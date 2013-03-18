@@ -62,6 +62,8 @@ eventbus.on "channelsubscription", (channelname, channel) ->
     channel.trigger 'device_sendmessage', {'commandtype': 'heartbeat', 'command': 'pP'}
     channel.trigger 'device_sendmessage', {'commandtype': 'heartbeat', 'command': 'gM'}
     channel.trigger 'device_sendmessage', {'commandtype': 'heartbeat', 'command': 'gUp'}
+    channel.trigger 'device_sendmessage', {'commandtype': 'heartbeat', 'command': 'gV'}
+    channel.trigger 'device_sendmessage', {'commandtype': 'heartbeat', 'command': 'gW'}
 
   channel.bind 'device_sendmessage', (data) ->
     console.log 'send message: ' + JSON.stringify data	
