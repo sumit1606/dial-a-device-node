@@ -24,11 +24,11 @@ dialadevicenode.init (eventbus)
 
 device.init (eventbus)
 
-serialport = dialadevicenode.openserialport 'COM3', 9600
+serialport = dialadevicenode.openserialport '/dev/ttyUSB0', 9600
 
 eventbus.on "serialport_opened", ->
   console.log "serial port opened"
-  dialadevicenode.webconnect "url"
+  dialadevicenode.webconnect "http://www.dial-a-device.com/websocket"
   
 eventbus.on "serial_received", (lm, data) ->
   device.serialdata lm, data

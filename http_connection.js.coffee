@@ -29,11 +29,12 @@ class WebSocketRails.HttpConnection
     xmlhttp
 
   constructor: (@url, @dispatcher) ->
+    @_url = @url
     @_conn         = new x.XMLHttpRequest()
     @last_pos      = 0
     @message_queue = []
     @_conn.onreadystatechange = @parse_stream
-    @_conn.open "GET", @url, true
+    @_conn.open "GET", @_url, true
     @_conn.send()
 
   parse_stream: =>
@@ -58,7 +59,7 @@ class WebSocketRails.HttpConnection
 
   post_data: (connection_id, payload) ->
     ajax
-      url: 'http://www.dial-a-device.com/websocket'
+      url: @_url
       type: 'POST'
       data:
         client_id: connection_id

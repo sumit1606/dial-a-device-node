@@ -1,18 +1,11 @@
 
 var util = require ('util');
 var ser = require ('serialport');
-
-// var xmlhttprequest = require ('./XMLHttpRequest.js');
-
 var wsr = require ('./websocket_rails.js.coffee');
-// ev = require './event.js.coffee'
-// htpc = require './http_connection.js.coffee'
-// wsc = require './websocket_connection.js.coffee'
 
 
 var serialport;
 var websockets;
-var url = 'http://www.dial-a-device.com/websocket'; 
 
 var localeventbus;
 
@@ -56,7 +49,7 @@ exports.openserialport = function (port, baud) {
 	
 };
 
-exports.webconnect = function (myurl) {
+exports.webconnect = function (url) {
     localeventbus.emit('connecting', url);	
     websockets = new WebSocketRails (url);
     localeventbus.emit('connected', url);
