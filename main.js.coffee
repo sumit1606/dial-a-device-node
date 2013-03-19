@@ -24,11 +24,14 @@ dialadevicenode.init (eventbus)
 
 device.init (eventbus)
 
-serialport = dialadevicenode.openserialport '/dev/ttyUSB0', 9600
+serialport = dialadevicenode.openserialport 'COM3', 9600
+
+connect = ->
+  dialadevicenode.webconnect "http://www.dial-a-device.com/websocket"
 
 eventbus.on "serialport_opened", ->
   console.log "serial port opened"
-  dialadevicenode.webconnect "http://www.dial-a-device.com/websocket"
+  setTimeout connect, 1000
   
 eventbus.on "serial_received", (lm, data) ->
   device.serialdata lm, data
@@ -52,6 +55,10 @@ eventbus.on "subscribing", (channelname) ->
 eventbus.on "device_received", (lm, data) ->
   # console.log (JSON.stringify (lm)+' --- '+data);
   channel.trigger 'device_reply', {'lastmessage': lm, 'response': data}
+  
+eventbus.on "connectionclosed", () ->
+  console.log "connection closed"
+  setTimeout connect, 1000
   
 eventbus.on "channelsubscription", (channelname, channel) ->
   console.log "subscribed to "+channelname

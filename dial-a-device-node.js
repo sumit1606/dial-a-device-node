@@ -52,6 +52,20 @@ exports.openserialport = function (port, baud) {
 exports.webconnect = function (url) {
     localeventbus.emit('connecting', url);	
     websockets = new WebSocketRails (url);
+	websockets.bind ("connection_closed", function (data) {
+	
+	localeventbus.emit('connectionclosed');
+	
+	});
+	
+	websockets.bind ("connection_error", function (data) {
+	
+	localeventbus.emit('connectionclosed');
+	
+	});
+	
+	
+	
     localeventbus.emit('connected', url);
   };
   

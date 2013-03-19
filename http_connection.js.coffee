@@ -50,6 +50,13 @@ class WebSocketRails.HttpConnection
         decoded_data = {}
 
       @dispatcher.new_message decoded_data
+    
+    if @_conn.readyState == 0
+      close_event = new WebSocketRails.Event(['connection_closed',{}])
+      @dispatcher.dispatch close_event
+    if @_conn.readyState == 4
+      close_event = new WebSocketRails.Event(['connection_closed',{}])
+      @dispatcher.dispatch close_event	
 
   trigger: (event) =>
     if @dispatcher.state != 'connected'
