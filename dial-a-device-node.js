@@ -69,6 +69,11 @@ exports.webconnect = function (url) {
     localeventbus.emit('connected', url);
   };
   
+
+exports.trigger = function (fn, data) {
+    websockets.trigger (fn, data);
+  };
+
   
 exports.subscribe = function (channelname) {
     localeventbus.emit('subscribing', channelname);
