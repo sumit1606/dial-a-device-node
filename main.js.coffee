@@ -55,7 +55,10 @@ eventbus.on "subscribing", (channelname) ->
 eventbus.on "device_received", (lm, data) ->
   # console.log (JSON.stringify (lm)+' --- '+data);
   channel.trigger 'device_reply', {'lastmessage': lm, 'response': data}
-  dialadevicenode.trigger 'device_log', {'lastmessage': lm, 'response': data} if lm.commandtype == 'heartbeat'
+
+eventbus.on "device_log", (lm, data) ->
+  console.log (JSON.stringify (lm)+' --- '+data);
+  dialadevicenode.trigger 'device_log', {'lastmessage': lm, 'response': data}
 
 eventbus.on "connectionclosed", () ->
   console.log "connection closed"

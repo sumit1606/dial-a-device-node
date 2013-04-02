@@ -30,10 +30,10 @@ exports.init = function (eventbus) {
   
 exports.openserialport = function (port, baud) {
 
-  serialport = new ser.SerialPort (port, {
-    baudrate: baud,
-	parser: (ser.parsers.readline (String.fromCharCode(13)))
-	});
+    serialport = new ser.SerialPort (port, {
+      baudrate: baud,
+	  parser: (ser.parsers.readline (String.fromCharCode(13)))
+	  });
 	
   console.log ("serial port initialized: "+port +" "+baud);
   
