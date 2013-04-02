@@ -11,9 +11,9 @@ exports.init = function (eventbus) {
 exports.serialdata = function (lm, data) {
     localeventbus.emit('device_received', lm, data);		
 
-	if (lm.command.startsWith ('pP')) {
+	if (lm.command == ('pP')) {
 
-		var re = data.response.split(';');
+		var re = data.split(';');
 
 		runtime = parseFloat(re[0].trim());
 
@@ -22,6 +22,7 @@ exports.serialdata = function (lm, data) {
 		var pumppower = re[3].trim();
 
 		newdata = {'runtime': runtime, 'pressure': currentpressure, 'setpoint': targetpressure, 'power': pumppower}
+		
 		localeventbus.emit('device_log', {'commandtype': 'heartbeat', 'command': 'pP', 'device_id': '1'}, newdata)
 
 	}
