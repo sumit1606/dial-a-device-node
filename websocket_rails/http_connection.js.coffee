@@ -2,8 +2,8 @@
  HTTP Interface for the WebSocketRails client.
 ###
 
-x = require './XMLHttpRequest.js'
-ajax = require './ajax.js'
+x = require '../helper/XMLHttpRequest.js'
+ajax = require '../helper/ajax.js'
 
 
 class WebSocketRails.HttpConnection

@@ -1,19 +1,16 @@
 
 var util = require ('util');
 var ser = require ('serialport');
-var wsr = require ('./websocket_rails.js.coffee');
-
 
 var serialport;
-var websockets;
+
+var simulation = false;
 
 var localeventbus;
 
 var lastmessage = new Array;
 var currentmessage;
 var waiting = false;
-
-exports.websockets = websockets;
 
 exports.init = function (eventbus) {
     localeventbus = eventbus;
@@ -29,6 +26,9 @@ exports.init = function (eventbus) {
   
   
 exports.openserialport = function (port, baud) {
+
+
+		simulation = false;
 
     serialport = new ser.SerialPort (port, {
       baudrate: baud,
@@ -47,44 +47,9 @@ exports.openserialport = function (port, baud) {
   
   return serialport;
 	
+	
 };
 
-exports.webconnect = function (url) {
-    localeventbus.emit('connecting', url);	
-    websockets = new WebSocketRails (url);
-	websockets.bind ("connection_closed", function (data) {
-	
-	localeventbus.emit('connectionclosed');
-	
-	});
-	
-	websockets.bind ("connection_error", function (data) {
-	
-	localeventbus.emit('connectionclosed');
-	
-	});
-	
-	
-	
-    localeventbus.emit('connected', url);
-  };
-  
-
-exports.trigger = function (fn, data) {
-    websockets.trigger (fn, data);
-  };
-
-  
-exports.subscribe = function (channelname) {
-    localeventbus.emit('subscribing', channelname);
-    channel = websockets.subscribe (channelname);
-	
-	channel.bind ('client_connected', function (data) {
-      console.log ('new client: ' + JSON.stringify (data));
-	});
-	
-    localeventbus.emit('channelsubscription', channelname, channel);
-  };
   
 writenext = function () {  
   if (waiting) {
@@ -93,8 +58,10 @@ writenext = function () {
     // setTimeout (cancelcommand, 1000);
 	waiting = true;	
 	currentmessage = lastmessage.pop();
-	serialport.write  (currentmessage.command+String.fromCharCode(13), function (err, results) {
-	});
+	  serialport.write  (currentmessage.command+String.fromCharCode(13), function (err, results) {
+
+	  });
+	
   }
 };
 

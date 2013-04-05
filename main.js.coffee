@@ -1,84 +1,82 @@
-x = require './XMLHttpRequest.js'
+ser_string = '/dev/ttyUSB0'
+# ser_string = 'COM3'
 
-wsr = require './websocket_rails.js.coffee'
-ev = require './event.js.coffee'
-htpc = require './http_connection.js.coffee'
-wsc = require './websocket_connection.js.coffee'
+simulation = false;
 
-ch = require './channel.js.coffee'
+url_string = 'http://localhost:3000/websocket'
+
+# --------------------------------------
+
+require './websocket_rails/websocket_rails.js.coffee'
+require './websocket_rails/event.js.coffee'
+require './websocket_rails/http_connection.js.coffee'
+require './websocket_rails/websocket_connection.js.coffee'
+require './websocket_rails/channel.js.coffee'
 
 ev = require 'events'
-util = require 'util'
 
 
+deviceconnection = require './deviceconnection.js'
 
-dialadevicenode = require './dial-a-device-node.js'
+webconnection = require './webconnection.js'
 
 device = require './device.js'
 
+consolelogger = require './consolelogger.js'
+
 eventbus = new ev.EventEmitter
 
-dialadevicenode.websockets
+webconnection.websockets
 
-dialadevicenode.init (eventbus)
+deviceconnection.init (eventbus)
+
+webconnection.init (eventbus)
 
 device.init (eventbus)
 
-serialport = dialadevicenode.openserialport '/dev/ttyUSB0', 9600
+consolelogger.init (eventbus)
+
+serialport = deviceconnection.openserialport ser_string, 9600
 
 connect = ->
-  dialadevicenode.webconnect "http://localhost:3000/websocket"
+  webconnection.webconnect url_string
 
 eventbus.on "serialport_opened", ->
-  console.log "serial port opened"
   setTimeout connect, 1000
-  
-eventbus.on "serial_received", (lm, data) ->
-  device.serialdata lm, data
 
-eventbus.on "initialized", ->
-  console.log "initialized"
-  
 eventbus.on "writenext", ->
-  setTimeout dialadevicenode.writenext, 100
-  
-eventbus.on "connecting", (url) ->
-  console.log "connecting to " + url
+  setTimeout deviceconnection.writenext, 100
+
 
 eventbus.on "connected", (url) ->
-  console.log "connected to "+ url
-  channel = dialadevicenode.subscribe 'channel_dev_1'
-  
-eventbus.on "subscribing", (channelname) ->
-  console.log "subscribing to "+ channelname
+  channel = webconnection.subscribe 'channel_dev_1'
 
 eventbus.on "device_received", (lm, data) ->
-  # console.log (JSON.stringify (lm)+' --- '+data);
   channel.trigger 'device_reply', {'lastmessage': lm, 'response': data}
 
 eventbus.on "device_log", (lm, data) ->
   console.log (JSON.stringify (lm)+' --- '+data);
-  dialadevicenode.trigger 'device_log', {'lastmessage': lm, 'response': data}
+  webconnection.trigger 'device_log', {'lastmessage': lm, 'response': data}
 
 eventbus.on "connectionclosed", () ->
-  console.log "connection closed"
   setTimeout connect, 1000
-  
+
+ 
 eventbus.on "channelsubscription", (channelname, channel) ->
-  console.log "subscribed to "+channelname
-  
-  
+    
+  eventbus.on "channel.send", (cmd, data) ->
+    channel.trigger cmd, data
   
   heartbeat = ->
-    channel.trigger 'device_sendmessage', {'commandtype': 'heartbeat', 'command': 'pP'}
-    channel.trigger 'device_sendmessage', {'commandtype': 'heartbeat', 'command': 'gM'}
-    channel.trigger 'device_sendmessage', {'commandtype': 'heartbeat', 'command': 'gUp'}
-    channel.trigger 'device_sendmessage', {'commandtype': 'heartbeat', 'command': 'gV'}
-    channel.trigger 'device_sendmessage', {'commandtype': 'heartbeat', 'command': 'gW'}
+
+    eventbus.emit "device.requestheartbeat"
+
+  heartbeatsimulation = ->
+    eventbus.emit "device.requestheartbeat.simulation"
 
   channel.bind 'device_sendmessage', (data) ->
     console.log 'send message: ' + JSON.stringify data	
-    dialadevicenode.writedata data
+    deviceconnection.writedata data
 
   channel.bind 'device_error', (data) ->
     console.log 'device error: ' + JSON.stringify data
@@ -88,6 +86,8 @@ eventbus.on "channelsubscription", (channelname, channel) ->
 
   channel.trigger 'client_connected', 'dial-a-device-node'
   
-  setInterval heartbeat, 1000
+  setInterval heartbeat, 1000 if !simulation
+
+  setInterval heartbeatsimulation, 1000 if simulation
  
   
