@@ -18,8 +18,13 @@ exports.init = function (eventbus) {
 	
 	localeventbus.on ("serial_incoming", function (data) {
 
-		localeventbus.emit ("serial_received", currentmessage, data);
-		waiting = false;
+		if (waiting) {
+
+			localeventbus.emit ("serial_received", currentmessage, data);
+			waiting = false;
+		} else {
+			localeventbus.emit ("serial_rawincoming", data);
+		}
 	});
 
 };

@@ -1,7 +1,7 @@
 ser_string = '/dev/ttyUSB0'
 # ser_string = 'COM3'
 
-simulation = false;
+simulation = false
 
 url_string = 'http://localhost:3000/websocket'
 
@@ -20,7 +20,7 @@ deviceconnection = require './deviceconnection.js'
 
 webconnection = require './webconnection.js'
 
-device = require './device.js'
+device = require './device_heidolph.js'
 
 consolelogger = require './consolelogger.js'
 
@@ -36,7 +36,7 @@ device.init (eventbus)
 
 consolelogger.init (eventbus)
 
-serialport = deviceconnection.openserialport ser_string, 9600
+serialport = deviceconnection.openserialport ser_string, 115200
 
 connect = ->
   webconnection.webconnect url_string
@@ -55,13 +55,12 @@ eventbus.on "device_received", (lm, data) ->
   channel.trigger 'device_reply', {'lastmessage': lm, 'response': data}
 
 eventbus.on "device_log", (lm, data) ->
-  console.log (JSON.stringify (lm)+' --- '+data);
   webconnection.trigger 'device_log', {'lastmessage': lm, 'response': data}
 
 eventbus.on "connectionclosed", () ->
   setTimeout connect, 1000
 
- 
+
 eventbus.on "channelsubscription", (channelname, channel) ->
     
   eventbus.on "channel.send", (cmd, data) ->

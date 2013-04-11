@@ -35,13 +35,21 @@ exports.init = function (eventbus) {
         
     });
 
+    localeventbus.on ("serial_rawincoming", function(data) {
+     
+
+        
+    });
+
     localeventbus.on ("device_received", function(lm, data) {
         
         if (lm.command == ('pP')) {
 
         var re = data.split(';');
 
-        runtime = parseFloat(re[0].trim());
+        if (re.length >= 4) {
+
+        var runtime = parseFloat(re[0].trim());
 
         var currentpressure = re[1].trim();
         var targetpressure = re[2].trim();
@@ -50,7 +58,7 @@ exports.init = function (eventbus) {
         newdata = {'runtime': runtime, 'pressure': currentpressure, 'setpoint': targetpressure, 'power': pumppower}
         
         localeventbus.emit('device_log', {'commandtype': 'heartbeat', 'command': 'pP', 'device_id': '1'}, newdata);
-
+        }
         }
     });
     

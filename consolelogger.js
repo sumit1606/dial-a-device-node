@@ -35,6 +35,12 @@ exports.init = function (eventbus) {
         
         console.log ("subscribed to "+channelname);
     });
+
+    localeventbus.on ("device_log", function(lm, data) {
+        
+        console.log (JSON.stringify(data));
+    });
+    
     
 
     localeventbus.emit ("consolelogger.initialized");
