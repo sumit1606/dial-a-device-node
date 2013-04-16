@@ -14,9 +14,15 @@ ev = require 'events'
 # do we have a unique id?
 # NO create one and save it on disk.
 
-# get unique id
+unique_id = 'gf638h2g7g86g3'
 
 # can we get device settings from main URL?
+# YES
+
+# settings = require ('http://localhost:3000/connect/' + unique_id + '.json')
+
+# console.log settings
+
 # NO
 #   do we have local copy of device settings?
 #     NO force simulation mode
@@ -26,20 +32,16 @@ ev = require 'events'
 #           NO download it as well
 #           start webserver
 #       
-# YES use local device settings, initalize the device
-#
-# port, device_type, channel, simulation yes/no
-#
 # do we have a local copy of the device js file?
 # NO download it from URL
 #
 # require (import) device specific js file
 
-
-# -----------------------------------
+device = require './device_knf920.js'
 
 ser_string = '/dev/ttyUSB0'
-# ser_string = 'COM3'
+ser_baud = 115200
+device_id = 3
 
 simulation = true
 
@@ -51,8 +53,6 @@ url_string = 'http://www.dial-a-device.com/websocket'
 deviceconnection = require './deviceconnection.js'
 
 webconnection = require './webconnection.js'
-
-device = require './device_knf920.js'
 
 consolelogger = require './consolelogger.js'
 
@@ -68,7 +68,7 @@ device.init (eventbus)
 
 consolelogger.init (eventbus)
 
-serialport = deviceconnection.openserialport ser_string, 115200
+serialport = deviceconnection.openserialport ser_string, ser_baud
 
 connect = ->
   webconnection.webconnect url_string
@@ -84,7 +84,7 @@ eventbus.on "writenext", ->
 
 
 eventbus.on "connected", (url) ->
-  channel = webconnection.subscribe 'channel_dev_3'
+  channel = webconnection.subscribe 'channel_dev_' + device_id
 
 eventbus.on "device_received", (lm, data) ->
   channel.trigger 'device_reply', {'lastmessage': lm, 'response': data}
