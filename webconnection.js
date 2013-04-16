@@ -1,6 +1,5 @@
 
 var util = require ('util');
-var ser = require ('serialport');
 var wsr = require ('./websocket_rails/websocket_rails.js.coffee');
 
 

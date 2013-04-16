@@ -1,11 +1,4 @@
-ser_string = '/dev/ttyUSB0'
-# ser_string = 'COM3'
-
-simulation = false
-
-url_string = 'http://localhost:3000/websocket'
-
-# --------------------------------------
+# ---------------IMPORT----------------
 
 require './websocket_rails/websocket_rails.js.coffee'
 require './websocket_rails/event.js.coffee'
@@ -16,11 +9,50 @@ require './websocket_rails/channel.js.coffee'
 ev = require 'events'
 
 
+# ---------------INIT--------------
+
+# do we have a unique id?
+# NO create one and save it on disk.
+
+# get unique id
+
+# can we get device settings from main URL?
+# NO
+#   do we have local copy of device settings?
+#     NO force simulation mode
+#     YES
+#       standalone mode?
+#         YES do we have local copy of UI?
+#           NO download it as well
+#           start webserver
+#       
+# YES use local device settings, initalize the device
+#
+# port, device_type, channel, simulation yes/no
+#
+# do we have a local copy of the device js file?
+# NO download it from URL
+#
+# require (import) device specific js file
+
+
+# -----------------------------------
+
+ser_string = '/dev/ttyUSB0'
+# ser_string = 'COM3'
+
+simulation = true
+
+url_string = 'http://www.dial-a-device.com/websocket'
+
+# ---------------CONNECT-------------
+
+
 deviceconnection = require './deviceconnection.js'
 
 webconnection = require './webconnection.js'
 
-device = require './device_heidolph.js'
+device = require './device_knf920.js'
 
 consolelogger = require './consolelogger.js'
 
@@ -41,6 +73,9 @@ serialport = deviceconnection.openserialport ser_string, 115200
 connect = ->
   webconnection.webconnect url_string
 
+
+# -----------------------------------
+
 eventbus.on "serialport_opened", ->
   setTimeout connect, 1000
 
@@ -49,7 +84,7 @@ eventbus.on "writenext", ->
 
 
 eventbus.on "connected", (url) ->
-  channel = webconnection.subscribe 'channel_dev_1'
+  channel = webconnection.subscribe 'channel_dev_3'
 
 eventbus.on "device_received", (lm, data) ->
   channel.trigger 'device_reply', {'lastmessage': lm, 'response': data}
