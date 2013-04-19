@@ -6,6 +6,9 @@ require './websocket_rails/http_connection.js.coffee'
 require './websocket_rails/websocket_connection.js.coffee'
 require './websocket_rails/channel.js.coffee'
 
+
+util = require 'util'
+
 ev = require 'events'
 
 
@@ -37,7 +40,7 @@ unique_id = 'gf638h2g7g86g3'
 #
 # require (import) device specific js file
 
-device = require './device_knf920.js'
+device = require './common/devices/knf920.js'
 
 ser_string = '/dev/ttyUSB0'
 ser_baud = 115200
@@ -50,11 +53,11 @@ url_string = 'http://www.dial-a-device.com/websocket'
 # ---------------CONNECT-------------
 
 
-deviceconnection = require './deviceconnection.js'
+deviceconnection = require './common/deviceconnection.js'
 
-webconnection = require './webconnection.js'
+webconnection = require './common/webconnection.js'
 
-consolelogger = require './consolelogger.js'
+consolelogger = require './common/consolelogger.js'
 
 eventbus = new ev.EventEmitter
 
@@ -92,12 +95,12 @@ eventbus.on "device_received", (lm, data) ->
 eventbus.on "device_log", (lm, data) ->
   webconnection.trigger 'device_log', {'lastmessage': lm, 'response': data}
 
-eventbus.on "connectionclosed", () ->
+eventbus.on "connectionclosed", (nothing) ->
   setTimeout connect, 1000
 
 
-eventbus.on "channelsubscription", (channelname, channel) ->
-    
+eventbus.on "channelsubscription", ([channelname, channel]) ->
+
   eventbus.on "channel.send", (cmd, data) ->
     channel.trigger cmd, data
   
