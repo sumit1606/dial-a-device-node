@@ -4,75 +4,87 @@ var ser = require ('serialport');
 
 var serialport;
 
-var simulation = false;
-
 var localeventbus;
 
 var lastmessage = new Array;
 var currentmessage;
 var waiting = false;
 
+var port;
+var baud;
+
 exports.init = function (eventbus) {
     localeventbus = eventbus;
-    localeventbus.emit ("initialized");
+    localeventbus.emit ("serial.initialized");
+
+    localeventbus.on ("serial.set.baud", function (data) {
+    	baud = data[0];
+    });
+
+    localeventbus.on ("serial.set.port", function (data) {
+    	port = data[0];
+    });
+
+    localeventbus.on ("serial.connect", function () {
+    	serialport = new ser.SerialPort (port, {
+			baudrate: baud,
+			parser: (ser.parsers.readline (String.fromCharCode(13)))
+		});
+
+		serialport.on ("error", function (err) {
+			localeventbus.emit ("serial.openfailed", err);
+		});
+  
+		serialport.on ("open", function() {
+			localeventbus.emit("serial.portopened", []);
 	
-	localeventbus.on ("serial_incoming", function (data) {
+			serialport.on ("data", function (data) {      
+				localeventbus.emit ("serial.incoming", [data]);	        
+			});
+
+			localeventbus.on ("serial.writenext", function () {
+				setTimeout (function() {
+
+  					if (waiting) {
+						localeventbus.emit ('serial.writenext');
+					} else if (lastmessage.length > 0) {
+
+						waiting = true;	
+						currentmessage = lastmessage.pop();
+						serialport.write  (currentmessage.command+String.fromCharCode(13), function (err, results) {
+						});
+	
+					}
+
+				}, 100);
+
+			});
+		
+		});
+    });
+	
+	localeventbus.on ("serial.incoming", function (data) {
 
 		if (waiting) {
 
-			localeventbus.emit ("serial_received", currentmessage, data);
+			localeventbus.emit ("device.reply", [currentmessage, data]);
 			waiting = false;
 		} else {
-			localeventbus.emit ("serial_rawincoming", data);
+			localeventbus.emit ("device.reply", [{"command": "heartbeat"}, data]);
 		}
 	});
 
-};
-  
-  
-exports.openserialport = function (port, baud) {
+	localeventbus.on ("device.command", function (msg) {
+		localeventbus.emit ("serial.writemessage", msg[0]);
+  	});
 
 
-		simulation = false;
 
-    serialport = new ser.SerialPort (port, {
-      baudrate: baud,
-	  parser: (ser.parsers.readline (String.fromCharCode(13)))
-	  });
-	
-  console.log ("serial port initialized: "+port +" "+baud);
-  
-  serialport.on ("open", function() {
-    localeventbus.emit("serialport_opened", []);
-	
-	serialport.on ("data", function (data) {      
-	  localeventbus.emit ("serial_incoming", [data]);	        
+	localeventbus.on ("serial.writemessage", function (data) {
+		lastmessage.push (data);
+    	localeventbus.emit("serial.writenext");
 	});
-  });
-  
-  return serialport;
 	
-	
+
 };
-
   
-writenext = function () {  
-  if (waiting) {
-    localeventbus.emit ('writenext');
-  } else if (lastmessage.length > 0) {
-    // setTimeout (cancelcommand, 1000);
-	waiting = true;	
-	currentmessage = lastmessage.pop();
-	  serialport.write  (currentmessage.command+String.fromCharCode(13), function (err, results) {
-
-	  });
-	
-  }
-};
-
-exports.writenext = writenext;
- 
-exports.writedata = function (data) {
-    lastmessage.push (data);
-    writenext();
-  };

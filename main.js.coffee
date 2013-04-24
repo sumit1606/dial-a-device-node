@@ -11,6 +11,7 @@ util = require 'util'
 
 ev = require 'events'
 
+http = require 'http'
 
 # ---------------INIT--------------
 
@@ -40,91 +41,67 @@ unique_id = 'gf638h2g7g86g3'
 #
 # require (import) device specific js file
 
-device = require './common/devices/knf920.js'
+device_type = 'knf-sc920'
 
-ser_string = '/dev/ttyUSB0'
+device_library = './devices/knf-sc920.js'
+device = require device_library
+simulation = require './devices/knf-sc920_SIM.js'
+
+ser_string = '/dev/ttyACM0'
 ser_baud = 115200
 device_id = 3
 
-simulation = true
-
-url_string = 'http://www.dial-a-device.com/websocket'
+url_string = 'http://localhost:3000/websocket'
 
 # ---------------CONNECT-------------
 
 
-deviceconnection = require './common/deviceconnection.js'
-
-webconnection = require './common/webconnection.js'
-
-consolelogger = require './common/consolelogger.js'
+deviceconnection = require './deviceconnection.js'
+webconnection = require './webconnection.js'
+consolelogger = require './consolelogger.js'
+status = require './systemstatus.js'
 
 eventbus = new ev.EventEmitter
 
-webconnection.websockets
+status.init (eventbus)
 
-deviceconnection.init (eventbus)
+webconnection.init eventbus, true
+webconnection.initsubscribe
 
-webconnection.init (eventbus)
+eventbus.emit "device.announce.deviceid", [device_id]
+eventbus.emit "device.announce.devicetype", [device_type]
 
 device.init (eventbus)
-
 consolelogger.init (eventbus)
 
-serialport = deviceconnection.openserialport ser_string, ser_baud
 
-connect = ->
-  webconnection.webconnect url_string
+deviceconnection.init (eventbus)
+eventbus.emit "serial.set.baud", [ser_baud]
+eventbus.emit "serial.set.port", [ser_string]
 
+eventbus.emit "serial.connect"
 
-# -----------------------------------
+eventbus.emit "webconnection.set.channelname", ['channel_dev_' + device_id]
+eventbus.emit "webconnection.set.url", [url_string]
+eventbus.emit "webconnection.set.deviceendpoint", [true]
 
-eventbus.on "serialport_opened", ->
-  setTimeout connect, 1000
+eventbus.emit "webconnection.connect"
 
-eventbus.on "writenext", ->
-  setTimeout deviceconnection.writenext, 100
+simulation.init (eventbus)
 
+# ------------------------------------------------------
 
-eventbus.on "connected", (url) ->
-  channel = webconnection.subscribe 'channel_dev_' + device_id
-
-eventbus.on "device_received", (lm, data) ->
-  channel.trigger 'device_reply', {'lastmessage': lm, 'response': data}
-
-eventbus.on "device_log", (lm, data) ->
-  webconnection.trigger 'device_log', {'lastmessage': lm, 'response': data}
-
-eventbus.on "connectionclosed", (nothing) ->
-  setTimeout connect, 1000
+# eventbus.on "ui.update.status", (devmodel) ->
+#   console.log devmodel
 
 
-eventbus.on "channelsubscription", ([channelname, channel]) ->
+heartbeat = ->
+  eventbus.emit "device.heartbeat"
 
-  eventbus.on "channel.send", (cmd, data) ->
-    channel.trigger cmd, data
+setInterval heartbeat, 1000
+
+# ------------------ background worker task -------------
+
+http.createServer((req, res) ->
   
-  heartbeat = ->
-
-    eventbus.emit "device.requestheartbeat"
-
-  heartbeatsimulation = ->
-    eventbus.emit "device.requestheartbeat.simulation"
-
-  channel.bind 'device_sendmessage', (data) ->
-    console.log 'send message: ' + JSON.stringify data	
-    deviceconnection.writedata data
-
-  channel.bind 'device_error', (data) ->
-    console.log 'device error: ' + JSON.stringify data
-
-  channel.bind 'device_reply', (data) ->
-    console.log 'device reply: ' + JSON.stringify data
-
-  channel.trigger 'client_connected', 'dial-a-device-node'
-  
-  setInterval heartbeat, 1000 if !simulation
-
-  setInterval heartbeatsimulation, 1000 if simulation
- 
-  
+).listen 9615
