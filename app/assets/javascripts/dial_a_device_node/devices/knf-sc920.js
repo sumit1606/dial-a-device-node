@@ -10,8 +10,23 @@
         ventilation: '0',
         coolant: '0',
         runtime: '0',
-        pressureunit: '0'
 
+         jashon: [
+                        { "jso_time":"52" , "jso_pressure":"20" , "jso_coolant":"2"  }, 
+                        { "jso_time":"34" , "jso_pressure":"54" , "jso_coolant":"1"  }, 
+                        { "jso_time":"68" , "jso_pressure":"44" , "jso_coolant":"2"  }, 
+                        { "jso_time":"69" , "jso_pressure":"89" , "jso_coolant":"2"  }, 
+                        { "jso_time":"15" , "jso_pressure":"89" , "jso_coolant":"1"  }, 
+                        { "jso_time":"78" , "jso_pressure":"55" , "jso_coolant":"2"  }, 
+                        { "jso_time":"98" , "jso_pressure":"21" , "jso_coolant":"2"  }, 
+                        { "jso_time":"96" , "jso_pressure":"85" , "jso_coolant":"1"  }, 
+                        { "jso_time":"75" , "jso_pressure":"18" , "jso_coolant":"2"  }, 
+                        { "jso_time":"87" , "jso_pressure":"10" , "jso_coolant":"1"  }, 
+                        { "jso_time":"98" , "jso_pressure":"25" , "jso_coolant":"2"  }, 
+                        { "jso_time":"32" , "jso_pressure":"19" , "jso_coolant":"1"  }
+                     ],
+
+        pressureunit: '0'
     };
 
     exports.init = function (eventbus) {
@@ -101,10 +116,50 @@
                 eventbus.emit('ui.update.coolant', [device_model]);
             }
         
+             if (lastmessage.command.startsWith ('gFv')) {
+                
+                var re = data.split(';');
+
+                if (re.length > 4) {
+                
+                var x = re[0].trim();
+                device_model.jashon[x].jso_time = re[1].trim();
+                device_model.jashon[x].jso_pressure = re[2].trim();
+                device_model.jashon[x].jso_coolant = re[3].trim();
+
+                eventbus.emit('ui.update.functionrow', [x, device_model]);
+
+                
+                } else {
+                    console.log ('wrong reply gFv');
+                console.log (lastmessage);
+                console.log (data);
+
+                }
+
+                
+            }
+
+        if (lastmessage.command.startsWith ('cFd') || lastmessage.command.startsWith ('cFc') || lastmessage.command.startsWith ('cFs')) {
+             
+                eventbus.emit('device.update.list', [device_model]);
+            }
+        
+        });
+
+        eventbus.on ("device.update.list", function (device_model) {;
+
+            for(index = 0; index < 12 ; index ++)
+            {
+            
+            localeventbus.emit ("device.update.row", [index]);
+            }
         });
 
         eventbus.on ("device.set.runmode", function(data) {
+       
             eventbus.emit ("device.command", [{"command": "cM"+data}])
+
         });
 
         eventbus.on ("device.set.startstop", function(data) {
@@ -121,6 +176,42 @@
 
         eventbus.on ("device.set.coolant", function(data) {
             eventbus.emit ("device.command", [{"command": "dW"+data}])
+        });
+
+         eventbus.on ("device.set.power", function(data) {
+            eventbus.emit ("device.command", [{"command": "cS"+data}])
+        });
+
+         eventbus.on ("device.set.pressure", function(data) {
+            eventbus.emit ("device.command", [{"command": "cC"+data}])
+        });
+
+         eventbus.on ("device.update.row", function(data) {
+
+              eventbus.emit ("device.command", [{"command": "gFv"+data}])
+        });
+
+         eventbus.on ("device.set.function", function(temp_obj , o1, o2, o3) {
+            
+            var main_i = parseInt(temp_obj);
+            var main_t = o1;
+            var main_p = o2;
+            var main_c = o3;
+            eventbus.emit ("device.command", [{"command": "cFs "+main_i+";"+main_t+";"+main_p+";"+main_c+";"}]);
+
+
+        });
+
+          eventbus.on ("device.delAll.function", function(temp_obj_2) {
+            
+            eventbus.emit ("device.command", [{"command": "cFd "+temp_obj_2+";"}]);
+
+        });
+
+           eventbus.on ("device.del1.function", function(temp_obj_3) {
+            
+            eventbus.emit ("device.command", [{"command": "cFc "+temp_obj_3+";"}]);
+
         });
 
         eventbus.emit ("device.initialized", []);

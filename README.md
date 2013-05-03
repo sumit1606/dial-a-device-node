@@ -1,6 +1,10 @@
 dial-a-device-node
 ==================
 
+This package contains a gem AND a standalone node.js application.
+
+## Installation in node.js
+
 * Install the latest node.js and node package manager
 
 		sudo add-apt-repository ppa:chris-lea/node.js
@@ -26,4 +30,24 @@ dial-a-device-node
 
 	Run the dial-a-device-node client
 
-		coffee main.js.coffee
+		nodejs autorun.js
+
+
+## Installation as part of a Ruby on Rails project (gem)
+
+Add this line to your application's Gemfile:
+
+    gem 'dial_a_device_node'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install dial_a_device_node
+
+
+## License
+
+GPLv3

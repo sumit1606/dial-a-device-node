@@ -1,4 +1,3 @@
-
 var util = require ('util');
 var ser = require ('serialport');
 
