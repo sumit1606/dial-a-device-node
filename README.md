@@ -1,7 +1,7 @@
 dial-a-device-node
 ==================
 
-This package contains a gem AND a standalone node.js application.
+This package contains a gem AND a npm package AND a standalone node.js application.
 
 ## Installation in node.js
 
@@ -11,7 +11,11 @@ This package contains a gem AND a standalone node.js application.
 		sudo apt-get update
 		sudo apt-get install python-software-properties nodejs git-core curl build-essential openssl libssl-dev npm coffeescript
 
-* Download the dial-a-device-node source code and the required packages
+* Install the dial-a-device-node npm package
+
+		sudo npm install dial-a-device-node
+
+* If this doesn't work, install the packages manually: Download the dial-a-device-node source code and the required packages
 
 		sudo git clone https://github.com/Cominch/dial-a-device-node.git
 		cd dial-a-device-node
@@ -24,7 +28,7 @@ This package contains a gem AND a standalone node.js application.
 
 		sudo chmod 777 /dev/ttyUSB0
 
-	Edit main.js.coffee
+	Edit dial_a_device_node.js
 
 		Define your serial port and websocket URL, if you don't want to use the default values
 
