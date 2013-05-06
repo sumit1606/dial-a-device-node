@@ -11,7 +11,7 @@ Install the latest node.js and node package manager
 	sudo apt-get update
 	sudo apt-get install python-software-properties nodejs git-core curl build-essential openssl libssl-dev npm coffeescript
 
-Install the packages manually: Download the dial-a-device-node source code and the required packages
+Install the packages manually for development use: Download the dial-a-device-node source code and the required packages
 
 	sudo git clone https://github.com/Cominch/dial-a-device-node.git
 	cd dial-a-device-node
@@ -25,7 +25,7 @@ Go! on Linux
 
 		sudo chmod 777 /dev/ttyUSB0
 
-	Edit dial_a_device_node.js
+	Edit autorun.js
 
 		Define your serial port and websocket URL, if you don't want to use the default values
 

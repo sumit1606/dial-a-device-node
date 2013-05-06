@@ -65,7 +65,7 @@
 
             if (lastmessage.command.startsWith ('pP')) {
 
-                var re = data.split(';');
+                var re = ("" + data).split(';');
 
                 device_model.runtime = re[0].trim();
                 device_model.pressure = re[1].trim();
@@ -82,7 +82,7 @@
 
             if (lastmessage.command.startsWith ('gM')) {
             
-                var re = data.split(';');
+                var re = ("" + data).split(';');
 
                 device_model.runmode = re[0].trim();
                 
@@ -91,7 +91,7 @@
 
             if (lastmessage.command.startsWith ('gUp')) {
             
-                var re = data.split(';');
+                var re = ("" + data).split(';');
 
                 device_model.pressureunit = re[0].trim();
                 
@@ -100,7 +100,7 @@
 
             if (lastmessage.command.startsWith ('gV')) {
             
-                var re = data.split(';');
+                var re = ("" + data).split(';');
 
                 device_model.ventilation = re[0].trim();
                 
@@ -109,7 +109,7 @@
 
             if (lastmessage.command.startsWith ('gW')) {
             
-                var re = data.split(';');
+                var re = ("" + data).split(';');
 
                 device_model.coolant = re[0].trim();
                 
@@ -118,7 +118,7 @@
         
              if (lastmessage.command.startsWith ('gFv')) {
                 
-                var re = data.split(';');
+                var re = ("" + data).split(';');
 
                 if (re.length > 4) {
                 
