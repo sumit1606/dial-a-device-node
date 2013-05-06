@@ -5,24 +5,21 @@ This package contains a gem AND a npm package AND a standalone node.js applicati
 
 ## Installation in node.js
 
-* Install the latest node.js and node package manager
+Install the latest node.js and node package manager
 
-		sudo add-apt-repository ppa:chris-lea/node.js
-		sudo apt-get update
-		sudo apt-get install python-software-properties nodejs git-core curl build-essential openssl libssl-dev npm coffeescript
+	sudo add-apt-repository ppa:chris-lea/node.js
+	sudo apt-get update
+	sudo apt-get install python-software-properties nodejs git-core curl build-essential openssl libssl-dev npm coffeescript
 
-* Install the dial-a-device-node npm package
+Install the packages manually: Download the dial-a-device-node source code and the required packages
 
-		sudo npm install dial-a-device-node
+	sudo git clone https://github.com/Cominch/dial-a-device-node.git
+	cd dial-a-device-node
+	sudo npm install coffee-script
+	sudo opkg install python-compiler
+	sudo npm install serialport
 
-* If this doesn't work, install the packages manually: Download the dial-a-device-node source code and the required packages
-
-		sudo git clone https://github.com/Cominch/dial-a-device-node.git
-		cd dial-a-device-node
-		sudo npm install coffee-script
-		sudo npm install serialport
-
-* Go!
+Go! on Linux
 
 	Make sure your user is in the dialout group or give full access to your serial port
 
@@ -36,6 +33,12 @@ This package contains a gem AND a npm package AND a standalone node.js applicati
 
 		nodejs autorun.js
 
+## Installation in node.js on BeagleBoard
+
+Install the dial-a-device-node npm package
+
+	opkg install python-compiler
+	npm install dial-a-device-node
 
 ## Installation as part of a Ruby on Rails project (gem)
 

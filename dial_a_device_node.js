@@ -1,8 +1,46 @@
 (function(exports) {
 
-exports.run = function (eventbus) {
+var consolelogger, simulate, device, device_id, device_library, device_type, deviceconnection, ev, eventbus, heartbeat, http, ser_baud, ser_string, simulation, status, unique_id, url_string, util, webconnection;
 
-var consolelogger, device, device_id, device_library, device_type, deviceconnection, ev, eventbus, heartbeat, http, ser_baud, ser_string, simulation, status, unique_id, url_string, util, webconnection;
+// default parameters
+ser_string = '/dev/ttyACM0';
+ser_baud = 115200;
+device_id = 0;
+url_string = 'http://localhost:3000/websocket';
+device_type = 'knf-sc920';
+unique_id = 'gf638h2g7g86g3';
+simulate = false;
+
+exports.set_url_string = function (param) {
+	url_string = param;
+};
+
+exports.set_device_type = function (param) {
+	device_type = param;
+};
+
+exports.set_ser_string = function (param) {
+	ser_string = param;
+};
+
+exports.set_simulate = function (param) {
+	simulate = param;
+};
+
+exports.set_device_id = function (param) {
+	device_id = param;
+};
+
+exports.set_unique_id = function (param) {
+	unique_id = param;
+};
+
+exports.set_ser_baud = function (param) {
+	ser_baud = param;
+};
+
+
+exports.run = function (eventbus) {
 
 require ('coffee-script');
 
@@ -22,23 +60,11 @@ ev = require('events');
 
 http = require('http');
 
-unique_id = 'gf638h2g7g86g3';
-
-device_type = 'knf-sc920';
-
-device_library = './app/assets/javascripts/dial_a_device_node/devices/knf-sc920.js';
+device_library = './app/assets/javascripts/dial_a_device_node/devices/' + device_type + '.js';
 
 device = require(device_library);
 
-simulation = require('./app/assets/javascripts/dial_a_device_node/devices/knf-sc920_SIM.js');
-
-ser_string = '/dev/ttyACM0';
-
-ser_baud = 115200;
-
-device_id = 3;
-
-url_string = 'http://localhost:3000/websocket';
+simulation = require('./app/assets/javascripts/dial_a_device_node/devices/'+ device_type +'_SIM.js');
 
 deviceconnection = require('./app/assets/javascripts/dial_a_device_node/deviceconnection.js');
 
@@ -80,7 +106,9 @@ eventbus.emit("webconnection.set.deviceendpoint", [true]);
 
 eventbus.emit("webconnection.connect");
 
-// simulation.init(eventbus);
+if (simulate) {
+	simulation.init(eventbus);
+}
 
 heartbeat = function() {
   return eventbus.emit("device.heartbeat");

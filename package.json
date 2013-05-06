@@ -1,10 +1,11 @@
 {
   "name": "dial-a-device-node",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "dial-a-device-node ==================",
   "main": "dial_a_device_node.js",
   "dependencies": {
-    "serialport": "~1.1.0"
+    "serialport": "~1.1.0",
+    "coffee-script": "~1.6.1"
   },
   "devDependencies": {
     "coffee-script": "~1.6.1"
