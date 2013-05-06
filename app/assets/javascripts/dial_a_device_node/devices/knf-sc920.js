@@ -65,6 +65,8 @@
 
             if (lastmessage.command.startsWith ('pP')) {
 
+                try {
+
                 var re = ("" + data).split(';');
 
                 device_model.runtime = re[0].trim();
@@ -78,42 +80,69 @@
                 eventbus.emit('ui.update.power', [device_model]);
         
                 eventbus.emit('device.snapshot', [device_model]);
+
+                } catch (e) {
+
+                }
             }
 
             if (lastmessage.command.startsWith ('gM')) {
             
-                var re = ("" + data).split(';');
+                try {
+
+                    var re = ("" + data).split(';');
 
                 device_model.runmode = re[0].trim();
                 
                 eventbus.emit('ui.update.runmode', [device_model]);
+
+                } catch (e) {
+                    
+                }
             }
 
             if (lastmessage.command.startsWith ('gUp')) {
+
+                try {
             
                 var re = ("" + data).split(';');
 
                 device_model.pressureunit = re[0].trim();
                 
                 eventbus.emit('ui.update.pressureunit', [device_model]);
+
+                } catch (e) {
+
+                }
             }
 
             if (lastmessage.command.startsWith ('gV')) {
+
+                try {
             
                 var re = ("" + data).split(';');
 
                 device_model.ventilation = re[0].trim();
                 
                 eventbus.emit('ui.update.ventilation', [device_model]);
+                } catch (e) {
+
+                }
             }
 
             if (lastmessage.command.startsWith ('gW')) {
+
+                try {
             
                 var re = ("" + data).split(';');
 
                 device_model.coolant = re[0].trim();
                 
                 eventbus.emit('ui.update.coolant', [device_model]);
+
+                } catch (e) {
+                    
+                }
             }
         
              if (lastmessage.command.startsWith ('gFv')) {
