@@ -46,7 +46,13 @@
 
         eventbus.on ("device.snapshot", function (param) {
 
-            var tm = parseInt(param.runtime);
+            if (device_model.runtime == "0.0") {
+                if (datacurve.length > 10) {
+                    datacurve.shift();
+                }
+            }
+
+            var tm = (new Date()).getTime();
             var pr = parseInt(param.pressure);
 
             var datapoint = [tm, pr];
@@ -206,7 +212,7 @@
 
         });
 
-        eventbus.on ("device.set.startstop", function(data) {
+        eventbus.on ("device.set.startstop", function(data) {            
             eventbus.emit ("device.command", [{"command": "d"+data}])
         });
 

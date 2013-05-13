@@ -63,6 +63,27 @@
                         device_model_simulation.pressure = newpressure.toString();
                     }
 
+                    if ((device_model_simulation.runmode == 1) && (device_model_simulation.pumpengine)) {
+                        // Pressure control
+                        var oldpressure = parseInt(device_model_simulation.pressure);
+
+                        var newpressure = oldpressure;
+
+                        if (oldpressure < device_model_simulation.setpoint) {
+                            newpressure = oldpressure + 20;
+                        }
+
+                        if (oldpressure > device_model_simulation.setpoint) {
+                            newpressure = oldpressure - 20;
+                        }
+
+                        if (Math.abs(oldpressure - newpressure) < 20) {
+                            newpressure = device_model_simulation.setpoint;
+                        }
+
+                        device_model_simulation.pressure = newpressure.toString();
+                    }
+
             } else {
                     // Increase pressure, because ventilation is open
                     var oldpressure = parseInt(device_model_simulation.pressure);

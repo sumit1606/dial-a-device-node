@@ -5,6 +5,10 @@
 
 	var temp_device_model;
 
+	var datacurve = new Array();
+
+	var functionvisible = false;
+
 	exports.init = function (eventbus) {
 
 		localeventbus = eventbus;
@@ -70,10 +74,10 @@
     	eventbus.on ("ui.update.runmode", function (device_model) {
     		temp_device_model = device_model;
 			switch ((device_model.runmode)) {
-				case '0': $('#runmode').text('Evacuate'); $("#tab2").show(); $("#tab3").hide(); $("#tab4").hide(); $("#container").show(); $('#myModal').modal('hide'); ui.updateChart(); break;
-				case '1': $('#runmode').text('Pressure Control'); $("#tab2").hide(); $("#tab3").show(); $("#tab4").hide(); $("#container").show();  $('#myModal').modal('hide');  ui.updateChart(); break;
-				case '2': $('#runmode').text('Automatic'); $("#tab2").hide(); $("#tab3").hide(); $("#tab4").hide(); $("#container").show(); $('#myModal').modal('hide'); break; 
-				case '3': $('#runmode').text('Function'); $("#tab2").hide(); $("#tab3").hide(); $("#tab4").show();   $("#container").show(); eventbus.emit("device.update.list", [device_model]); ui.updateChart(); break;
+				case '0': $('#runmode').text('Evacuate'); $("#tab2").show(); $("#tab3").hide(); $("#tab4").hide(); $("#container").show(); $('#myModal').modal('hide'); functionvisible = false; break;
+				case '1': $('#runmode').text('Pressure Control'); $("#tab2").hide(); $("#tab3").show(); $("#tab4").hide(); $("#container").show();  $('#myModal').modal('hide');  functionvisible = false; break;
+				case '2': $('#runmode').text('Automatic'); $("#tab2").hide(); $("#tab3").hide(); $("#tab4").hide(); $("#container").show(); $('#myModal').modal('hide'); functionvisible = false; break; 
+				case '3': $('#runmode').text('Function'); $("#tab2").hide(); $("#tab3").hide(); $("#tab4").show();   $("#container").show(); eventbus.emit("device.update.list", [device_model]); functionvisible = true;  break;
 			}
     	});
 
@@ -102,6 +106,11 @@
 			document.getElementById('tbl').rows[index].cells[2].innerHTML = temp_device_model.jashon[index].jso_coolant;  
 			
     	});
+
+    	eventbus.on ("ui.refreshdatacurve", function (datac) {
+    		datacurve = datac;
+    		ui.updateChart();
+    	})
 
 	};
 
@@ -291,30 +300,78 @@ exports.power_select = function power_select()
 		 //document.getElementById("j_c").value="10";
   	}
   	
+  	exports.getData = function getData() {
 
-exports.updateChart = function () {
+  		var myarray = new Array();
 
+		if (functionvisible) {
 
-var myrow = new Array();
-var mycell = new Array();
-myrow[0] = parseInt(temp_device_model.jashon[0].jso_time);
-mycell[0] = parseInt(temp_device_model.jashon[0].jso_pressure);
-for(i=1;i<12;i++)
-{
-	myrow[i]= myrow[i-1] + parseInt(temp_device_model.jashon[i].jso_time);
-	mycell[i]=  parseInt(temp_device_model.jashon[i].jso_pressure);
-}
+			var myrow = new Array();
+			var mycell = new Array();
+			myrow[0] = parseInt(temp_device_model.jashon[0].jso_time);
+			mycell[0] = parseInt(temp_device_model.jashon[0].jso_pressure);
+			for(i=1;i<12;i++)
+			{
+				myrow[i]= myrow[i-1] + parseInt(temp_device_model.jashon[i].jso_time);
+				mycell[i]=  parseInt(temp_device_model.jashon[i].jso_pressure);
+			}
+
+			myarray.push ({
+	                name: 'Function',
+	                animation: false ,
+	                // Define the data points. All series have a dummy year
+	                // of 1970/71 in order to be compared on the same x axis. Note
+	                // that in JavaScript, months start at 0 for January, 1 for February etc.
+	                data: [
+	                		[myrow[0], mycell[0]],
+	                		[myrow[1], mycell[1]],
+	                		[myrow[2], mycell[2]],
+	                		[myrow[3], mycell[3]],
+	                		[myrow[4], mycell[4]],
+	                		[myrow[5], mycell[5]],
+	                		[myrow[6], mycell[6]],
+	                		[myrow[7], mycell[7]],
+	                		[myrow[8], mycell[8]],
+	                		[myrow[9], mycell[9]],
+	                		[myrow[10], mycell[10]],
+	                		[myrow[11],mycell[11]]
+	                ]
+	            });
+		};
+
+		myarray.push ({
+            name: 'Data',
+            animation: false ,
+                // Define the data points. All series have a dummy year
+                // of 1970/71 in order to be compared on the same x axis. Note
+                // that in JavaScript, months start at 0 for January, 1 for February etc.
+            data: datacurve
+                
+            });
+
+		return myarray;
+
+  	}
+
+	exports.updateChart = function () {
 
         $('#container').highcharts({
             chart: {
                 type: 'spline' , 
-                animation: false
+                animation: false,
+                events: {
+                	load: function() {
+                		setInterval (function() {
+                			series = ui.getData();
+                		}, 1000);
+                	}
+                }              
             },
             title: {
-                text: 'Pressure vs time'
+                text: 'Pressure'
             },
-            subtitle: {
-                text: 'An example of irregular time data in Highcharts JS'
+            exporting: {
+            	enabled: false
             },
             xAxis: {
                 type: 'datetime',
@@ -328,7 +385,7 @@ for(i=1;i<12;i++)
             },
             yAxis: {
                 title: {
-                    text: 'Pressure (m)'
+                    text: 'Pressure'
                 },
                 min: 0
             },
@@ -339,47 +396,7 @@ for(i=1;i<12;i++)
                 }
             },
             
-            series: [{
-                name: 'Function',
-                animation: false ,
-                // Define the data points. All series have a dummy year
-                // of 1970/71 in order to be compared on the same x axis. Note
-                // that in JavaScript, months start at 0 for January, 1 for February etc.
-                data: [
-                		[myrow[0], mycell[0]],
-                		[myrow[1], mycell[1]],
-                		[myrow[2], mycell[2]],
-                		[myrow[3], mycell[3]],
-                		[myrow[4], mycell[4]],
-                		[myrow[5], mycell[5]],
-                		[myrow[6], mycell[6]],
-                		[myrow[7], mycell[7]],
-                		[myrow[8], mycell[8]],
-                		[myrow[9], mycell[9]],
-                		[myrow[10], mycell[10]],
-                		[myrow[11],mycell[11]]
-                ]
-            }, {
-                name: 'Data',
-                animation: false ,
-                // Define the data points. All series have a dummy year
-                // of 1970/71 in order to be compared on the same x axis. Note
-                // that in JavaScript, months start at 0 for January, 1 for February etc.
-                data: [
-                		[0, mycell[0]],
-                		[60, mycell[1]],
-                		[120, mycell[2]],
-                		[myrow[3], mycell[3]],
-                		[myrow[4], mycell[4]],
-                		[myrow[5], mycell[5]],
-                		[myrow[6], mycell[6]],
-                		[myrow[7], mycell[7]],
-                		[myrow[8], mycell[8]],
-                		[myrow[9], mycell[9]],
-                		[myrow[10], mycell[10]],
-                		[myrow[11],mycell[11]]
-                ]
-            },  ]
+            series: ui.getData()
         });
 	
 }
