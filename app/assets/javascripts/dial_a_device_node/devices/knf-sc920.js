@@ -29,6 +29,9 @@
         pressureunit: '0'
     };
 
+
+    var datacurve = new Array();
+
     exports.init = function (eventbus) {
 
         if (typeof String.prototype.startsWith != 'function') {
@@ -38,6 +41,18 @@
         }
 
         eventbus.on ("device.initialized", function () {
+
+        });
+
+        eventbus.on ("device.snapshot", function (param) {
+
+            var tm = parseInt(param.runtime);
+            var pr = parseInt(param.pressure);
+
+            var datapoint = [tm, pr];
+            datacurve.push (datapoint);
+
+            eventbus.emit ("ui.refreshdatacurve", [datacurve]);
 
         });
 

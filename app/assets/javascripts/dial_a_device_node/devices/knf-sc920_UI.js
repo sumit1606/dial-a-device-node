@@ -4,7 +4,7 @@
 	var localeventbus;
 
 	var temp_device_model;
-	
+
 	exports.init = function (eventbus) {
 
 		localeventbus = eventbus;
@@ -17,10 +17,14 @@
 				$('#startstopicon').removeClass('icon-play');
 				$('#startstopicon').addClass('icon-stop');
 				$('#startstop').addClass('active');
+
+				$('#runmode').addClass('disabled');
 			} else {
 				$('#startstopicon').removeClass('icon-stop');
 				$('#startstopicon').addClass('icon-play');
 				$('#startstop').removeClass('active');
+
+				$('#runmode').removeClass('disabled');
 		    }
     	});
 
@@ -336,7 +340,7 @@ for(i=1;i<12;i++)
             },
             
             series: [{
-                name: 'Chem Lab',
+                name: 'Function',
                 animation: false ,
                 // Define the data points. All series have a dummy year
                 // of 1970/71 in order to be compared on the same x axis. Note
@@ -355,7 +359,27 @@ for(i=1;i<12;i++)
                 		[myrow[10], mycell[10]],
                 		[myrow[11],mycell[11]]
                 ]
-            } ]
+            }, {
+                name: 'Data',
+                animation: false ,
+                // Define the data points. All series have a dummy year
+                // of 1970/71 in order to be compared on the same x axis. Note
+                // that in JavaScript, months start at 0 for January, 1 for February etc.
+                data: [
+                		[0, mycell[0]],
+                		[60, mycell[1]],
+                		[120, mycell[2]],
+                		[myrow[3], mycell[3]],
+                		[myrow[4], mycell[4]],
+                		[myrow[5], mycell[5]],
+                		[myrow[6], mycell[6]],
+                		[myrow[7], mycell[7]],
+                		[myrow[8], mycell[8]],
+                		[myrow[9], mycell[9]],
+                		[myrow[10], mycell[10]],
+                		[myrow[11],mycell[11]]
+                ]
+            },  ]
         });
 	
 }
