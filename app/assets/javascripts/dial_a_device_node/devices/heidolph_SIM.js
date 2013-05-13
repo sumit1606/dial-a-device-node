@@ -1,9 +1,18 @@
 (function(exports) {
 
+	var device_model_simulation = {
+
+        temperature: '31.4',
+        exttemperature: '25.3',
+        rotation: '20',
+        vacuum: '976'
+
+    };
+
     exports.init = function (eventbus) {
  
         setInterval (function() {
-            eventbus.emit ("serial_rawincoming", ["20;31.4;25.3;976"]);
+            eventbus.emit ("serial_rawincoming", [device_model_simulation.rotation+";"+device_model_simulation.temperature+";"+device_model_simulation.exttemperature+";"+device_model_simulation.vacuum]);
         }, 1000);
 
         eventbus.emit ("serial.simulation", []);

@@ -3,7 +3,7 @@
 	var device_model_simulation = {
 
         runmode: '0',
-        pressure: '700',
+        pressure: '1013',
         setpoint: '300',
         power: '10',
         ventilation: '0',
@@ -45,6 +45,32 @@
             	var rt = parseFloat(device_model_simulation.runtime) + 0.5;
             	device_model_simulation.runtime = rt;
 
+                
+
+            } else {
+
+            }
+
+            if (device_model_simulation.ventilation == 0) {
+
+                    if ((device_model_simulation.runmode == 0) && (device_model_simulation.pumpengine)) {
+                        // Evacuation
+                        var oldpressure = parseInt(device_model_simulation.pressure);
+                        var newpressure = oldpressure - 20;
+                        if (newpressure <= 0) {
+                            newpressure = 0;
+                        }
+                        device_model_simulation.pressure = newpressure.toString();
+                    }
+
+            } else {
+                    // Increase pressure, because ventilation is open
+                    var oldpressure = parseInt(device_model_simulation.pressure);
+                    var newpressure = oldpressure + 300;
+                    if (newpressure > 1013) {
+                        newpressure = 1013;
+                    }
+                    device_model_simulation.pressure = newpressure.toString();
             }
 
         }, 500);
