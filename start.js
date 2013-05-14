@@ -1,4 +1,4 @@
-var dialadevicenode = require ('./dial_a_device_node.js');
+var dialadevicenode = require ('dial-a-device-node');
 
 dialadevicenode.set_ser_string ('/dev/ttyACM0');
 
