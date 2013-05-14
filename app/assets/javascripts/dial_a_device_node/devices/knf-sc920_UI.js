@@ -158,7 +158,7 @@
 	}
 
 
-exports.power_select = function power_select() 
+	exports.power_select = function power_select() 
 	{
 		
 			var person=prompt("enter pump power","100");
@@ -170,12 +170,12 @@ exports.power_select = function power_select()
   					localeventbus.emit ("device.set.power", [x])
   				}
   			}
-  			document.getElementById($('#textb').blur()); 
+  			$('#textb').blur(); 
 	}
 
 	exports.pressure_select = function pressure_select() 
 	{
-		var person2=prompt("enter pump pressure setpoint","100");
+		var person2=prompt("enter pressure setpoint","100");
 		if (person2!=null && person2!="")
   		{
   			var y= parseInt(person2);
@@ -184,7 +184,7 @@ exports.power_select = function power_select()
   				localeventbus.emit ("device.set.pressure", [y])
   			}
   		}
-  		document.getElementById($('#textb2').blur()); 	
+  		$('#textb2').blur(); 	
 	}
 
 	exports.edit_cell = function edit_cell(row) 
