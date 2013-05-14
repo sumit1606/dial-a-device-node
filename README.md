@@ -25,20 +25,13 @@ Go! on Linux
 
 		sudo chmod 777 /dev/ttyUSB0
 
-	Edit autorun.js
+	Edit start.js
 
 		Define your serial port and websocket URL, if you don't want to use the default values
 
 	Run the dial-a-device-node client
 
-		nodejs autorun.js
-
-## Installation in node.js on BeagleBoard
-
-Install the dial-a-device-node npm package
-
-	opkg install python-compiler
-	npm install dial-a-device-node
+		nodejs start.js
 
 ## Installation as part of a Ruby on Rails project (gem)
 
