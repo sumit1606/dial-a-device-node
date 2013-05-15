@@ -23,7 +23,16 @@
             eventbus.emit('device_received', [lm, data]);        
         });
 
-        eventbus.on ("serial_rawincoming", function(data) {
+        eventbus.on ("serial_rawincoming", function(params) {
+
+            var data = "";
+            
+            if (typeof params.command == 'string') {
+                data = params;
+            }
+            else {
+                data = params[0];
+            }
 
             var re = data.split(';');
 
