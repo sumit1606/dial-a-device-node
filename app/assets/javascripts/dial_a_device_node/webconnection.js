@@ -102,6 +102,10 @@
 					channel.trigger ("device.status", data);
 				});
 
+				localeventbus.on ("device.snapshot", function (data) {
+					channel.trigger ("device.updatemodel", data);
+				});
+
 			} else {
 
 				channel.bind ("device.reply", function (lm, data) {
@@ -114,6 +118,10 @@
 
 				channel.bind ("device.status", function (data) {
 					localeventbus.emit ("status.incoming", [data]);
+				});
+
+				channel.bind ("device.updatemodel", function (data) {
+					localeventbus.emit ("device.updatemodel", [data]);
 				});
 
 			}

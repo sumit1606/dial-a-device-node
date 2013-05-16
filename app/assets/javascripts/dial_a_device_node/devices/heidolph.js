@@ -23,10 +23,20 @@
             eventbus.emit('device_received', [lm, data]);        
         });
 
+        eventbus.on ("device.updatemodel", function (param) {
+
+            device_model = param[0];
+
+            eventbus.emit('ui.update.rotation', [device_model]);
+            eventbus.emit('ui.update.temperature', [device_model]);
+            eventbus.emit('ui.update.exttemperature', [device_model]);
+            eventbus.emit('ui.update.vacuum', [device_model]);
+        });
+
         eventbus.on ("serial_rawincoming", function(params) {
 
             var data = "";
-            
+
             if (typeof params.command == 'string') {
                 data = params;
             }
