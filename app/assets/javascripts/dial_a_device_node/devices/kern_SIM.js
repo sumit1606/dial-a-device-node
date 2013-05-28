@@ -2,18 +2,12 @@
 
 	var device_model_simulation = {
 
-        power: "off"
+        weight:'10',
 
     };
 
     exports.init = function (eventbus) {
  
-        setInterval (function() {
-
-            // every second ask for current weight
-            eventbus.emit ("device.currentweight", ['0.500g']);
-        
-        }, 1000);
 
         eventbus.emit ("serial.simulation", []);
         eventbus.emit ("serial.portopened", []);
@@ -30,13 +24,46 @@
 
             (typeof params.command == 'string'? message = params : message = params[0]);
 
-            // get
+             if (message.command.startsWith ('D05')) {
+                data = device_model_simulation.weight ;
 
-            if (message.command.startsWith ('Q')) {
-                data = "ok";
+            }
+            
+            if (message.command.startsWith ('T')) {
+                device_model_simulation.weight ='0';
+                data = device_model_simulation.weight;
+
+            }
+           
+            if (message.command.startsWith ('R')) {
+                device_model_simulation.weight ='0';
+                data = device_model_simulation.weight;
+
             }
 
-            eventbus.emit ("device.reply", [message, data]);
+            if (message.command.startsWith ('D06')) {
+                device_model_simulation.weight ='25';
+                setInterval (function() {
+                  var oldweight = parseInt(device_model_simulation.weight);
+                        var newweight = oldweight + 1;
+                   device_model_simulation.weight = newweight.toString();
+                   data=  device_model_simulation.weight;
+                    }
+        }, 1000);
+
+            if (message.command.startsWith ('D09')) {
+                device_model_simulation.weight ='45';
+                data = device_model_simulation.weight;
+
+            }
+
+
+            }
+             
+
+
+
+            eventbus.emit ("device.reply", [data]);
 
         });
 	
