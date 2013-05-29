@@ -41,6 +41,13 @@ exports.init = function (eventbus) {
 				localeventbus.emit ("serial.incoming", [data]);	        
 			});
 
+			localeventbus.on ("device.immediatecommand", function (msg) {
+				waiting = false;	
+				lastmessage = new Array;
+				console.log (msg);
+				serialport.write  (msg[0].command+String.fromCharCode(13), function (err, results) {});
+  			});
+
 			localeventbus.on ("serial.writenext", function () {
 				setTimeout (function() {
 
@@ -76,6 +83,8 @@ exports.init = function (eventbus) {
 	localeventbus.on ("device.command", function (msg) {
 		localeventbus.emit ("serial.writemessage", msg[0]);
   	});
+
+
 
 
 

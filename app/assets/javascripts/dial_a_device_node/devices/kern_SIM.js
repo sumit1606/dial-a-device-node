@@ -2,11 +2,29 @@
 
 	var device_model_simulation = {
 
-        weight:'10',
+        weight:"10",
+        autoprint: "0",
+        power: "1"
 
     };
 
+
+
+
     exports.init = function (eventbus) {
+
+        setInterval (function() {
+
+            if (device_model_simulation.power == "1") {
+
+                if (device_model_simulation.autoprint == "1") {
+
+                    eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
+                }
+
+            }
+
+        }, 3000);
  
 
         eventbus.emit ("serial.simulation", []);
@@ -17,55 +35,83 @@
                 return this.indexOf(str) == 0;
             };
         }
-
+  
+          
         eventbus.on ("device.command", function(params) {
 
             var data = "1";
 
             (typeof params.command == 'string'? message = params : message = params[0]);
 
-             if (message.command.startsWith ('D05')) {
-                data = device_model_simulation.weight ;
+            console.log (message);
 
+            if (message.command.startsWith ('D05')) {
+                device_model_simulation.weight="10";
+               eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
+            }     
+        });
+
+
+          eventbus.on ("device.immediatecommand", function(params) {
+
+            var data = "1";
+
+            (typeof params.command == 'string'? message = params : message = params[0]);
+
+            console.log (message);
+
+            if (message.command.startsWith ('T')) {
+                data = device_model_simulation.weight ;
+                device_model_simulation.weight="0";
+               eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
             }
             
-            if (message.command.startsWith ('T')) {
-                device_model_simulation.weight ='0';
-                data = device_model_simulation.weight;
-
-            }
-           
-            if (message.command.startsWith ('R')) {
-                device_model_simulation.weight ='0';
-                data = device_model_simulation.weight;
-
+             if (message.command.startsWith ('R')) {
+                data = device_model_simulation.weight ;
+                device_model_simulation.weight="0";
+               eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
             }
 
-            if (message.command.startsWith ('D06')) {
-                device_model_simulation.weight ='25';
-                setInterval (function() {
-                  var oldweight = parseInt(device_model_simulation.weight);
-                        var newweight = oldweight + 1;
-                   device_model_simulation.weight = newweight.toString();
-                   data=  device_model_simulation.weight;
-                    }
-        }, 1000);
-
-            if (message.command.startsWith ('D09')) {
-                device_model_simulation.weight ='45';
-                data = device_model_simulation.weight;
-
-            }
-
-
+        
+            if (message.command.startsWith ('C')) {
+                data = device_model_simulation.weight ;
+                device_model_simulation.weight="0";
+               eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
             }
              
+            if (message.command.startsWith ('D06')) {
 
+                if (device_model_simulation.power == "1") {
 
+                    device_model_simulation.autoprint="1";
 
-            eventbus.emit ("device.reply", [data]);
+                }
+            }
+             
+              
+            if (message.command.startsWith ('D09')) {
 
+                if (device_model_simulation.power == "1") {
+
+                    device_model_simulation.autoprint="0";
+                }
+            }
+                
+              if (message.command.startsWith ('Q')) {
+                if(device_model_simulation.power=="1"){
+                    device_model_simulation.power="0";
+                }
+                   if(device_model_simulation.power=="0"){
+                    device_model_simulation.power="1";
+                }
+            }
         });
+    
+    
+
+
+    
+
 	
     };
 

@@ -94,6 +94,10 @@
 					localeventbus.emit ("device.command", [data]);
 				});
 
+				channel.bind ("device.immediatecommand", function (data) {
+					localeventbus.emit ("device.immediatecommand", [data]);
+				});
+
 				localeventbus.on ("device.reply", function (lm, data) {
 					channel.trigger ("device.reply", lm, data);
 				});
@@ -114,6 +118,10 @@
 
 				localeventbus.on ("device.command", function (data) {
 					channel.trigger ("device.command", data);
+				});
+
+				localeventbus.on ("device.immediatecommand", function (data) {
+					channel.trigger ("device.immediatecommand", data);
 				});
 
 				channel.bind ("device.status", function (data) {
