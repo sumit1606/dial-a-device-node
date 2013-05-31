@@ -9,6 +9,12 @@ exports.init = function (eventbus) {
         console.log ("serial port opened");
     });
 
+    localeventbus.on ("serial_rawincoming", function(data) {
+        
+    //    console.log ("serial rawincoming " + data);
+    });
+
+
     localeventbus.on ("connecting", function(url) {
         
         console.log ("connecting to " + url);

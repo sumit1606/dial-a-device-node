@@ -19,8 +19,8 @@
 
         });
 
-        eventbus.on ("serial_received", function(lm, data) {
-            eventbus.emit('device_received', [lm, data]);        
+        eventbus.on ("serial.received", function(lm, data) {
+            eventbus.emit('device.received', [lm, data]);        
         });
 
         eventbus.on ("device.updatemodel", function (param) {
@@ -37,13 +37,12 @@
 
             var data = "";
 
-            if (typeof params.command == 'string') {
+            if (typeof params == 'string') {
                 data = params;
             }
             else {
                 data = params[0];
             }
-
             var re = data.split(';');
 
             if (re.length == 4) {
@@ -59,7 +58,6 @@
                 eventbus.emit('ui.update.vacuum', [device_model]);
         
                 eventbus.emit('device.snapshot', [device_model]);
-                eventbus.emit('device.updatemodel', [device_model]);
             }
         
         });    
