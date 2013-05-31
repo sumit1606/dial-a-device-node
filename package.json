@@ -1,6 +1,6 @@
 {
   "name": "dial-a-device-node",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "dial-a-device-node ==================",
   "main": "dial_a_device_node.js",
   "dependencies": {

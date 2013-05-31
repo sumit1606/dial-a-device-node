@@ -59,6 +59,7 @@
                 eventbus.emit('ui.update.vacuum', [device_model]);
         
                 eventbus.emit('device.snapshot', [device_model]);
+                eventbus.emit('device.updatemodel', [device_model]);
             }
         
         });    
