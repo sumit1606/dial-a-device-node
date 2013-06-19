@@ -37,11 +37,15 @@
     	});
 
     	eventbus.on ("ui.update.power", function (device_model) {
-    		$('#si_power_input').val(parseInt(device_model.power));
+    		if (!$('#si_power_input').hasClass("dontupdate")) {
+    			$('#si_power_input').val(parseInt(device_model.power));
+    		}
     	});
 
     	eventbus.on ("ui.update.setpoint", function (device_model) {
-    		$('#si_setpoint_input').val(parseInt(device_model.setpoint));
+    		if (!$('#si_setpoint_input').hasClass("dontupdate")) {
+    			$('#si_setpoint_input').val(parseInt(device_model.setpoint));
+    		}
     	});
 
     	eventbus.on ("ui.update.ventilation", function (device_model) {
