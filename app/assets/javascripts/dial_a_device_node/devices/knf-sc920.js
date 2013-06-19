@@ -232,7 +232,7 @@
             eventbus.emit ("device.command", [{"command": "cS"+data}])
         });
 
-         eventbus.on ("device.set.pressure", function(data) {
+         eventbus.on ("device.set.setpoint", function(data) {
             eventbus.emit ("device.command", [{"command": "cC"+data}])
         });
 

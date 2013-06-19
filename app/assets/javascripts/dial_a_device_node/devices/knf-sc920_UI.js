@@ -161,8 +161,8 @@
 		localeventbus.emit ("device.set.power", [value]);
 	}
 
-	exports.setPressure = function setPressure(value) {
-		localeventbus.emit ("device.set.pressure", [value]);
+	exports.setSetpoint = function setSetpoint(value) {
+		localeventbus.emit ("device.set.setpoint", [value]);
 	}
 
 
