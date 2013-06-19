@@ -77,17 +77,17 @@
   
 // code for changing to the tare button i.e tare function is called
        exports.tare = function tare(){
-        localeventbus.emit ("device.set.tare")
+        localeventbus.emit ("device.set.tare");
     };
 
 //   code for changing to the print function i.e print function is called
        exports.print = function print(){
-         localeventbus.emit ("device.set.print") 
+         localeventbus.emit ("device.set.print");
     };
     
 //   code for changing to the reset function i.e reset function is called    
     exports.reset = function reset(){
-        localeventbus.emit ("device.set.reset")
+        localeventbus.emit ("device.set.reset");
     };
 
 //   code for changing to the autoprint function i.e autoprint function is called 

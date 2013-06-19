@@ -37,11 +37,11 @@
     	});
 
     	eventbus.on ("ui.update.power", function (device_model) {
-    		$('#textb').val(parseInt(device_model.power));
+    		$('#si_power_input').val(parseInt(device_model.power));
     	});
 
     	eventbus.on ("ui.update.setpoint", function (device_model) {
-    		$('#textb2').val(parseInt(device_model.setpoint));
+    		$('#si_setpoint_input').val(parseInt(device_model.setpoint));
     	});
 
     	eventbus.on ("ui.update.ventilation", function (device_model) {
@@ -157,35 +157,14 @@
 		localeventbus.emit ("device.set.coolant", [data])
 	}
 
-
-	exports.power_select = function power_select() 
-	{
-		
-			var person=prompt("enter pump power","100");
-			if (person!=null && person!="")
-  			{
-  				var x= parseInt(person);
-  				if(x<=100 && x>=0)
-  				{
-  					localeventbus.emit ("device.set.power", [x])
-  				}
-  			}
-  			$('#textb').blur(); 
+	exports.setPower = function setPower(value) {
+		localeventbus.emit ("device.set.power", [value]);
 	}
 
-	exports.pressure_select = function pressure_select() 
-	{
-		var person2=prompt("enter pressure setpoint","100");
-		if (person2!=null && person2!="")
-  		{
-  			var y= parseInt(person2);
-  			if(y>=0)
-  			{
-  				localeventbus.emit ("device.set.pressure", [y])
-  			}
-  		}
-  		$('#textb2').blur(); 	
+	exports.setPressure = function setPressure(value) {
+		localeventbus.emit ("device.set.pressure", [value]);
 	}
+
 
 	exports.edit_cell = function edit_cell(row) 
 	{

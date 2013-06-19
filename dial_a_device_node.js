@@ -8,7 +8,7 @@ ser_baud = 115200;
 device_id = 0;
 url_string = 'http://localhost:3000/websocket';
 device_type = 'knf-sc920';
-unique_id = 'gf638h2g7g86g3';
+unique_id = '';
 simulate = false;
 
 exports.set_url_string = function (param) {
