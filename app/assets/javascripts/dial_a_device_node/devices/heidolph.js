@@ -11,6 +11,12 @@
 
     exports.init = function (eventbus) {
 
+        if (typeof String.prototype.startsWith != 'function') {
+            String.prototype.startsWith = function (str){
+                return this.indexOf(str) == 0;
+            };
+        }
+
         eventbus.on ("device.initialized", function () {
 
         });
