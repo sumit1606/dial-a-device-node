@@ -81,7 +81,7 @@ exports.init = function (eventbus) {
 			if (output.substring(0,1) == "\n") {
 				output = output.substring (1);
 			}
-			localeventbus.emit ("device.reply", [{"command": "heartbeat"}, [output]]);
+			localeventbus.emit ("device.reply", [{"command": "heartbeat"}, output]);
 		}
 	});
 
