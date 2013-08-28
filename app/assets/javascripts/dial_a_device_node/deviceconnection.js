@@ -76,7 +76,14 @@ exports.init = function (eventbus) {
 			localeventbus.emit ("device.reply", [currentmessage, data]);
 			waiting = false;
 		} else {
-			localeventbus.emit ("device.reply", [{"command": "heartbeat"}, data]);
+
+			var output = data;
+			console.log (data[0]);
+			if (data[0] == String.fromCharCode(13)) {
+				console.log ("line break removed");
+				output = data.substring (1);
+			}
+			localeventbus.emit ("device.reply", [{"command": "heartbeat"}, output]);
 		}
 	});
 
