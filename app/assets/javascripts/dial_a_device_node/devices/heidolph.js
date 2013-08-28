@@ -45,7 +45,7 @@
             }
 
              if (lastmessage.command.startsWith ('heartbeat')) {
-                var re = data.split(';');
+                var re = data[0].split(';');
 
                 if (re.length == 4) {
 

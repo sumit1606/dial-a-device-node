@@ -14,7 +14,6 @@
         setInterval (function() {
             mystring = device_model_simulation.rotation+";"+device_model_simulation.temperature+";"+device_model_simulation.exttemperature+";"+device_model_simulation.vacuum;
             eventbus.emit ("device.reply", [{"command": "heartbeat"}, [mystring]]);
-            console.log (mystring);
         }, 1000);
 
         eventbus.emit ("serial.simulation", []);
