@@ -33,34 +33,36 @@
             eventbus.emit('ui.update.vacuum', [device_model]);
         });
 
-        eventbus.on ("serial_rawincoming", function(params) {
+        eventbus.on ("device.reply", function(params, data) {
 
-            var data = "";
 
-            if (typeof params == 'string') {
-                data = params;
+            if (typeof params.command == 'string') {
+                lastmessage = params;
             }
             else {
-                data = params[0];
+                lastmessage = params[0];
+                data = params[1];
             }
-            var re = data.split(';');
 
-            if (re.length == 4) {
+             if (lastmessage.command.startsWith ('heartbeat')) {
+                var re = data.split(';');
 
-                device_model.rotation = re[0].trim();
-                device_model.temperature = re[1].trim();
-                device_model.exttemperature = re[2].trim();
-                device_model.vacuum = re[3].trim();
+                if (re.length == 4) {
 
-                eventbus.emit('ui.update.rotation', [device_model]);
-                eventbus.emit('ui.update.temperature', [device_model]);
-                eventbus.emit('ui.update.exttemperature', [device_model]);
-                eventbus.emit('ui.update.vacuum', [device_model]);
-        
-                eventbus.emit('device.snapshot', [device_model]);
-            }
-        
-        });    
+                    device_model.rotation = re[0].trim();
+                    device_model.temperature = re[1].trim();
+                    device_model.exttemperature = re[2].trim();
+                    device_model.vacuum = re[3].trim();
+
+                    eventbus.emit('ui.update.rotation', [device_model]);
+                    eventbus.emit('ui.update.temperature', [device_model]);
+                    eventbus.emit('ui.update.exttemperature', [device_model]);
+                    eventbus.emit('ui.update.vacuum', [device_model]);
+            
+                    eventbus.emit('device.snapshot', [device_model]);
+                }
+             }
+   
 
 	   eventbus.emit ("device.initialized", []);
 
