@@ -62,6 +62,8 @@
                     eventbus.emit('device.snapshot', [device_model]);
                 }
              }
+
+        });
    
 
 	   eventbus.emit ("device.initialized", []);
