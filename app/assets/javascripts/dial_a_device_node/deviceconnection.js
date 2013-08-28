@@ -77,13 +77,11 @@ exports.init = function (eventbus) {
 			waiting = false;
 		} else {
 
-			var output = data;
-			console.log (data[0]);
-			if (data[0] == String.fromCharCode(13)) {
-				console.log ("line break removed");
-				output = data.substring (1);
+			var output = data[0];
+			if (output.substring(0,1) == "\n") {
+				output = output.substring (1);
 			}
-			localeventbus.emit ("device.reply", [{"command": "heartbeat"}, output]);
+			localeventbus.emit ("device.reply", [{"command": "heartbeat"}, [output]]);
 		}
 	});
 
