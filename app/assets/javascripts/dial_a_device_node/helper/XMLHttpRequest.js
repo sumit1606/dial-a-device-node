@@ -427,6 +427,7 @@ exports.XMLHttpRequest = function() {
       }
 
       request.end();
+      request.socket.destroy();
 
       self.dispatchEvent("loadstart");
     } else { // Synchronous
@@ -453,7 +454,7 @@ exports.XMLHttpRequest = function() {
         + "fs.writeFileSync('" + syncFile + "', 'NODE-XMLHTTPREQUEST-ERROR:' + JSON.stringify(error), 'utf8');"
         + "});"
         + (data ? "req.write('" + data.replace(/'/g, "\\'") + "');":"")
-        + "req.end();";
+        + "req.end();req.socket.destroy();";
       // Start the other Node Process, executing this string
       syncProc = spawn(process.argv[0], ["-e", execString]);
       while((self.responseText = fs.readFileSync(syncFile, 'utf8')) == "") {
@@ -493,6 +494,7 @@ exports.XMLHttpRequest = function() {
   this.abort = function() {
     if (request) {
       request.abort();
+      request.socket.destroy();
       request = null;
     }
 
