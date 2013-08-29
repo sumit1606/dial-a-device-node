@@ -417,6 +417,9 @@ exports.XMLHttpRequest = function() {
         response.on('error', function(error) {
           self.handleError(error);
         });
+
+        request.socket.destroy();
+        
       }).on('error', function(error) {
         self.handleError(error);
       });
@@ -427,7 +430,6 @@ exports.XMLHttpRequest = function() {
       }
 
       request.end();
-      request.socket.destroy();
 
       self.dispatchEvent("loadstart");
     } else { // Synchronous
