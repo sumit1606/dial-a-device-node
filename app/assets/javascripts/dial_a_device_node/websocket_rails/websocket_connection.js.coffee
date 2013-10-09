@@ -1,12 +1,22 @@
 ###
 WebSocket Interface for the WebSocketRails client.
 ###
+
+x = require '../helper/WebSocket-Node-wrapper.js'
+
 class WebSocketRails.WebSocketConnection
 
   constructor: (@url,@dispatcher) ->
-    @url             = "ws://#{@url}" unless @url.match(/^wss?:\/\//)
+    if @url.match(/^wss?:\/\//)
+        console.log "WARNING: Using connection urls with protocol specified is depricated"
+#    else if window.location.protocol == 'https:'
+#        @url = "wss://#{@url}"
+    else
+        @url = "ws://#{@url}"
+
+    console.log @url
     @message_queue   = []
-    @_conn           = new WebSocket(@url)
+    @_conn           = new x.WebSocket(@url)
     @_conn.onmessage = @on_message
     @_conn.onclose   = @on_close
     @_conn.onerror   = @on_error

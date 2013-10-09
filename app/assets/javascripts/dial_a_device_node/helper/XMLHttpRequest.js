@@ -366,7 +366,7 @@ exports.XMLHttpRequest = function() {
       path: uri,
       method: settings.method,
       headers: headers,
-      agent: agent
+      agent: false
     };
 
     // Reset error flag

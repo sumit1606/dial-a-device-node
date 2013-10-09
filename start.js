@@ -6,7 +6,7 @@ dialadevicenode.set_ser_baud (1200);
 
 dialadevicenode.set_device_id (2);
 
-dialadevicenode.set_url_string ('http://localhost:3000/websocket');
+dialadevicenode.set_url_string ('localhost:3000/websocket');
 
 dialadevicenode.set_device_type ('kern');
 

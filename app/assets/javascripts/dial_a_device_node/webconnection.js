@@ -60,7 +60,7 @@
     	localeventbus.on ("webconnection.connect", function (data) {
     		localeventbus.emit('connecting', [url]);	
 
-    	websockets = new WebSocketRails (url, false);
+    	websockets = new WebSocketRails (url, true);
 
 		websockets.bind ("connection_closed", function (data) {
 			localeventbus.emit('webconnection.closed', []);
@@ -85,7 +85,7 @@
     		channel = websockets.subscribe (channelname);
 	
 			channel.bind ('client_connected', function (data) {
-				// localeventbus.emit ("channel.client_connected", [data]);
+			   localeventbus.emit ("channel.client_connected", [data]);
 			});
 
 			if (deviceendpoint) {

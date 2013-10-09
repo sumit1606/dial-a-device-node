@@ -1,15 +1,17 @@
 {
   "name": "dial-a-device-node",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "dial-a-device-node ==================",
   "main": "dial_a_device_node.js",
   "dependencies": {
     "serialport": "~1.1.0",
-    "coffee-script": "~1.6.1"
+    "coffee-script": "~1.6.1",
+    "websocket": "~1.0.8"
   },
   "devDependencies": {
     "coffee-script": "~1.6.1",
-    "serialport": "~1.1.0"
+    "serialport": "~1.1.0",
+    "websocket": "~1.0.8"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

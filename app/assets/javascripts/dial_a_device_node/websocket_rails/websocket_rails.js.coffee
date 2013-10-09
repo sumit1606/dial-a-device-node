@@ -20,14 +20,15 @@ Listening for new events from the server
 util = require 'util'
 
 class global.WebSocketRails
-  constructor: (@url, @use_websockets = true) ->
+  constructor: (@url, @use_websockets = false) ->
     @state     = 'connecting'
     @callbacks = {}
     @channels  = {}
     @queue     = {}
 
-    unless @supports_websockets() and @use_websockets
-      @_conn = new WebSocketRails.HttpConnection url, @
+
+    unless  @use_websockets
+      @_conn = new WebSocketRails.HttpConnection "http://"+url, @
     else
       @_conn = new WebSocketRails.WebSocketConnection url, @
 
@@ -100,3 +101,6 @@ class global.WebSocketRails
   pong: =>
     pong = new WebSocketRails.Event( ['websocket_rails.pong',{},@connection_id] )
     @_conn.trigger pong
+
+  connection_stale: =>
+    @state != 'connected'

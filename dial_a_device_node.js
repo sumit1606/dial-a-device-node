@@ -114,7 +114,7 @@ heartbeat = function() {
   return eventbus.emit("device.heartbeat");
 };
 
-setInterval(heartbeat, 1000);
+ setInterval(heartbeat, 1000);
 
 };
 

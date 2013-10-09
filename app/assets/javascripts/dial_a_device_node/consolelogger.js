@@ -14,13 +14,18 @@ exports.init = function (eventbus) {
     //    console.log ("serial rawincoming " + data);
     });
 
+    localeventbus.on ("status.deviceendpoint", function(url) {
+        
+        console.log ("device endpoint?  " + url);
+    });
+
 
     localeventbus.on ("connecting", function(url) {
         
         console.log ("connecting to " + url);
     });
 
-    localeventbus.on ("connected", function(url) {
+    localeventbus.on ("webconnection.connected", function(url) {
         
         console.log ("connected to  " + url);
     });
