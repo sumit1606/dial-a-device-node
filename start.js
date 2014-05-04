@@ -4,7 +4,7 @@ dialadevicenode.set_ser_string ('/dev/ttyUSB0');
 
 dialadevicenode.set_ser_baud (1200);
 
-dialadevicenode.set_device_id (2);
+dialadevicenode.set_device_id (4);
 
 dialadevicenode.set_url_string ('localhost:3000/websocket');
 
@@ -12,6 +12,6 @@ dialadevicenode.set_device_type ('kern');
 
 dialadevicenode.set_unique_id ('gf638h2g7g86g3');
 
-dialadevicenode.set_simulate (true);
+dialadevicenode.set_simulate (false);
 
 dialadevicenode.run();

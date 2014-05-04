@@ -8,6 +8,12 @@
 
     };
 
+    function pad(num, size) {
+        var s = num+"";
+        while (s.length < size) s = "0" + s;
+        return s;
+    }
+
 
 
 
@@ -46,7 +52,10 @@
             console.log (message);
 
             if (message.command.startsWith ('D05')) {
-                device_model_simulation.weight="10";
+
+                w = Math.floor((Math.random() * 100) + 1)
+
+                device_model_simulation.weight="0."+pad(w, 3)+"[0]g";
                eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
             }     
         });
