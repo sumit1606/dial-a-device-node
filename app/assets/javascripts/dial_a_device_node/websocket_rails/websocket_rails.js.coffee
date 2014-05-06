@@ -61,6 +61,9 @@ class global.WebSocketRails
     @callbacks[event_name] ?= []
     @callbacks[event_name].push callback
 
+  unbind: (event_name) =>
+    delete @callbacks[event_name]
+
   trigger: (event_name, data, success_callback, failure_callback) =>    
     event = new WebSocketRails.Event( [event_name, data, @connection_id], success_callback, failure_callback )
     @queue[event.id] = event

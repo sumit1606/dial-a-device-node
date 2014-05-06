@@ -31,6 +31,10 @@ class WebSocketRails.Channel
     @_callbacks[event_name] ?= []
     @_callbacks[event_name].push callback
 
+  unbind: (event_name) ->
+    delete @_callbacks[event_name]
+
+
   trigger: (event_name, message) =>
     event = new WebSocketRails.Event( [event_name, {channel: @name, data: message, token: @_token}, @_dispatcher.connection_id] )
     if !@_token
