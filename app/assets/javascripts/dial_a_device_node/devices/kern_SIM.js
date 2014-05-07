@@ -55,7 +55,9 @@
 
                 w = Math.floor((Math.random() * 100) + 1)
 
-                device_model_simulation.weight="0."+pad(w, 3)+"[0]g";
+                // device_model_simulation.weight="0."+pad(w, 3)+"[0]g";
+
+                device_model_simulation.weight="0.166[0]g";
                eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
             }     
         });
