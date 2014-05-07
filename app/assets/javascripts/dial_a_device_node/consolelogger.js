@@ -50,7 +50,7 @@ exports.init = function (eventbus) {
         console.log ("new client: " + data);
     });
 
-    localeventbus.on ("device_log", function(lm, data) {
+    localeventbus.on ("device.log", function(lm, data) {
         
         console.log (JSON.stringify(data));
     });

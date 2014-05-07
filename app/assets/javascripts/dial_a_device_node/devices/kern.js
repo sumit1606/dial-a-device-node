@@ -20,6 +20,16 @@
 
         });
 
+        eventbus.on ("device.updatemodel", function (param) {
+
+            device_model = param[0];
+
+            eventbus.emit('ui.update.display', [device_model]);
+            eventbus.emit('ui.update.autoprint', [device_model]);
+            eventbus.emit('ui.update.power', [device_model]);
+            
+        });
+
       
 
         eventbus.on ("device.set.power", function(powermode) {
@@ -108,9 +118,8 @@
 
              if (lastmessage.command.startsWith ('heartbeat')) {
                 device_model.weight = data ;
-                eventbus.emit('ui.update.display', [device_model]);
-
                 device_model.power='1';
+                eventbus.emit('ui.update.display', [device_model]);
                 eventbus.emit('ui.update.power', [device_model]);
 
                 eventbus.emit('device.snapshot', [device_model]);
@@ -119,9 +128,8 @@
 
             if (lastmessage.command.startsWith ('D')) {
                 device_model.weight = data ;
-                eventbus.emit('ui.update.display', [device_model]);
-
                 device_model.power='1';
+                eventbus.emit('ui.update.display', [device_model]);
                 eventbus.emit('ui.update.power', [device_model]);
 
                 eventbus.emit('device.snapshot', [device_model]);
