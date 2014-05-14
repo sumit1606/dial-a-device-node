@@ -36,7 +36,9 @@ Go! on Linux
 
 ## Installation on BeagleBone (Angstrom Linux)
 
-	--
+Use the dial-a-device-bb package, available here:
+
+	https://github.com/Cominch/dial-a-device-bb
 
 ## Installation as part of a Ruby on Rails project (gem)
 
