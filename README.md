@@ -3,21 +3,22 @@ dial-a-device-node
 
 This package contains a gem AND a npm package AND a standalone node.js application.
 
-## Installation in node.js
+## Installation in node.js (Ubuntu Linux)
 
 Install the latest node.js and node package manager
 
+	sudo apt-get install software-properties-common python-software-properties
 	sudo add-apt-repository ppa:chris-lea/node.js
 	sudo apt-get update
-	sudo apt-get install python-software-properties nodejs git-core curl build-essential openssl libssl-dev npm coffeescript
+	sudo apt-get install nodejs git-core curl build-essential openssl libssl-dev coffeescript
 
 Install the packages manually for development use: Download the dial-a-device-node source code and the required packages
 
 	sudo git clone https://github.com/Cominch/dial-a-device-node.git
 	cd dial-a-device-node
 	sudo npm install coffee-script
-	sudo opkg install python-compiler
 	sudo npm install serialport
+	sudo npm install websocket
 
 Go! on Linux
 
@@ -32,6 +33,10 @@ Go! on Linux
 	Run the dial-a-device-node client
 
 		nodejs start.js
+
+## Installation on BeagleBone (Angstrom Linux)
+
+	--
 
 ## Installation as part of a Ruby on Rails project (gem)
 
