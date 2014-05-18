@@ -76,7 +76,6 @@
 			websockets.trigger ("device.log", [{"metainfo": device_info, "data": data}]);
 		});
 
-
 		websockets.on_open = function(data) {
 			localeventbus.emit('webconnection.connected', [url]);
 

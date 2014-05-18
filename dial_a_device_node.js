@@ -48,6 +48,8 @@ require('./app/assets/javascripts/dial_a_device_node/websocket_rails/websocket_r
 
 require('./app/assets/javascripts/dial_a_device_node/websocket_rails/event.js.coffee');
 
+require('./app/assets/javascripts/dial_a_device_node/websocket_rails/abstract_connection.js.coffee');
+
 require('./app/assets/javascripts/dial_a_device_node/websocket_rails/http_connection.js.coffee');
 
 require('./app/assets/javascripts/dial_a_device_node/websocket_rails/websocket_connection.js.coffee');
