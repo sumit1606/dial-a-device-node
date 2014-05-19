@@ -1,6 +1,8 @@
 (function(exports) {
 
-    var b = require('bonescript');
+
+
+    // var b = require('bonescript');
 
     var device_model = {
 
@@ -49,9 +51,12 @@
             b.pinMode("USR0", b.INPUT);
 
             b.digitalRead("USR0", function(x) {
-                device_model.userled0 = x.value;
-                eventbus.emit('ui.update.userled0', [device_model]);
-                eventbus.emit('device.snapshot', [device_model]);
+
+                if !x.err {
+                    device_model.userled0 = x.value;
+                    eventbus.emit('ui.update.userled0', [device_model]);
+                    eventbus.emit('device.snapshot', [device_model]);
+                }
             });
 
             b.pinMode("USR1", b.INPUT);
