@@ -2,6 +2,7 @@
 
     var device_model = {
 
+        bbplatform: [],
         userled0: '0',
         userled1: '0',
         userled2: '0',
@@ -32,21 +33,30 @@
 
             device_model = param[0];
 
-            eventbus.emit('ui.update.userled0', [device_model]);
-            eventbus.emit('ui.update.temperature', [device_model]);
-            eventbus.emit('ui.update.exttemperature', [device_model]);
-            eventbus.emit('ui.update.vacuum', [device_model]);
+            eventbus.emit('ui.update.bbplatform', [device_model]);
+            eventbus.emit('ui.update.usrled0', [device_model]);
+            eventbus.emit('ui.update.usrled0', [device_model]);
+            eventbus.emit('ui.update.usrled0', [device_model]);
+            eventbus.emit('ui.update.usrled0', [device_model]);
+
+    
         });
 
         eventbus.on ("device.heartbeat", function () {
 
             var b = require('bonescript');
 
+            device_model.bbplatform = b.getPlatform();
+
+            eventbus.emit('ui.update.bbplatform', [device_model]);
+            eventbus.emit('device.snapshot', [device_model]);
+
+
             b.pinMode("USR0", b.INPUT);
 
             b.digitalRead("USR0", function(x) {
 
-                if (!x.err) {
+                if (x.err == null) {
                     device_model.userled0 = x.value;
                     eventbus.emit('ui.update.userled0', [device_model]);
                     eventbus.emit('device.snapshot', [device_model]);

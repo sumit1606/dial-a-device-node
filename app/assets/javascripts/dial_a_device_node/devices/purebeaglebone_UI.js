@@ -14,6 +14,10 @@
         }
 
 
+        eventbus.on ("ui.update.bbplatform", function(device_model) {   
+           console.log (device_model.bbplatform);
+        });
+
         eventbus.on ("ui.update.usrled0", function(device_model) {   
            switch (parseInt(device_model.usrled1)) {
                     case 0: $('#usrled0button').removeClass('active'); break;
