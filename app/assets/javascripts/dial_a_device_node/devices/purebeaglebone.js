@@ -44,8 +44,6 @@
 
         eventbus.on ("device.heartbeat", function () {
 
-            if 
-
             b.pinMode("USR0", b.INPUT);
 
             b.digitalRead("USR0", function(x) {
