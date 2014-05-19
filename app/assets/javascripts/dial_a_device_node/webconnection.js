@@ -119,6 +119,14 @@
 					localeventbus.emit ("device.heartbeat", []);
 				});
 
+
+				// new commands
+
+				localeventbus.on ("ui.update", function (data) {
+					channel.trigger ("ui.update", data);
+				});
+
+
 			} else {
 
 				channel.bind ("device.reply", function (lm, data) {
@@ -143,6 +151,12 @@
 
 				localeventbus.on ("device.remotecommand", function (data) {
 					channel.trigger ("device.remotecommand", data);
+				});
+
+				// new commands
+
+				localeventbus.on ("ui.command", function (data) {
+					channel.trigger ("device.command", data);
 				});
 
 			}

@@ -33,12 +33,7 @@
 
             device_model = param[0];
 
-            eventbus.emit('ui.update.bbplatform', [device_model]);
-            eventbus.emit('ui.update.usrled0', [device_model]);
-            eventbus.emit('ui.update.usrled1', [device_model]);
-            eventbus.emit('ui.update.usrled2', [device_model]);
-            eventbus.emit('ui.update.usrled3', [device_model]);
-
+            eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
     
         });
 
@@ -48,8 +43,7 @@
 
             device_model.bbplatform = b.getPlatform();
 
-            eventbus.emit('ui.update.bbplatform', [device_model]);
-            eventbus.emit('device.snapshot', [device_model]);
+            eventbus.emit('ui.update', [{"component": "bbplatform", "model": device_model}]);
 
 
             b.pinMode("USR0", b.INPUT);
@@ -58,26 +52,26 @@
 
                 if (x.err == null) {
                     device_model.userled0 = x.value;
-                    eventbus.emit('ui.update.userled0', [device_model]);
-                    eventbus.emit('device.snapshot', [device_model]);
+                    eventbus.emit('ui.update', [{"component": "userled0", "model": device_model}]);
+ 
                 }
             });
 
             b.pinMode("USR1", b.INPUT);
             b.digitalRead("USR1", function(x) {
                 if (x.err == null) {
-                device_model.userled1 = x.value;
-                eventbus.emit('ui.update.userled1', [device_model]);
-                eventbus.emit('device.snapshot', [device_model]);
+                    device_model.userled1 = x.value;
+                    eventbus.emit('ui.update', [{"component": "userled1", "model": device_model}]);
+
                 }
             });
 
             b.pinMode("USR2", b.INPUT);
             b.digitalRead("USR2", function(x) {
                 if (x.err == null) {
-                device_model.userled2 = x.value;
-                eventbus.emit('ui.update.userled2', [device_model]);
-                eventbus.emit('device.snapshot', [device_model]);
+                    device_model.userled2 = x.value;
+                    eventbus.emit('ui.update', [{"component": "userled2", "model": device_model}]);
+
                 }
             });
 
@@ -85,38 +79,24 @@
             b.digitalRead("USR3", function(x) {
                 if (x.err == null) {
                     device_model.userled3 = x.value;
-                    eventbus.emit('ui.update.userled3', [device_model]);
-                    eventbus.emit('device.snapshot', [device_model]);
+                    eventbus.emit('ui.update', [{"component": "userled3", "model": device_model}]);
+
                 }
             });
            
 
         });
 
-        eventbus.on ("device.immediatecommand", function(data) {
+        eventbus.on ("device.command", function(data) {
 
-            var b = require('bonescript');
+            if (data[0].command == "setled") {
 
-            b.pinMode(data[0].led, b.OUTPUT);
-            b.digitalWrite(led, data[0].value);
-        });
+                var b = require('bonescript');
 
-        eventbus.on ("device.set.usrled0", function(data) {
-            eventbus.emit ("device.remotecommand", [{"command": "setled", "led": "USR0", "value": data}]);
-        });
-
-        eventbus.on ("device.set.usrled1", function(data) {
-            eventbus.emit ("device.remotecommand", [{"command": "setled", "led": "USR1", "value": data}]);
-        });
-
-        eventbus.on ("device.set.usrled2", function(data) {
-            eventbus.emit ("device.remotecommand", [{"command": "setled", "led": "USR2", "value": data}]);
-        });
-
-        eventbus.on ("device.set.usrled3", function(data) {
-            eventbus.emit ("device.remotecommand", [{"command": "setled", "led": "USR3", "value": data}]);
-        });
-   
+                b.pinMode(data[0].led, b.OUTPUT);
+                b.digitalWrite(led, data[0].value);
+            }
+        }); 
 
 	   eventbus.emit ("device.initialized", []);
 

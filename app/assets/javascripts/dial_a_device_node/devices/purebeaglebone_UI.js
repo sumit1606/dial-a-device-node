@@ -14,38 +14,28 @@
         }
 
 
-        eventbus.on ("ui.update.bbplatform", function(device_model) {   
-           console.log (device_model.bbplatform.serialNumber);
-        });
+        eventbus.on ("ui.update", function(data) {   
 
-        eventbus.on ("ui.update.usrled0", function(device_model) {   
-           switch (parseInt(device_model.usrled1)) {
+            switch (parseInt(data.model.usrled0.value)) {
                     case 0: $('#usrled0button').removeClass('active'); break;
                     case 1: $('#usrled0button').addClass('active'); break;
-                }
-        });
+            }
 
-        eventbus.on ("ui.update.usrled1", function(device_model) {   
-           switch (parseInt(device_model.usrled1)) {
+            switch (parseInt(data.model.usrled1.value)) {
                     case 0: $('#usrled1button').removeClass('active'); break;
                     case 1: $('#usrled1button').addClass('active'); break;
-                }
-        });
+            }
 
-        eventbus.on ("ui.update.usrled2", function(device_model) {   
-           switch (parseInt(device_model.usrled1)) {
+            switch (parseInt(data.model.usrled2.value)) {
                     case 0: $('#usrled2button').removeClass('active'); break;
                     case 1: $('#usrled2button').addClass('active'); break;
-                }
-        });
+            }
 
-        eventbus.on ("ui.update.usrled3", function(device_model) {   
-           switch (parseInt(device_model.usrled1)) {
+            switch (parseInt(data.model.usrled3.value)) {
                     case 0: $('#usrled3button').removeClass('active'); break;
                     case 1: $('#usrled3button').addClass('active'); break;
-                }
+            }
         });
-        
 
     };
 
@@ -59,7 +49,7 @@
             data = "1";
         }
 
-        localeventbus.emit ("device.set.usrled0", [data]);
+        localeventbus.emit ("ui.command", [{"command": "setled", "led": "USR0", "value": data}]);
     };
 
     exports.toggleusrled1 = function toggleusrled1() {
@@ -72,7 +62,7 @@
             data = "1";
         }
 
-        localeventbus.emit ("device.set.usrled1", [data]);
+        localeventbus.emit ("ui.command", [{"command": "setled", "led": "USR1", "value": data}]);
     };
 
     exports.toggleusrled2 = function toggleusrled2() {
@@ -85,7 +75,7 @@
             data = "1";
         }
 
-        localeventbus.emit ("device.set.usrled2", [data]);
+        localeventbus.emit ("ui.command", [{"command": "setled", "led": "USR2", "value": data}]);
     };
 
     exports.toggleusrled3 = function toggleusrled3() {
@@ -98,7 +88,7 @@
             data = "1";
         }
 
-        localeventbus.emit ("device.set.usrled3", [data]);
+        localeventbus.emit ("ui.command", [{"command": "setled", "led": "USR3", "value": data}]);
     };
   
   
