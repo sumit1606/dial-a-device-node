@@ -102,19 +102,19 @@
         });
 
         eventbus.on ("device.set.usrled0", function(data) {
-            eventbus.emit ("device.immediatecommand", [{"command": "setled", "led": "USR0", "value": data}]);
+            eventbus.emit ("device.remotecommand", [{"command": "setled", "led": "USR0", "value": data}]);
         });
 
         eventbus.on ("device.set.usrled1", function(data) {
-            eventbus.emit ("device.immediatecommand", [{"command": "setled", "led": "USR1", "value": data}]);
+            eventbus.emit ("device.remotecommand", [{"command": "setled", "led": "USR1", "value": data}]);
         });
 
         eventbus.on ("device.set.usrled2", function(data) {
-            eventbus.emit ("device.immediatecommand", [{"command": "setled", "led": "USR2", "value": data}]);
+            eventbus.emit ("device.remotecommand", [{"command": "setled", "led": "USR2", "value": data}]);
         });
 
         eventbus.on ("device.set.usrled3", function(data) {
-            eventbus.emit ("device.immediatecommand", [{"command": "setled", "led": "USR3", "value": data}]);
+            eventbus.emit ("device.remotecommand", [{"command": "setled", "led": "USR3", "value": data}]);
         });
    
 

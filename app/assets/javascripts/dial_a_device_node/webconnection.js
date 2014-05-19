@@ -97,6 +97,10 @@
 					localeventbus.emit ("device.immediatecommand", [data]);
 				});
 
+				channel.bind ("device.remotecommand", function (data) {
+					localeventbus.emit ("device.immediatecommand", [data]);
+				});
+
 				localeventbus.on ("device.reply", function (lm, data) {
 					channel.trigger ("device.reply", lm, data);
 				});
@@ -108,6 +112,8 @@
 				localeventbus.on ("device.snapshot", function (data) {
 					channel.trigger ("device.updatemodel", data);
 				});
+
+				// device-local loop
 
 				localeventbus.on ("device.requestheartbeat", function (data) {
 					localeventbus.emit ("device.heartbeat", []);
@@ -133,6 +139,10 @@
 
 				channel.bind ("device.updatemodel", function (data) {
 					localeventbus.emit ("device.updatemodel", [data]);
+				});
+
+				localeventbus.on ("device.remotecommand", function (data) {
+					channel.trigger ("device.remotecommand", data);
 				});
 
 			}
