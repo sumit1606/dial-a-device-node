@@ -20,7 +20,7 @@
 
         setInterval (function() {
 
-            eventbus.emit ("device.requestheartbeat", []);
+            // eventbus.emit ("device.requestheartbeat", []);
 
         }, 1000);
 
