@@ -15,7 +15,7 @@
 
 
         eventbus.on ("ui.update.bbplatform", function(device_model) {   
-           console.log (device_model.bbplatform);
+           console.log (device_model.bbplatform.serialNumber);
         });
 
         eventbus.on ("ui.update.usrled0", function(device_model) {   
