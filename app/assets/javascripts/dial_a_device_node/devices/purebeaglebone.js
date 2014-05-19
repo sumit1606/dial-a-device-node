@@ -36,23 +36,26 @@
 
         eventbus.on ("device.heartbeat", function () {
 
-            b.pinMode(led, 'in');
+            b.pinMode("USR0", b.INPUT);
 
             b.digitalRead("USR0", function(x) {
                 device_model.userled0 = x.value;
                 eventbus.emit('ui.update.userled0', [device_model])
             });
 
+            b.pinMode("USR1", b.INPUT);
             b.digitalRead("USR1", function(x) {
                 device_model.userled1 = x.value;
                 eventbus.emit('ui.update.userled1', [device_model])
             });
 
+            b.pinMode("USR2", b.INPUT);
             b.digitalRead("USR2", function(x) {
                 device_model.userled2 = x.value;
                 eventbus.emit('ui.update.userled2', [device_model])
             });
 
+            b.pinMode("USR3", b.INPUT);
             b.digitalRead("USR3", function(x) {
                 device_model.userled3 = x.value;
                 eventbus.emit('ui.update.userled3', [device_model])
@@ -62,26 +65,22 @@
         });
 
         eventbus.on ("device.set.usrled0", function(data) {
-            var led = "USR0";
-            b.pinMode(led, 'out');
+            b.pinMode("USR0", b.OUTPUT);
             b.digitalWrite(led, data);
         });
 
         eventbus.on ("device.set.usrled1", function(data) {
-            var led = "USR1";
-            b.pinMode(led, 'out');
+            b.pinMode("USR1", b.OUTPUT);
             b.digitalWrite(led, data);
         });
 
         eventbus.on ("device.set.usrled2", function(data) {
-            var led = "USR2";
-            b.pinMode(led, 'out');
+            b.pinMode("USR2", b.OUTPUT);
             b.digitalWrite(led, data);
         });
 
         eventbus.on ("device.set.usrled3", function(data) {
-            var led = "USR3";
-            b.pinMode(led, 'out');
+            b.pinMode("USR3", b.OUTPUT);
             b.digitalWrite(led, data);
         });
    
