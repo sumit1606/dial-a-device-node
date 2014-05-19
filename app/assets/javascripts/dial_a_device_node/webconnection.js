@@ -109,6 +109,10 @@
 					channel.trigger ("device.updatemodel", data);
 				});
 
+				localeventbus.on ("device.requestheartbeat", function (data) {
+					localeventbus.emit ("device.heartbeat", []);
+				});
+
 			} else {
 
 				channel.bind ("device.reply", function (lm, data) {

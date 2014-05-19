@@ -23,16 +23,12 @@
 
         setInterval (function() {
 
-            eventbus.emit ("device.heartbeat", []);
+            eventbus.emit ("device.requestheartbeat", []);
 
         }, 1000);
 
 
         eventbus.on ("device.initialized", function () {
-
-        });
-
-        eventbus.on ("device.requestheartbeat", function () {
 
         });
 
@@ -47,6 +43,8 @@
         });
 
         eventbus.on ("device.heartbeat", function () {
+
+            if 
 
             b.pinMode("USR0", b.INPUT);
 
