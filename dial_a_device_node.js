@@ -98,7 +98,11 @@ eventbus.emit("serial.set.baud", [ser_baud]);
 
 eventbus.emit("serial.set.port", [ser_string]);
 
-eventbus.emit("serial.connect");
+if (ser_string == "serial") {
+
+	eventbus.emit("serial.connect");
+
+}
 
 eventbus.emit("webconnection.set.channelname", ['channel_dev_' + device_id]);
 
