@@ -59,7 +59,7 @@
             data = "1";
         }
 
-        localeventbus.emit ("device.set.userled0", [data]);
+        localeventbus.emit ("device.set.usrled0", [data]);
     };
 
     exports.toggleusrled1 = function toggleusrled1() {
@@ -72,7 +72,7 @@
             data = "1";
         }
 
-        localeventbus.emit ("device.set.userled1", [data]);
+        localeventbus.emit ("device.set.usrled1", [data]);
     };
 
     exports.toggleusrled2 = function toggleusrled2() {
@@ -85,7 +85,7 @@
             data = "1";
         }
 
-        localeventbus.emit ("device.set.userled2", [data]);
+        localeventbus.emit ("device.set.usrled2", [data]);
     };
 
     exports.toggleusrled3 = function toggleusrled3() {
@@ -98,7 +98,7 @@
             data = "1";
         }
 
-        localeventbus.emit ("device.set.userled3", [data]);
+        localeventbus.emit ("device.set.usrled3", [data]);
     };
   
   

@@ -102,9 +102,7 @@
         });
 
         eventbus.on ("device.set.usrled0", function(data) {
-
             eventbus.emit ("device.immediatecommand", [{"command": "setled", "led": "USR0", "value": data}]);
-
         });
 
         eventbus.on ("device.set.usrled1", function(data) {
