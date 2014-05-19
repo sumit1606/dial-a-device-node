@@ -1,7 +1,5 @@
 (function(exports) {
 
-    var b = require('bonescript');
-
     var device_model = {
 
         userled0: '0',
@@ -42,6 +40,8 @@
 
         eventbus.on ("device.heartbeat", function () {
 
+            var b = require('bonescript');
+
             b.pinMode("USR0", b.INPUT);
 
             b.digitalRead("USR0", function(x) {
@@ -78,6 +78,8 @@
         });
 
         eventbus.on ("device.immediatecommand", function(data) {
+
+            var b = require('bonescript');
 
             b.pinMode(data[0].led, b.OUTPUT);
             b.digitalWrite(led, data[0].value);
