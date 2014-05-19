@@ -1,8 +1,6 @@
 (function(exports) {
 
-
-
-    // var b = require('bonescript');
+    var b = require('bonescript');
 
     var device_model = {
 
