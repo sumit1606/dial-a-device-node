@@ -52,7 +52,7 @@
 
             b.digitalRead("USR0", function(x) {
 
-                if !x.err {
+                if (!x.err) {
                     device_model.userled0 = x.value;
                     eventbus.emit('ui.update.userled0', [device_model]);
                     eventbus.emit('device.snapshot', [device_model]);
