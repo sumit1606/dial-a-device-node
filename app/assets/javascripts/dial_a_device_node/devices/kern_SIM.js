@@ -61,7 +61,7 @@
         });
 
 
-          eventbus.on ("device.immediatecommand", function(params) {
+          eventbus.on ("device.immediatecommand", function (data) {
 
             (typeof data.command == 'string'? data = data : data = data[0]);
 
