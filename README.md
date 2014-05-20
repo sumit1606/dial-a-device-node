@@ -19,6 +19,7 @@ Install the packages manually for development use: Download the dial-a-device-no
 	sudo npm install coffee-script
 	sudo npm install serialport
 	sudo npm install websocket
+	sudo npm install bonescript
 
 Go! on Linux
 
