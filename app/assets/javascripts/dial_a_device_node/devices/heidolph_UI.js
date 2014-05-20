@@ -1,21 +1,15 @@
 (function(exports) {
 
     exports.init = function (eventbus) {
- 
-        eventbus.on ("ui.update.rotation", function(device_model) {
-            g1.refresh(device_model.rotation);
-        });
 
-        eventbus.on ("ui.update.temperature", function(device_model) {
-            g2.refresh(device_model.temperature);
-        });
+        eventbus.on ("ui.update", function(data) {   
 
-        eventbus.on ("ui.update.exttemperature", function(device_model) {
-            g3.refresh(device_model.exttemperature);
-        });
+            g1.refresh(data.model.rotation);
+            g2.refresh(data.model.temperature);
+            g3.refresh(data.model.exttemperature);
+            g4.refresh(data.model.vacuum);
 
-        eventbus.on ("ui.update.vacuum", function(device_model) {
-            g4.refresh(device_model.vacuum);
+            
         });
 
     };

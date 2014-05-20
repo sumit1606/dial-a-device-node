@@ -33,14 +33,11 @@
 
             device_model = param[0];
 
-            eventbus.emit('ui.update.rotation', [device_model]);
-            eventbus.emit('ui.update.temperature', [device_model]);
-            eventbus.emit('ui.update.exttemperature', [device_model]);
-            eventbus.emit('ui.update.vacuum', [device_model]);
+            eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
         });
+        
 
         eventbus.on ("device.reply", function(params, data) {
-
 
             if (typeof params.command == 'string') {
                 lastmessage = params;
@@ -51,6 +48,9 @@
             }
 
              if (lastmessage.command.startsWith ('heartbeat')) {
+
+                eventbus.emit('device.assumeconnected', []);
+
                 var re = data.split(';');
 
                 if (re.length == 4) {
@@ -60,10 +60,7 @@
                     device_model.exttemperature = re[2].trim();
                     device_model.vacuum = re[3].trim();
 
-                    eventbus.emit('ui.update.rotation', [device_model]);
-                    eventbus.emit('ui.update.temperature', [device_model]);
-                    eventbus.emit('ui.update.exttemperature', [device_model]);
-                    eventbus.emit('ui.update.vacuum', [device_model]);
+                    eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
             
                     eventbus.emit('device.snapshot', [device_model]);
                 }

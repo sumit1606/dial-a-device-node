@@ -45,10 +45,29 @@ exports.init = function (eventbus) {
         console.log ("subscribed to "+channelname);
     });
 
-    localeventbus.on ("channel.client_connected", function(data) {
+
+
+    localeventbus.on ("channel.ui_connected", function(data) {
         
-        console.log ("new client: " + data);
+        console.log ("new ui conection: " + JSON.stringify(data));
     });
+
+    localeventbus.on ("channel.ui_disconnected", function(data) {
+        
+        console.log ("ui disconection: " + JSON.stringify(data));
+    });
+
+    localeventbus.on ("channel.dev_connected", function(data) {
+        
+        console.log ("new dev conection: " + JSON.stringify(data));
+    });
+
+    localeventbus.on ("channel.dev_disconnected", function(data) {
+        
+        console.log ("dev disconection: " + JSON.stringify(data));
+    });
+
+
 
     localeventbus.on ("device.log", function(lm, data) {
         
@@ -78,6 +97,24 @@ exports.init = function (eventbus) {
         console.log ("device reply: " + JSON.stringify(message));
 
     });
+
+    localeventbus.on ("ui.update", function (message) {
+
+        console.log ("ui update: " + JSON.stringify(message));
+
+    });
+
+    localeventbus.on ("ui.command", function (message) {
+
+        console.log ("ui command: " + JSON.stringify(message));
+
+    });
+
+    localeventbus.on ("status.incoming", function (message) {
+        
+        console.log ("status incoming  " + JSON.stringify(message));
+    });
+
 
     localeventbus.emit ("consolelogger.initialized", []);
 };

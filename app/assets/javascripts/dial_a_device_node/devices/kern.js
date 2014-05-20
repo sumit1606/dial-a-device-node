@@ -2,7 +2,7 @@
 
     var device_model = {
 
-        weight:'0',
+        weight:'0.000[0]g',
         autoprint :'0',
         power:'1'
 
@@ -24,86 +24,77 @@
 
             device_model = param[0];
 
-            eventbus.emit('ui.update.display', [device_model]);
-            eventbus.emit('ui.update.autoprint', [device_model]);
-            eventbus.emit('ui.update.power', [device_model]);
+            eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
             
         });
 
-      
+        eventbus.on ("device.command", function(data) {
 
-        eventbus.on ("device.set.power", function(powermode) {
+            (typeof data.command == 'string'? data = data : data = data[0]);
 
-            if (typeof powermode == 'string') {
-                msg = powermode;
-            }
-            else {
-                msg = powermode[0];
-            }
-
-
-            if(msg=="1") {
+            if (data.command == "power") {
 
                 eventbus.emit ("device.immediatecommand", [{"command": "Q"}]);
 
-                device_model.power='1';
-                eventbus.emit('ui.update.power', [device_model]);
-                eventbus.emit('device.snapshot', [device_model]);
+                device_model.power = '' + data.value;
 
-            } else {
-
-                eventbus.emit ("device.immediatecommand", [{"command": "Q"}]); 
-                device_model.power='0';
-                eventbus.emit('ui.update.power', [device_model]);
-
-                eventbus.emit('device.snapshot', [device_model]);
+                eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
 
             }
 
-        });
+            if (data.command == "calibration") {
 
-        eventbus.on ("device.set.calibration", function() {
-            eventbus.emit ("device.immediatecommand", [{"command": "CAL"}]);  
+                eventbus.emit ("device.immediatecommand", [{"command": "CAL"}]);
+
+                eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+
+            }
+
+            if (data.command == "tare") {
+
+                eventbus.emit ("device.immediatecommand", [{"command": "T"}]);
+
+                eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+
+            }
+
+            if (data.command == "print") {
+
+                eventbus.emit ("device.command", [{"command": "D05"}]);
+
+            }
+
+            if (data.command == "autoprint") {
+
+                if(data.value == "1") {
             
-        });
-       
-         eventbus.on ("device.set.tare", function() {
-            eventbus.emit ("device.immediatecommand", [{"command": "T"}]);
-               
-        });
-        
-        
-        eventbus.on ("device.set.print", function() {
-            eventbus.emit ("device.command", [{"command": "D05"}]);
-          
-        });
-        
-        eventbus.on ("device.set.autoprint", function(data) {
-          if (typeof data == 'string') {
-                msg = data;
-            }
-            else {
-                msg = data[0];
-            }
-          if(msg=="1") {
-            
-            eventbus.emit ("device.immediatecommand", [{"command": "D06"}]);
-            device_model.autoprint='1';
-            eventbus.emit('ui.update.autoprint', [device_model]);
-            } 
-          else{ 
-                eventbus.emit ("device.immediatecommand", [{"command": "D09"}]); 
-                device_model.autoprint='0';
-                eventbus.emit('ui.update.autoprint', [device_model]);
-               
-             }
+                    eventbus.emit ("device.immediatecommand", [{"command": "D06"}]);
 
-         });
-        
-         eventbus.on ("device.set.reset", function() {
-            eventbus.emit ("device.immediatecommand", [{"command": "R"}]);
-   
-        });
+                    device_model.autoprint='1';
+
+                    eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+                } 
+                else {  
+                    eventbus.emit ("device.immediatecommand", [{"command": "D09"}]); 
+
+                    device_model.autoprint='0';
+
+                    eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+                   
+                 }
+
+            }
+
+            if (data.command == "reset") {
+
+                eventbus.emit ("device.immediatecommand", [{"command": "R"}]);
+
+            }
+
+
+
+        });        
+
 
         eventbus.on ("device.reply", function(params, data) {
 
@@ -116,11 +107,13 @@
                 data = params[1];
             }
 
+            eventbus.emit('device.assumeconnected', []);
+
              if (lastmessage.command.startsWith ('heartbeat')) {
                 device_model.weight = data ;
                 device_model.power='1';
-                eventbus.emit('ui.update.display', [device_model]);
-                eventbus.emit('ui.update.power', [device_model]);
+
+                eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
 
                 eventbus.emit('device.snapshot', [device_model]);
              }
@@ -129,8 +122,8 @@
             if (lastmessage.command.startsWith ('D')) {
                 device_model.weight = data ;
                 device_model.power='1';
-                eventbus.emit('ui.update.display', [device_model]);
-                eventbus.emit('ui.update.power', [device_model]);
+
+                eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
 
                 eventbus.emit('device.snapshot', [device_model]);
              }

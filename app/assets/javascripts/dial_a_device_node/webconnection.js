@@ -8,6 +8,8 @@
 
 	var deviceendpoint = false;
 
+	var simulation = false;
+
 	var device_info = {
 
 		deviceid: "", 
@@ -32,6 +34,12 @@
     	localeventbus.emit ("initialized", []);
 
     	localeventbus.emit ("status.deviceendpoint", [deviceendpoint]);
+
+    	localeventbus.on ("serial.simulation", function () {
+        
+	        simulation = true;
+	        
+	    });
 
     	localeventbus.on ("device.announce.deviceid", function (data) {
     		(typeof data == 'object'? device_info.deviceid = data[0] : device_info.deviceid = data);
@@ -82,10 +90,19 @@
 			localeventbus.emit('channel.subscribing', [channelname]);
 
     		channel = websockets.subscribe (channelname);
-	
-			channel.bind ('client_connected', function (data) {
-			   localeventbus.emit ("channel.client_connected", [data]);
-			});
+
+    		if (simulation) {
+
+    			// create a local loop for ui updates
+
+    			localeventbus.on ("ui.command", function (data) {
+
+    				localeventbus.emit ("device.command", [data]);
+					
+				});
+
+    		}
+
 
 			if (deviceendpoint) {
 
@@ -105,7 +122,7 @@
 					channel.trigger ("device.reply", lm, data);
 				});
 
-				localeventbus.on ("ui.update.status", function (data) {
+				localeventbus.on ("ui.status", function (data) {
 					channel.trigger ("device.status", data);
 				});
 
@@ -124,6 +141,14 @@
 
 				localeventbus.on ("ui.update", function (data) {
 					channel.trigger ("ui.update", data);
+				});
+
+				channel.bind ('subscriber_join', function (data) {
+				   localeventbus.emit ("channel.ui_connected", [data]);
+				});
+
+				channel.bind ('subscriber_part', function (data) {
+				   localeventbus.emit ("channel.ui_disconnected", [data]);
 				});
 
 
@@ -155,8 +180,24 @@
 
 				// new commands
 
+				channel.bind ("ui.update", function (data) {
+					localeventbus.emit ("ui.update", data);
+				});
+
+				channel.bind ("ui.status", function (data) {
+					localeventbus.emit ("status.incoming", data);
+				});
+
 				localeventbus.on ("ui.command", function (data) {
 					channel.trigger ("device.command", data);
+				});
+
+				channel.bind ('subscriber_join', function (data) {
+				   localeventbus.emit ("channel.dev_connected", [data]);
+				});
+
+				channel.bind ('subscriber_part', function (data) {
+				   localeventbus.emit ("channel.dev_disconnected", [data]);
 				});
 
 			}

@@ -16,22 +16,22 @@
 
         eventbus.on ("ui.update", function(data) {   
 
-            switch (parseInt(data.model.usrled0.value)) {
+            switch (parseInt(data.model.usrled0)) {
                     case 0: $('#usrled0button').removeClass('active'); break;
                     case 1: $('#usrled0button').addClass('active'); break;
             }
 
-            switch (parseInt(data.model.usrled1.value)) {
+            switch (parseInt(data.model.usrled1)) {
                     case 0: $('#usrled1button').removeClass('active'); break;
                     case 1: $('#usrled1button').addClass('active'); break;
             }
 
-            switch (parseInt(data.model.usrled2.value)) {
+            switch (parseInt(data.model.usrled2)) {
                     case 0: $('#usrled2button').removeClass('active'); break;
                     case 1: $('#usrled2button').addClass('active'); break;
             }
 
-            switch (parseInt(data.model.usrled3.value)) {
+            switch (parseInt(data.model.usrled3)) {
                     case 0: $('#usrled3button').removeClass('active'); break;
                     case 1: $('#usrled3button').addClass('active'); break;
             }
@@ -50,6 +50,7 @@
         }
 
         localeventbus.emit ("ui.command", [{"command": "setled", "led": "USR0", "value": data}]);
+
     };
 
     exports.toggleusrled1 = function toggleusrled1() {

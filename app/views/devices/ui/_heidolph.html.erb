@@ -1,0 +1,54 @@
+
+<div class="row-fluid clearfix" style="height: 160px;">
+
+             <div id="gauge1" class="span3 200x160px"></div>
+
+
+             <div id="gauge2" class="span3 200x160px"></div>
+
+
+            <div id="gauge3" class="span3 200x160px"></div>
+
+             <div id="gauge4" class="span3 200x160px"></div>
+
+</div>
+
+
+<script>
+ var g1 = new JustGage({
+    id: "gauge1", 
+    value: 0, 
+    min: 10,
+    max: 280,
+    title: "Rotation",
+    label: "rpm"
+  }); 
+
+  var g2 = new JustGage({
+    id: "gauge2", 
+    value: 0, 
+    min: 20,
+    max: 210,
+    title: "HB - temperature",
+    label: "°C"
+  }); 
+
+  var g3 = new JustGage({
+    id: "gauge3", 
+    value: 0, 
+    min: 5,
+    max: 40,
+    title: "Ext. Sensor-Temperature",
+    label: "°C"
+  }); 
+
+  var g4 = new JustGage({
+    id: "gauge4", 
+    value: 0, 
+    min: 0,
+    max: 1200,
+    title: "Vacuum",
+    label: "mbar"
+  }); 
+</script>
+

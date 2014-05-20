@@ -7,7 +7,7 @@ ser_string = '/dev/ttyACM0';
 ser_baud = 115200;
 device_id = 0;
 url_string = 'http://localhost:3000/websocket';
-device_type = 'knf-sc920';
+device_type = 'purebeaglebone';
 unique_id = '';
 simulate = false;
 

@@ -14,14 +14,11 @@
         }
 
 
-        eventbus.on ("ui.update.display", function(device_model) {   
-           document.getElementById ("iDisplay").innerHTML = device_model.weight;
-        });
-        
-//autoprint state is changing to active or not
-        eventbus.on ("ui.update.autoprint", function (device_model) {
+        eventbus.on ("ui.update", function(data) {
 
-            switch (parseInt(device_model.autoprint)) {
+            document.getElementById ("iDisplay").innerHTML = data.model.weight;
+
+            switch (parseInt(data.model.autoprint)) {
                    case 0:$('#autoprinticon').removeClass('icon-stop');
                     $('#autoprinticon').addClass('icon-play');
                    $('#autoprintbutton').removeClass('active');
@@ -31,34 +28,30 @@
                     $('#autoprinticon').addClass('icon-stop');
                      $('#autoprintbutton').addClass('active');
                      break;
-                }
-        });
+            }
 
-// powerbutton state is changing to active or not 
-        eventbus.on ("ui.update.power", function (device_model) {
+        
 
-            console.log ("switched " + device_model.power);
-
-            switch (parseInt(device_model.power)) {
+            switch (parseInt(data.model.power)) {
 
                    case 0:$('#powericon').removeClass('icon-stop');
-                           $('#powericon').addClass('icon-play');
-                        $('#powerbutton').removeClass('active');
+                          $('#powericon').addClass('icon-play');
+                          $('#powerbutton').removeClass('active');
                           break;
                     case 1: 
-                 $('#powericon').removeClass('icon-play');
-                    $('#powericon').addClass('icon-stop');
-                    $('#powerbutton').addClass('active');
+                            $('#powericon').removeClass('icon-play');
+                            $('#powericon').addClass('icon-stop');
+                            $('#powerbutton').addClass('active');
                    break;
                 }
+
         });
-
-
-
+        
     };
+
 // code for the calibaration thing i.e the calibration function is called    
    exports.calibration = function calibration(){
-        localeventbus.emit ("device.set.calibration")
+        localeventbus.emit ("ui.command", [{"command": "calibration"}]);
     };
 
 // code for changing the power status either on/off
@@ -72,22 +65,26 @@
             data = "1";
         }
 
-        localeventbus.emit ("device.set.power", [data]);
+        localeventbus.emit ("ui.command", [{"command": "power", "value": data}]);
+        
     };
   
 // code for changing to the tare button i.e tare function is called
        exports.tare = function tare(){
-        localeventbus.emit ("device.set.tare");
+        localeventbus.emit ("ui.command", [{"command": "tare"}]);
+        
     };
 
 //   code for changing to the print function i.e print function is called
        exports.print = function print(){
-         localeventbus.emit ("device.set.print");
+         
+         localeventbus.emit ("ui.command", [{"command": "print"}]);
     };
     
 //   code for changing to the reset function i.e reset function is called    
     exports.reset = function reset(){
-        localeventbus.emit ("device.set.reset");
+        localeventbus.emit ("ui.command", [{"command": "reset"}]);
+        
     };
 
 //   code for changing to the autoprint function i.e autoprint function is called 
@@ -99,7 +96,9 @@
         } else {
             data = "1";
           }
-         localeventbus.emit ("device.set.autoprint", [data]);
+
+          localeventbus.emit ("ui.command", [{"command": "autoprint", "value": data}]);
+         
     };
   
 

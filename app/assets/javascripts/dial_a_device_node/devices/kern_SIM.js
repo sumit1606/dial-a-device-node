@@ -2,7 +2,7 @@
 
 	var device_model_simulation = {
 
-        weight:"10",
+        weight:"0.166[0]g",
         autoprint: "0",
         power: "1"
 
@@ -43,54 +43,52 @@
         }
   
           
-        eventbus.on ("device.command", function(params) {
+        eventbus.on ("device.command", function (data) {
 
-            var data = "1";
+            (typeof data.command == 'string'? data = data : data = data[0]);
 
-            (typeof params.command == 'string'? message = params : message = params[0]);
-
-            console.log (message);
-
-            if (message.command.startsWith ('D05')) {
+            if (data.command.startsWith ('D05')) {
 
                 w = Math.floor((Math.random() * 100) + 1)
 
                 // device_model_simulation.weight="0."+pad(w, 3)+"[0]g";
 
-                device_model_simulation.weight="0.166[0]g";
+                device_model_simulation.weight = "0.166[0]g";
+
                eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
-            }     
+            }
+
         });
 
 
           eventbus.on ("device.immediatecommand", function(params) {
 
-            var data = "1";
+            (typeof data.command == 'string'? data = data : data = data[0]);
 
-            (typeof params.command == 'string'? message = params : message = params[0]);
 
-            console.log (message);
+            if (data.command.startsWith ('T')) {
 
-            if (message.command.startsWith ('T')) {
-                data = device_model_simulation.weight ;
-                device_model_simulation.weight="0";
+                device_model_simulation.weight="0.000[0]g";
+
                eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
             }
             
-             if (message.command.startsWith ('R')) {
-                data = device_model_simulation.weight ;
-                device_model_simulation.weight="0";
+            if (data.command.startsWith ('R')) {
+
+                device_model_simulation.weight="0.000[0]g";
+
                eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
             }
 
         
-            if (message.command.startsWith ('C')) {
-                data = device_model_simulation.weight ;
-                device_model_simulation.weight="0";
+            if (data.command.startsWith ('C')) {
+
+                device_model_simulation.weight="0.000[0]g";
+
                eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
             }
              
-            if (message.command.startsWith ('D06')) {
+            if (data.command.startsWith ('D06')) {
 
                 if (device_model_simulation.power == "1") {
 
@@ -100,7 +98,7 @@
             }
              
               
-            if (message.command.startsWith ('D09')) {
+            if (data.command.startsWith ('D09')) {
 
                 if (device_model_simulation.power == "1") {
 
@@ -108,7 +106,7 @@
                 }
             }
                 
-              if (message.command.startsWith ('Q')) {
+              if (data.command.startsWith ('Q')) {
                 if(device_model_simulation.power=="1"){
                     device_model_simulation.power="0";
                 }
@@ -118,11 +116,6 @@
             }
         });
     
-    
-
-
-    
-
 	
     };
 

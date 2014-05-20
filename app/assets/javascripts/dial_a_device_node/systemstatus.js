@@ -28,6 +28,8 @@ exports.init = function (eventbus) {
 
     localeventbus.on ("status.incoming", function(data) {
 
+        console.log("status incoming");
+
         if (typeof data.webchannel == 'string') {
             status_model_device = data;
         }
@@ -39,25 +41,32 @@ exports.init = function (eventbus) {
         status_model.deviceconnection = status_model_device.deviceconnection;
         status_model.devicesimulation = status_model_device.devicesimulation;
 
-        localeventbus.emit ("ui.update.status", [status_model]);
+        localeventbus.emit ("ui.status", [status_model]);
     });
 
     localeventbus.on ("serial.portopened", function() {
         
         status_model.deviceconnection = true;
-        localeventbus.emit ("ui.update.status", [status_model]);
+        localeventbus.emit ("ui.status", [status_model]);
+    });
+
+    localeventbus.on ("device.assumeconnected", function() {
+        
+        status_model.deviceconnection = true;
+        localeventbus.emit ("ui.status", [status_model]);
     });
 
     localeventbus.on ("serial.simulation", function() {
         
         status_model.devicesimulation = true;
-        localeventbus.emit ("ui.update.status", [status_model]);
+        
+        localeventbus.emit ("ui.status", [status_model]);
     });
 
     localeventbus.on ("serial.openfailed", function() {
         
         status_model.deviceconnection = false;
-        localeventbus.emit ("ui.update.status", [status_model]);
+        localeventbus.emit ("ui.status", [status_model]);
 
         setTimeout (function() {
             localeventbus.emit ("serial.connect");
@@ -74,7 +83,7 @@ exports.init = function (eventbus) {
         status_model.webconnection = true;
     }
         status_model.webchannel = "";
-        localeventbus.emit ("ui.update.status", [status_model]);
+        localeventbus.emit ("ui.status", [status_model]);
     });
 
     localeventbus.on ("webconnection.closed", function() {
@@ -85,7 +94,7 @@ exports.init = function (eventbus) {
         status_model.webconnection = false;
     }
         status_model.webchannel = "";
-        localeventbus.emit ("ui.update.status", [status_model]);
+        localeventbus.emit ("ui.status", [status_model]);
 
         setTimeout (function() {
             localeventbus.emit ("webconnection.connect");
@@ -101,9 +110,27 @@ exports.init = function (eventbus) {
             status_model.webchannel = channelname[0];
         }
 
-        localeventbus.emit ("ui.update.status", [status_model]);
+        if (deviceendpoint) {
+            status_model.devicewebconnection = true;
+        } else {
+            status_model.webconnection = true;
+        }
+
+        localeventbus.emit ("ui.status", [status_model]);
     });
-   
+
+    localeventbus.on ("channel.dev_disconnected", function() {
+
+        if (deviceendpoint) {
+            status_model.devicewebconnection = false;
+            status_model.deviceconnection = false;
+        } else {
+            status_model.devicewebconnection = false;
+            status_model.deviceconnection = false;
+        }
+
+        localeventbus.emit ("ui.status", [status_model]);
+    });
 
     localeventbus.emit ("status.initialized", []);
 };
