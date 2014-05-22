@@ -15,11 +15,12 @@ Install the latest node.js and node package manager
 Install the packages manually for development use: Download the dial-a-device-node source code and the required packages
 
 	sudo git clone https://github.com/Cominch/dial-a-device-node.git
-	cd dial-a-device-node
-	sudo npm install coffee-script
-	sudo npm install serialport
-	sudo npm install websocket
-	sudo npm install bonescript
+	
+	sudo npm install -g coffee-script
+	sudo npm install -g serialport
+	sudo npm install -g websocket
+	sudo npm install -g bonescript
+	sudo npm install -g getmac
 
 Go! on Linux
 
@@ -33,13 +34,40 @@ Go! on Linux
 
 	Run the dial-a-device-node client
 
-		nodejs start.js
+		node start.js
 
-## Installation on BeagleBone (Angstrom Linux)
+## Installation on BeagleBone (Angstrom Linux) for development
 
-Use the dial-a-device-bb package, available here:
+Install required OS packages
 
-	https://github.com/Cominch/dial-a-device-bb
+	opkg update
+	opkg install python-compiler
+	opkg install python-misc
+	opkg install python-multiprocessing
+
+Install the npm package
+	
+	npm update
+	npm install -g coffee-script
+	npm install -g serialport
+	npm install -g websocket
+	npm install -g bonescript
+	npm install -g getmac
+
+	cd /var/lib/cloud9
+
+	env GIT_SSL_NO_VERIFY=true git clone https://github.com/Cominch/dial-a-device-node
+
+	cd /var/lib/cloud9/dial-a-device-node
+
+	npm install
+
+	node start.js
+
+You can access and modify the source code via the cloud9 editor on your BeagleBone:
+
+	http://192.168.7.2:3000
+
 
 ## Installation as part of a Ruby on Rails project (gem)
 

@@ -2,11 +2,20 @@
 
 var consolelogger, simulate, device, device_id, device_library, device_type, deviceconnection, ev, eventbus, heartbeat, http, ser_baud, ser_string, simulation, status, unique_id, url_string, util, webconnection;
 
+var serialnumber, ipaddress, server;
+
+var bbinfo;
+
+var updateBB_loop = false;
+
 // default parameters
-ser_string = '/dev/ttyACM0';
+ser_string = '/dev/ttyUSB0';
+
 ser_baud = 115200;
 device_id = 0;
-url_string = 'http://localhost:3000/websocket';
+
+url_string = 'http://192.168.7.1:3000/websocket';
+
 device_type = 'purebeaglebone';
 unique_id = '';
 simulate = false;
@@ -37,6 +46,144 @@ exports.set_unique_id = function (param) {
 
 exports.set_ser_baud = function (param) {
 	ser_baud = param;
+};
+
+
+function getBBInfo(interval, action) {
+
+	if (typeof interval === "undefined") {interval = 1000}
+
+	if (typeof action === "undefined") {action = "start"}
+
+
+	var intervalIDcheck = setInterval (function() {
+
+		if (bbinfo) {
+			clearInterval(intervalIDcheck);
+
+			bbinfo.ipaddress = ipaddress;
+
+			if (bbinfo.id) {
+
+				if (action == "start") {
+
+					run_dial_a_device();
+
+				} else if (action == "heartbeat") {
+
+					getBBInfo(10000, "heartbeat");
+
+				}
+
+			} else {
+
+				console.log ("beaglebone not registered");
+				
+				getBBInfo(5000);
+			}
+		} else {
+
+			var dialadeviceweb = require ('./dial-a-device-web.js');
+
+			dialadeviceweb.getBBInfo(server, ipaddress, serialnumber, function (message) {
+				
+				console.log ("beaglebone registration response");
+				console.log (message);
+
+				bbinfo = message;
+
+			}, function (message) {
+				clearInterval(intervalIDcheck);
+				console.log ("beaglebone registration failed ("+message+")");
+
+				bbinfo = undefined;
+
+				getBBInfo(5000, "start");
+
+			});
+
+
+		}
+
+	}, interval);
+
+}
+
+
+exports.run_beaglebone = function(host) {
+
+	server = host;
+
+	console.log ("connecting to "+host);
+
+	var beaglebonechip = require ('./beaglebonechip.js');
+
+	beaglebonechip.getSerialNumber(function(ser) {
+
+		console.log ("serialnumber " +ser);
+
+		serialnumber = ser;
+
+		beaglebonechip.getIPAddress(function(ip) {
+
+			ipaddress = ip;
+
+			getBBInfo(5000, "start");
+
+		});
+
+	});
+
+
+};
+
+exports.run_dial_a_device = function() {
+
+	updateBB_loop = false;
+	
+	console.log ('beaglebone:');
+	console.log (bbinfo);
+
+	if (!bbinfo.device) {
+
+		console.log ("no device registered for this beaglebone");
+
+		getBBInfo(5000);
+
+
+	} else {
+
+
+		// successfully connected
+
+		var dialadevicenode = require ('dial-a-device-node');
+
+		dialadevicenode.set_ser_string (bbinfo.device.portname);
+
+		dialadevicenode.set_ser_baud (parseInt(bbinfo.device.portbaud));
+
+		dialadevicenode.set_device_id (bbinfo.device.id);
+
+		dialadevicenode.set_url_string (server+'/websocket');
+
+		dialadevicenode.set_device_type (bbinfo.devicetype.name);
+
+		dialadevicenode.set_unique_id (serialnumber);
+
+		dialadevicenode.set_simulate (false);
+
+		dialadevicenode.run();
+
+		updateBB_loop = true;
+
+	}
+
+	if (updateBB_loop) {
+
+		getBBInfo(10000, "heartbeat");		
+	
+	}
+
 };
 
 
