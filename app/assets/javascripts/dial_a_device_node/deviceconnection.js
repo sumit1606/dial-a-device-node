@@ -48,6 +48,11 @@ exports.init = function (eventbus) {
 				serialport.write  (msg[0].command+String.fromCharCode(13), function (err, results) {});
   			});
 
+  			localeventbus.on ("serial.send", function (msg) {
+
+				serialport.write  (msg[0].command+String.fromCharCode(13), function (err, results) {});
+  			});
+
 			localeventbus.on ("serial.writenext", function () {
 				setTimeout (function() {
 
@@ -71,6 +76,13 @@ exports.init = function (eventbus) {
 	
 	localeventbus.on ("serial.incoming", function (data) {
 
+		var output = data[0];
+			if (output.substring(0,1) == "\n") {
+				output = output.substring (1);
+			}
+
+		localeventbus.emit ("serial.retrieve", [output]);
+
 		if (waiting) {
 
 			localeventbus.emit ("device.reply", [currentmessage, data]);
@@ -82,6 +94,7 @@ exports.init = function (eventbus) {
 				output = output.substring (1);
 			}
 			localeventbus.emit ("device.reply", [{"command": "heartbeat"}, output]);
+
 		}
 	});
 
