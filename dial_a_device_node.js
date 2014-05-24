@@ -14,7 +14,7 @@ ser_string = '/dev/ttyUSB0';
 ser_baud = 115200;
 device_id = 0;
 
-url_string = 'http://192.168.7.1:3000/websocket';
+url_string = '192.168.7.1:3000/websocket';
 
 device_type = 'purebeaglebone';
 unique_id = '';
@@ -96,6 +96,10 @@ function getBBInfo(interval, action) {
 				clearInterval(intervalIDcheck);
 				console.log ("beaglebone registration failed ("+message+")");
 
+				var exec = require ('child_process').exec;
+
+				exec ('udhcpc -i eth0', function(error, stdout, stderr) { console.log ("resetting DHCP on eth0...") });
+
 				bbinfo = undefined;
 
 				getBBInfo(5000, "start");
@@ -137,7 +141,7 @@ exports.run_beaglebone = function(host) {
 
 };
 
-exports.run_dial_a_device = function() {
+function run_dial_a_device() {
 
 	updateBB_loop = false;
 	
