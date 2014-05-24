@@ -14,7 +14,7 @@ var os = require ('os');
 
             if (x.serialNumber && x.serialNumber != "") {
 
-                callback(x.serialnumber);
+                callback(x.serialNumber);
 
             
             } else {
