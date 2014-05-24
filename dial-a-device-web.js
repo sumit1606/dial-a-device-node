@@ -32,7 +32,7 @@ var querystring = require ('querystring');
     		port: port,
     		path: "/connect/"+myserial,
     		method: "POST",
-    		headers: {'content-type': 'application/x-www-form-urlencoded', 'Content-Length:': Buffer.byteLength(postdata)}
+    		headers: {'content-type': 'application/x-www-form-urlencoded'}
     	}
 
 
