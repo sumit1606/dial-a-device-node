@@ -50,7 +50,16 @@ var querystring = require ('querystring');
                 var myResponse = JSON.parse (body);
 
                 if (myResponse) {
-                    callback (myResponse.table);
+
+                    if (typeof myResponse.table === "undefined") {
+
+                        callback (myResponse);
+
+                    } else {
+
+                        callback (myResponse.table);
+
+                    }
                 } else {
                     callback ({});
                 }
