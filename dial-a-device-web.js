@@ -50,7 +50,7 @@ var querystring = require ('querystring');
                 var myResponse = JSON.parse (body);
 
                 if (myResponse) {
-                    callback (myResponse);
+                    callback (myResponse.table);
                 } else {
                     callback ({});
                 }

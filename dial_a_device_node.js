@@ -63,7 +63,7 @@ function getBBInfo(interval, action) {
 
 			bbinfo.ipaddress = ipaddress;
 
-			if (bbinfo.id) {
+			if (bbinfo.id > 0) {
 
 				if (action == "start") {
 
