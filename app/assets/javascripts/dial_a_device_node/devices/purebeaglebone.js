@@ -3,6 +3,7 @@
     var device_model = {
 
         bbplatform: [],
+        lastserialmessage = "",
         usrled0: '0',
         usrled1: '0',
         usrled2: '0',
@@ -99,6 +100,23 @@
                 if (data.led == "USR2") { device_model.usrled2 = data.value }
                 if (data.led == "USR3") { device_model.usrled3 = data.value }
             }
+
+            if (data.command == "sendserial") {
+
+                localeventbus.emit ("serial.send", data.value);
+            }
+
+        });
+
+        eventbus.on ("serial.retrieve", function(data) {
+
+            device_model.lastserialmessage = data;
+
+            eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+
+            device_model.lastserialmessage = "";
+
+
         }); 
 
 	   eventbus.emit ("device.initialized", []);

@@ -35,7 +35,23 @@
                     case 0: $('#usrled3button').removeClass('active'); break;
                     case 1: $('#usrled3button').addClass('active'); break;
             }
+
+            if (data.model.lastserialmessage != "") {
+
+                $('#serialconsole').val( $('#serialconsole').val() + data.model.lastserialmessage + "\n" );
+
+            }
         });
+
+    };
+
+    exports.sendserial = function sendserial() {
+
+        var data = "";
+
+        data = $('#serialconsole').val();
+
+        localeventbus.emit ("ui.command", [{"command": "sendserial", "value": data}]);
 
     };
 
