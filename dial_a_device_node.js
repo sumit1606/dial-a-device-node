@@ -8,6 +8,10 @@ var bbinfo;
 
 var updateBB_loop = false;
 
+var dialadevicenode;
+
+var heartbeatinterval;
+
 // default parameters
 ser_string = '/dev/ttyUSB0';
 
@@ -58,7 +62,7 @@ function getBBInfo(interval, action) {
 
 	var intervalIDcheck = setInterval (function() {
 
-		if (bbinfo) {
+		if (bbinfo && action != "heartbeat") {
 			clearInterval(intervalIDcheck);
 
 			bbinfo.ipaddress = ipaddress;
@@ -78,6 +82,8 @@ function getBBInfo(interval, action) {
 			} else {
 
 				console.log ("beaglebone not registered");
+
+				dialadevicenode.halt();
 				
 				getBBInfo(5000);
 			}
@@ -98,11 +104,19 @@ function getBBInfo(interval, action) {
 
 				var exec = require ('child_process').exec;
 
-				exec ('udhcpc -i eth0', function(error, stdout, stderr) { console.log ("resetting DHCP on eth0...") });
+				exec ('udhcpc -i eth0', function(error, stdout, stderr) {
 
-				bbinfo = undefined;
+					console.log ("resetting DHCP on eth0...");
 
-				getBBInfo(5000, "start");
+					bbinfo = undefined;
+
+					getBBInfo(8000, "start");
+
+				});
+
+				dialadevicenode.halt();
+
+				
 
 			});
 
@@ -132,7 +146,7 @@ exports.run_beaglebone = function(host) {
 
 			ipaddress = ip;
 
-			getBBInfo(5000, "start");
+			getBBInfo(2000, "start");
 
 		});
 
@@ -143,11 +157,6 @@ exports.run_beaglebone = function(host) {
 
 function run_dial_a_device() {
 
-	updateBB_loop = false;
-	
-	console.log ('beaglebone:');
-	console.log (bbinfo);
-
 	if (!bbinfo.device) {
 
 		console.log ("no device registered for this beaglebone");
@@ -157,10 +166,11 @@ function run_dial_a_device() {
 
 	} else {
 
+		getBBInfo(10000, "heartbeat");
 
 		// successfully connected
 
-		var dialadevicenode = require ('dial-a-device-node');
+		dialadevicenode = require ('dial-a-device-node');
 
 		dialadevicenode.set_ser_string (bbinfo.device.portname);
 
@@ -178,18 +188,19 @@ function run_dial_a_device() {
 
 		dialadevicenode.run();
 
-		updateBB_loop = true;
-
 	}
 
-	if (updateBB_loop) {
-
-		getBBInfo(10000, "heartbeat");		
-	
-	}
 
 };
 
+
+exports.halt = function (eventbus) {
+
+	clearInterval(heartbeatinterval);
+
+	process.exit(1);
+
+}
 
 exports.run = function (eventbus) {
 
@@ -271,7 +282,7 @@ heartbeat = function() {
   return eventbus.emit("device.heartbeat");
 };
 
- setInterval(heartbeat, 1000);
+heartbeatinterval = setInterval(heartbeat, 1000);
 
 };
 
