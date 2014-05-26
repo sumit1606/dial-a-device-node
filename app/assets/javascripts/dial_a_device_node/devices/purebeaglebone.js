@@ -3,7 +3,7 @@
     var device_model = {
 
         bbplatform: [],
-        lastserialmessage = "",
+        lastserialmessage: "",
         usrled0: '0',
         usrled1: '0',
         usrled2: '0',
