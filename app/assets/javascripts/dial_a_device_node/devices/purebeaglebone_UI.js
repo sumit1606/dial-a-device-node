@@ -49,7 +49,7 @@
 
         var data = "";
 
-        data = $('#serialconsole').val();
+        data = $('#sendserial').val();
 
         localeventbus.emit ("ui.command", [{"command": "sendserial", "value": data}]);
 
