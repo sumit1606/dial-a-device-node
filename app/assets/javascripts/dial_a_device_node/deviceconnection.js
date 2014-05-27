@@ -33,6 +33,12 @@ exports.init = function (eventbus) {
 		serialport.on ("error", function (err) {
 			localeventbus.emit ("serial.openfailed", err);
 		});
+
+		serialport.on ("close", function() {
+			localeventbus.emit("serial.portclosed", []);
+
+		});
+
   
 		serialport.on ("open", function() {
 			localeventbus.emit("serial.portopened", []);
@@ -51,6 +57,11 @@ exports.init = function (eventbus) {
   			localeventbus.on ("serial.send", function (msg) {
 
 				serialport.write  (msg[0].command+String.fromCharCode(13), function (err, results) {});
+  			});
+
+  			localeventbus.on ("serial.close", function (msg) {
+
+				serialport.close();
   			});
 
 			localeventbus.on ("serial.writenext", function () {

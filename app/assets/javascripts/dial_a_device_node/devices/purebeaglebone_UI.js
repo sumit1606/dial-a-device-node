@@ -45,6 +45,22 @@
 
     };
 
+    exports.serialopen = function serialopen() {
+        localeventbus.emit ("ui.command", [{"command": "serialopen"}]);
+    };
+
+    exports.serialclose = function serialclose() {
+        localeventbus.emit ("ui.command", [{"command": "serialclose"}]);
+    };
+
+    exports.serialsetbaud = function serialsetbaud() {
+        localeventbus.emit ("ui.command", [{"command": "serialsetbaud", "value": $('#serialbaud').val()}]);
+    };
+
+    exports.serialsetport = function serialsetport() {
+        localeventbus.emit ("ui.command", [{"command": "serialsetport", "value": $('#serialport').val()}]);
+    };
+
     exports.sendserial = function sendserial() {
 
         var data = "";

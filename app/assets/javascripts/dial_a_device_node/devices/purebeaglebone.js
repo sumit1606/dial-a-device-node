@@ -106,6 +106,26 @@
                 localeventbus.emit ("serial.send", data.value);
             }
 
+            if (data.command == "serialsetport") {
+
+                localeventbus.emit ("serial.set.port", data.value);
+            }
+
+            if (data.command == "serialsetbaud") {
+
+                localeventbus.emit ("serial.set.baud", data.value);
+            }
+
+            if (data.command == "serialopen") {
+
+                localeventbus.emit ("serial.connect", data.value);
+            }
+
+            if (data.command == "serialclose") {
+
+                localeventbus.emit ("serial.close", data.value);
+            }
+
         });
 
         eventbus.on ("serial.retrieve", function(data) {

@@ -19,8 +19,8 @@
         </span>
 
 
-        <br/>
-
+        <br>
+        <br>
         <span>
             <h4>Serial console</h4>
             <textarea rows="4" cols="80" id="serialconsole"></textarea>
@@ -28,6 +28,22 @@
             <br/>
 
             <input type="text" id="sendserial" /> <input type="button" value="send" onClick="ui.sendserial();" />
+
+        </span>
+
+        <br>
+        <br>
+        <span>
+            <h4>Serial connection</h4>
+            <br/>
+
+            <input type="text" id="serialport" /> <input type="button" value="set port" onClick="ui.serialsetport();" />
+            <br>
+            <input type="text" id="serialbaud" /> <input type="button" value="set baud" onClick="ui.serialsetbaud();" />
+            <br>
+            <input type="button" value="open" onClick="ui.serialopen();" />
+            <br>
+            <input type="button" value="close" onClick="ui.serialclose();" />
 
         </span>
     </div>

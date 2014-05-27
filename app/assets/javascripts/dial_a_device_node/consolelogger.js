@@ -2,17 +2,50 @@
 
 exports.init = function (eventbus) {
     localeventbus = eventbus;
-    
 
-    localeventbus.on ("serialport_opened", function() {
+
+    localeventbus.on ("serial.initialized", function() {
+        
+        console.log ("serial port library initialized");
+    });
+
+
+    localeventbus.on ("serial.portopened", function() {
         
         console.log ("serial port opened");
     });
 
-    localeventbus.on ("serial_rawincoming", function(data) {
+    localeventbus.on ("serial.portclosed", function() {
         
-    //    console.log ("serial rawincoming " + data);
+        console.log ("serial port closed");
     });
+
+    localeventbus.on ("serial.incoming", function(data) {
+
+        console.log ("serial rawincoming: " + data);
+    });
+
+    localeventbus.on ("serial.retrieve", function(data) {
+
+        console.log ("serial retrieve: " + data);
+    });
+
+    localeventbus.on ("serial.set.baud", function (data) {
+        console.log ("serial set baud: " + data);
+    });
+
+    localeventbus.on ("serial.set.port", function (data) {
+        console.log ("serial set port: " + data);
+    });
+
+
+
+    localeventbus.on ("serial.openfailed", function(data) {
+
+        console.log ("serial openfailed: " + data);
+    });
+
+    
 
     localeventbus.on ("status.deviceendpoint", function(url) {
         
