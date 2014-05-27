@@ -24,6 +24,12 @@
 
 	exports.websockets = websockets;
 
+	exports.halt = function () {
+
+		if (!(typeof websockets === "undefined")) { websockets.close(); }	
+
+	}
+
 	exports.init = function (eventbus, de) {
     	localeventbus = eventbus;
 

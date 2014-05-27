@@ -83,9 +83,9 @@ function getBBInfo(interval, action) {
 
 				console.log ("beaglebone not registered");
 
-				dialadevicenode.halt();
+				if (typeof dialadevicenode === "undefined") { process.exit(1); } else { dialadevicenode.halt(); }
+		
 				
-				getBBInfo(5000);
 			}
 		} else {
 
@@ -114,7 +114,7 @@ function getBBInfo(interval, action) {
 
 				});
 
-				dialadevicenode.halt();
+				if (typeof dialadevicenode === "undefined") { process.exit(1); } else { dialadevicenode.halt(); }
 
 				
 
@@ -195,6 +195,8 @@ function run_dial_a_device() {
 
 
 exports.halt = function (eventbus) {
+
+	webconnection.halt;
 
 	clearInterval(heartbeatinterval);
 
