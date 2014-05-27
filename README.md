@@ -36,7 +36,7 @@ Go! on Linux
 
 		node start.js
 
-## Installation on BeagleBone (Angstrom Linux) for development
+## Installation on BeagleBone (Angstrom Linux) for development and debugging
 
 Install required OS packages
 
@@ -51,7 +51,6 @@ Install the npm package
 	npm install -g coffee-script
 	npm install -g serialport
 	npm install -g websocket
-	npm install -g bonescript
 	npm install -g getmac
 
 	cd /var/lib/cloud9
