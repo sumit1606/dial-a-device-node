@@ -149,7 +149,7 @@ exports.init = function (eventbus) {
     });
 
 
-    localeventbus.emit ("consolelogger.initialized", []);
+    localeventbus.emit ("consolelogger.initialized");
 };
 
 })(typeof exports == 'undefined'? this['consolelogger'] = {}: exports);

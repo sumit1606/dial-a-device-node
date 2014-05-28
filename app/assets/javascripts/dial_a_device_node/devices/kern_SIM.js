@@ -25,7 +25,7 @@
 
                 if (device_model_simulation.autoprint == "1") {
 
-                    eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
+                    eventbus.emit ("device.reply", {"command": "heartbeat"}, device_model_simulation.weight);
                 }
 
             }
@@ -33,8 +33,8 @@
         }, 3000);
  
 
-        eventbus.emit ("serial.simulation", []);
-        eventbus.emit ("serial.portopened", []);
+        eventbus.emit ("serial.simulation");
+        eventbus.emit ("serial.portopened");
 
         if (typeof String.prototype.startsWith != 'function') {
             String.prototype.startsWith = function (str){
@@ -45,8 +45,6 @@
           
         eventbus.on ("device.command", function (data) {
 
-            (typeof data.command == 'string'? data = data : data = data[0]);
-
             if (data.command.startsWith ('D05')) {
 
                 w = Math.floor((Math.random() * 100) + 1)
@@ -55,7 +53,7 @@
 
                 device_model_simulation.weight = "0.166[0]g";
 
-               eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
+               eventbus.emit ("device.reply", {"command": "heartbeat"}, device_model_simulation.weight);
             }
 
         });
@@ -63,21 +61,19 @@
 
           eventbus.on ("device.immediatecommand", function (data) {
 
-            (typeof data.command == 'string'? data = data : data = data[0]);
-
 
             if (data.command.startsWith ('T')) {
 
                 device_model_simulation.weight="0.000[0]g";
 
-               eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
+               eventbus.emit ("device.reply", {"command": "heartbeat"}, device_model_simulation.weight);
             }
             
             if (data.command.startsWith ('R')) {
 
                 device_model_simulation.weight="0.000[0]g";
 
-               eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
+               eventbus.emit ("device.reply", {"command": "heartbeat"}, device_model_simulation.weight);
             }
 
         
@@ -85,7 +81,7 @@
 
                 device_model_simulation.weight="0.000[0]g";
 
-               eventbus.emit ("device.reply", [{"command": "heartbeat"}, device_model_simulation.weight]);
+               eventbus.emit ("device.reply", {"command": "heartbeat"}, device_model_simulation.weight);
             }
              
             if (data.command.startsWith ('D06')) {

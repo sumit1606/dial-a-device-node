@@ -35,28 +35,27 @@ exports.init = function (eventbus) {
 		});
 
 		serialport.on ("close", function() {
-			localeventbus.emit("serial.portclosed", []);
+			localeventbus.emit("serial.portclosed");
 
 		});
 
   
 		serialport.on ("open", function() {
-			localeventbus.emit("serial.portopened", []);
+			localeventbus.emit("serial.portopened");
 	
 			serialport.on ("data", function (data) {      
-				localeventbus.emit ("serial.incoming", [data]);	        
+				localeventbus.emit ("serial.incoming", data);	        
 			});
 
 			localeventbus.on ("device.immediatecommand", function (msg) {
 				waiting = false;	
 				lastmessage = new Array;
-				console.log (msg);
-				serialport.write  (msg[0].command+String.fromCharCode(13), function (err, results) {});
+				serialport.write  (msg.command+String.fromCharCode(13), function (err, results) {});
   			});
 
   			localeventbus.on ("serial.send", function (msg) {
 
-				serialport.write  (msg[0].command+String.fromCharCode(13), function (err, results) {});
+				serialport.write  (msg+String.fromCharCode(13), function (err, results) {});
   			});
 
   			localeventbus.on ("serial.close", function (msg) {
@@ -73,7 +72,7 @@ exports.init = function (eventbus) {
 
 						waiting = true;	
 						currentmessage = lastmessage.pop();
-						serialport.write  (currentmessage.command+String.fromCharCode(13), function (err, results) {
+						serialport.write  (currentmessage+String.fromCharCode(13), function (err, results) {
 						});
 	
 					}
@@ -87,30 +86,28 @@ exports.init = function (eventbus) {
 	
 	localeventbus.on ("serial.incoming", function (data) {
 
-		var output = data[0];
-			if (output.substring(0,1) == "\n") {
-				output = output.substring (1);
+			if (data.substring(0,1) == "\n") {
+				data = output.substring (1);
 			}
 
-		localeventbus.emit ("serial.retrieve", [output]);
+		localeventbus.emit ("serial.retrieve", data);
 
 		if (waiting) {
 
-			localeventbus.emit ("device.reply", [currentmessage, data]);
+			localeventbus.emit ("device.reply", currentmessage, data);
 			waiting = false;
 		} else {
 
-			var output = data[0];
-			if (output.substring(0,1) == "\n") {
-				output = output.substring (1);
+			if (data.substring(0,1) == "\n") {
+				data = data.substring (1);
 			}
-			localeventbus.emit ("device.reply", [{"command": "heartbeat"}, output]);
+			localeventbus.emit ("device.reply", "heartbeat", data);
 
 		}
 	});
 
 	localeventbus.on ("device.command", function (msg) {
-		localeventbus.emit ("serial.writemessage", msg[0]);
+		localeventbus.emit ("serial.writemessage", msg);
   	});
 
 

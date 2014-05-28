@@ -248,9 +248,9 @@ webconnection.init(eventbus, true);
 
 webconnection.initsubscribe;
 
-eventbus.emit("device.announce.deviceid", [device_id]);
+eventbus.emit("device.announce.deviceid", device_id);
 
-eventbus.emit("device.announce.devicetype", [device_type]);
+eventbus.emit("device.announce.devicetype", device_type);
 
 device.init(eventbus);
 
@@ -258,9 +258,9 @@ consolelogger.init(eventbus);
 
 deviceconnection.init(eventbus);
 
-eventbus.emit("serial.set.baud", [ser_baud]);
+eventbus.emit("serial.set.baud", ser_baud);
 
-eventbus.emit("serial.set.port", [ser_string]);
+eventbus.emit("serial.set.port", ser_string);
 
 if (ser_string == "serial") {
 
@@ -268,11 +268,11 @@ if (ser_string == "serial") {
 
 }
 
-eventbus.emit("webconnection.set.channelname", ['channel_dev_' + device_id]);
+eventbus.emit("webconnection.set.channelname", 'channel_dev_' + device_id);
 
-eventbus.emit("webconnection.set.url", [url_string]);
+eventbus.emit("webconnection.set.url", url_string);
 
-eventbus.emit("webconnection.set.deviceendpoint", [true]);
+eventbus.emit("webconnection.set.deviceendpoint", true);
 
 eventbus.emit("webconnection.connect");
 

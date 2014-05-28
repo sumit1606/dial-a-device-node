@@ -22,45 +22,43 @@
 
         eventbus.on ("device.updatemodel", function (param) {
 
-            device_model = param[0];
+            device_model = param;
 
-            eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+            eventbus.emit('ui.update', {"component": "all", "model": device_model});
             
         });
 
         eventbus.on ("device.command", function(data) {
 
-            (typeof data.command == 'string'? data = data : data = data[0]);
-
             if (data.command == "power") {
 
-                eventbus.emit ("device.immediatecommand", [{"command": "Q"}]);
+                eventbus.emit ("device.immediatecommand", {"command": "Q"});
 
                 device_model.power = '' + data.value;
 
-                eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+                eventbus.emit('ui.update', {"component": "all", "model": device_model});
 
             }
 
             if (data.command == "calibration") {
 
-                eventbus.emit ("device.immediatecommand", [{"command": "CAL"}]);
+                eventbus.emit ("device.immediatecommand", {"command": "CAL"});
 
-                eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+                eventbus.emit('ui.update', {"component": "all", "model": device_model});
 
             }
 
             if (data.command == "tare") {
 
-                eventbus.emit ("device.immediatecommand", [{"command": "T"}]);
+                eventbus.emit ("device.immediatecommand", {"command": "T"});
 
-                eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+                eventbus.emit('ui.update', {"component": "all", "model": device_model});
 
             }
 
             if (data.command == "print") {
 
-                eventbus.emit ("device.command", [{"command": "D05"}]);
+                eventbus.emit ("device.command", {"command": "D05"});
 
             }
 
@@ -68,18 +66,18 @@
 
                 if(data.value == "1") {
             
-                    eventbus.emit ("device.immediatecommand", [{"command": "D06"}]);
+                    eventbus.emit ("device.immediatecommand", {"command": "D06"});
 
                     device_model.autoprint='1';
 
-                    eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+                    eventbus.emit('ui.update', {"component": "all", "model": device_model});
                 } 
                 else {  
-                    eventbus.emit ("device.immediatecommand", [{"command": "D09"}]); 
+                    eventbus.emit ("device.immediatecommand", {"command": "D09"}); 
 
                     device_model.autoprint='0';
 
-                    eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+                    eventbus.emit('ui.update', {"component": "all", "model": device_model});
                    
                  }
 
@@ -87,7 +85,7 @@
 
             if (data.command == "reset") {
 
-                eventbus.emit ("device.immediatecommand", [{"command": "R"}]);
+                eventbus.emit ("device.immediatecommand", {"command": "R"});
 
             }
 
@@ -96,36 +94,27 @@
         });        
 
 
-        eventbus.on ("device.reply", function(params, data) {
+        eventbus.on ("device.reply", function(lastmessage, data) {
 
+            eventbus.emit('device.assumeconnected');
 
-            if (typeof params.command == 'string') {
-                lastmessage = params;
-            }
-            else {
-                lastmessage = params[0];
-                data = params[1];
-            }
-
-            eventbus.emit('device.assumeconnected', []);
-
-             if (lastmessage.command.startsWith ('heartbeat')) {
+             if (lastmessage.startsWith ('heartbeat')) {
                 device_model.weight = data ;
                 device_model.power='1';
 
-                eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+                eventbus.emit('ui.update', {"component": "all", "model": device_model});
 
-                eventbus.emit('device.snapshot', [device_model]);
+                eventbus.emit('device.snapshot', device_model);
              }
 
 
-            if (lastmessage.command.startsWith ('D')) {
+            if (lastmessage.startsWith ('D')) {
                 device_model.weight = data ;
                 device_model.power='1';
 
-                eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+                eventbus.emit('ui.update', {"component": "all", "model": device_model});
 
-                eventbus.emit('device.snapshot', [device_model]);
+                eventbus.emit('device.snapshot', device_model);
              }
   
 

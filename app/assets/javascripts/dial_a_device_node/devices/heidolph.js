@@ -26,30 +26,23 @@
         });
 
         eventbus.on ("serial.received", function(lm, data) {
-            eventbus.emit('device.received', [lm, data]);        
+            eventbus.emit('device.received', lm, data);        
         });
 
         eventbus.on ("device.updatemodel", function (param) {
 
-            device_model = param[0];
+            device_model = param;
 
             eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
         });
         
 
-        eventbus.on ("device.reply", function(params, data) {
+        eventbus.on ("device.reply", function(lastmessage, data) {
 
-            if (typeof params.command == 'string') {
-                lastmessage = params;
-            }
-            else {
-                lastmessage = params[0];
-                data = params[1];
-            }
 
-             if (lastmessage.command.startsWith ('heartbeat')) {
+             if (lastmessage.startsWith ('heartbeat')) {
 
-                eventbus.emit('device.assumeconnected', []);
+                eventbus.emit('device.assumeconnected');
 
                 var re = data.split(';');
 
@@ -60,16 +53,16 @@
                     device_model.exttemperature = re[2].trim();
                     device_model.vacuum = re[3].trim();
 
-                    eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+                    eventbus.emit('ui.update', {"component": "all", "model": device_model});
             
-                    eventbus.emit('device.snapshot', [device_model]);
+                    eventbus.emit('device.snapshot', device_model);
                 }
              }
 
         });
    
 
-	   eventbus.emit ("device.initialized", []);
+	   eventbus.emit ("device.initialized");
 
     };
 

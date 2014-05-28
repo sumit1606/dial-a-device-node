@@ -25,7 +25,7 @@
 
         eventbus.on ("device.updatemodel", function (param) {
 
-            device_model = param[0];
+            device_model = param;
 
             eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
     
@@ -37,9 +37,9 @@
 
             // device_model.bbplatform = b.getPlatform();
 
-            eventbus.emit('ui.update', [{"component": "bbplatform", "model": device_model}]);
+            eventbus.emit('ui.update', {"component": "bbplatform", "model": device_model});
 
-            eventbus.emit('device.assumeconnected', []);
+            eventbus.emit('device.assumeconnected');
 
 
             b.pinMode("USR0", b.INPUT);
@@ -80,13 +80,11 @@
                 }
             });
     
-            eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);       
+            eventbus.emit('ui.update', {"component": "all", "model": device_model});       
 
         });
 
         eventbus.on ("device.command", function(data) {
-
-            (typeof data.command == 'string'? data = data : data = data[0]);
 
             if (data.command == "setled") {
 
@@ -132,14 +130,14 @@
 
             device_model.lastserialmessage = data;
 
-            eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+            eventbus.emit('ui.update', {"component": "all", "model": device_model});
 
             device_model.lastserialmessage = "";
 
 
         }); 
 
-	   eventbus.emit ("device.initialized", []);
+	   eventbus.emit ("device.initialized");
 
     };
 

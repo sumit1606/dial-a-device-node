@@ -51,7 +51,7 @@
 
 // code for the calibaration thing i.e the calibration function is called    
    exports.calibration = function calibration(){
-        localeventbus.emit ("ui.command", [{"command": "calibration"}]);
+        localeventbus.emit ("ui.command", {"command": "calibration"});
     };
 
 // code for changing the power status either on/off
@@ -65,25 +65,25 @@
             data = "1";
         }
 
-        localeventbus.emit ("ui.command", [{"command": "power", "value": data}]);
+        localeventbus.emit ("ui.command", {"command": "power", "value": data});
         
     };
   
 // code for changing to the tare button i.e tare function is called
        exports.tare = function tare(){
-        localeventbus.emit ("ui.command", [{"command": "tare"}]);
+        localeventbus.emit ("ui.command", {"command": "tare"});
         
     };
 
 //   code for changing to the print function i.e print function is called
        exports.print = function print(){
          
-         localeventbus.emit ("ui.command", [{"command": "print"}]);
+         localeventbus.emit ("ui.command", {"command": "print"});
     };
     
 //   code for changing to the reset function i.e reset function is called    
     exports.reset = function reset(){
-        localeventbus.emit ("ui.command", [{"command": "reset"}]);
+        localeventbus.emit ("ui.command", {"command": "reset"});
         
     };
 
@@ -97,7 +97,7 @@
             data = "1";
           }
 
-          localeventbus.emit ("ui.command", [{"command": "autoprint", "value": data}]);
+          localeventbus.emit ("ui.command", {"command": "autoprint", "value": data});
          
     };
   
