@@ -25,7 +25,7 @@
 
                 if (device_model_simulation.autoprint == "1") {
 
-                    eventbus.emit ("device.reply", {"command": "heartbeat"}, device_model_simulation.weight);
+                    eventbus.emit ("device.reply", "heartbeat", device_model_simulation.weight);
                 }
 
             }
@@ -53,7 +53,7 @@
 
                 device_model_simulation.weight = "0.166[0]g";
 
-               eventbus.emit ("device.reply", {"command": "heartbeat"}, device_model_simulation.weight);
+               eventbus.emit ("device.reply", "heartbeat", device_model_simulation.weight);
             }
 
         });
@@ -66,14 +66,14 @@
 
                 device_model_simulation.weight="0.000[0]g";
 
-               eventbus.emit ("device.reply", {"command": "heartbeat"}, device_model_simulation.weight);
+               eventbus.emit ("device.reply", "heartbeat", device_model_simulation.weight);
             }
             
             if (data.command.startsWith ('R')) {
 
                 device_model_simulation.weight="0.000[0]g";
 
-               eventbus.emit ("device.reply", {"command": "heartbeat"}, device_model_simulation.weight);
+               eventbus.emit ("device.reply", "heartbeat", device_model_simulation.weight);
             }
 
         
@@ -81,7 +81,7 @@
 
                 device_model_simulation.weight="0.000[0]g";
 
-               eventbus.emit ("device.reply", {"command": "heartbeat"}, device_model_simulation.weight);
+               eventbus.emit ("device.reply", "heartbeat", device_model_simulation.weight);
             }
              
             if (data.command.startsWith ('D06')) {

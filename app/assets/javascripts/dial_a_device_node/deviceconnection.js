@@ -50,7 +50,7 @@ exports.init = function (eventbus) {
 			localeventbus.on ("device.immediatecommand", function (msg) {
 				waiting = false;	
 				lastmessage = new Array;
-				serialport.write  (msg.command+String.fromCharCode(13), function (err, results) {});
+				serialport.write  (msg+String.fromCharCode(13), function (err, results) {});
   			});
 
   			localeventbus.on ("serial.send", function (msg) {

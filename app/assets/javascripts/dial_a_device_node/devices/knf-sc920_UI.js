@@ -13,9 +13,11 @@
 
 		localeventbus = eventbus;
 
-    	eventbus.on ("ui.update.runtime", function(device_model) {
-    		temp_device_model = device_model;
-        	runtime = parseFloat(device_model.runtime);
+		eventbus.on ("ui.update", function(data) {
+
+			temp_device_model = data.model;
+
+			runtime = parseFloat(device_model.runtime);
 
 			if (runtime > 0) {
 				$('#startstopicon').removeClass('icon-play');
@@ -30,26 +32,18 @@
 
 				$('#runmode').removeClass('disabled');
 		    }
-    	});
 
-    	eventbus.on ("ui.update.pressure", function (device_model) {
-    		$('#pressure').text(device_model.pressure);
-    	});
+		    $('#pressure').text(data.model.pressure);
 
-    	eventbus.on ("ui.update.power", function (device_model) {
-    		if (!$('#si_power_input').hasClass("dontupdate")) {
-    			$('#si_power_input').val(parseInt(device_model.power));
+		    if (!$('#si_power_input').hasClass("dontupdate")) {
+    			$('#si_power_input').val(parseInt(data.model.power));
     		}
-    	});
 
-    	eventbus.on ("ui.update.setpoint", function (device_model) {
     		if (!$('#si_setpoint_input').hasClass("dontupdate")) {
-    			$('#si_setpoint_input').val(parseInt(device_model.setpoint));
+    			$('#si_setpoint_input').val(parseInt(data.model.setpoint));
     		}
-    	});
 
-    	eventbus.on ("ui.update.ventilation", function (device_model) {
-    		switch (parseInt(device_model.ventilation)) {
+    		switch (parseInt(data.model.ventilation)) {
 					case 0: $('#ventilationicon').removeClass('icon-star-empty');
 					$('#ventilationicon').addClass('icon-star');
 					$('#ventilationbutton').removeClass('active'); break;
@@ -59,11 +53,8 @@
 					$('#ventilationbutton').addClass('active'); break;
 					
 				}
-    	});
 
-    	eventbus.on ("ui.update.coolant", function (device_model) {
-    		temp_device_model = device_model;
-    		switch (parseInt(device_model.coolant)) {
+			switch (parseInt(data.model.coolant)) {
 					case 0: $('#coolanticon').removeClass('icon-star-empty');
 					$('#coolanticon').addClass('icon-star');
 					$('#coolantbutton').removeClass('active'); break;
@@ -72,22 +63,15 @@
 					$('#coolanticon').addClass('icon-star-empty');
 					$('#coolantbutton').addClass('active'); break;
 				}
-    	});
-				
 
-    	eventbus.on ("ui.update.runmode", function (device_model) {
-    		temp_device_model = device_model;
-			switch ((device_model.runmode)) {
+			switch ((data.model.runmode)) {
 				case '0': $('#runmode').text('Evacuate'); $("#tab2").show(); $("#tab3").hide(); $("#tab4").hide(); $("#container").show(); $('#myModal').modal('hide'); functionvisible = false; break;
 				case '1': $('#runmode').text('Pressure Control'); $("#tab2").hide(); $("#tab3").show(); $("#tab4").hide(); $("#container").show();  $('#myModal').modal('hide');  functionvisible = false; break;
 				case '2': $('#runmode').text('Automatic'); $("#tab2").hide(); $("#tab3").hide(); $("#tab4").hide(); $("#container").show(); $('#myModal').modal('hide'); functionvisible = false; break; 
 				case '3': $('#runmode').text('Function'); $("#tab2").hide(); $("#tab3").hide(); $("#tab4").show();   $("#container").show(); eventbus.emit("device.update.list", [device_model]); functionvisible = true;  break;
 			}
-    	});
 
-    	eventbus.on ("ui.update.pressureunit", function (device_model) {
-    		temp_device_model = device_model;
-			switch (parseInt(device_model.pressureunit)) {
+			switch (parseInt(data.model.pressureunit)) {
 				case 0: $('#unitpressure').text('mbar'); break;
 				case 1: $('#unitpressure').text('bar'); break;
 				case 2: $('#unitpressure').text('hPa'); break;
@@ -119,19 +103,23 @@
 	};
 
 	exports.setPressureunit = function setPressureunit(data) {
-		localeventbus.emit ("device.set.pressureunit", [data])
+		
+		localeventbus.emit ("ui.command", {"command": "setpressureunit", "value": data});
 	};
 
 	exports.setRunmode = function setRunmode(data) {
-		localeventbus.emit ("device.set.runmode", [data])
+	
+		localeventbus.emit ("ui.command", {"command": "setrunmode", "value": data});
 	};
 
 	exports.setVentilation = function setVentilation(data) {
-		localeventbus.emit ("device.set.ventilation", [data])
+		
+		localeventbus.emit ("ui.command", {"command": "setventilation", "value": data});
 	};
 
 	exports.setCoolant = function setCoolant(data) {
-		localeventbus.emit ("device.set.coolant", [data])
+		
+		localeventbus.emit ("ui.command", {"command": "setcoolant", "value": data});
 	};
 
 	exports.toggleStartstop = function toggleStartstop() {
@@ -140,7 +128,8 @@
 		} else {
 			data = 'B';
 		}
-		localeventbus.emit ("device.set.startstop", [data])
+		localeventbus.emit ("ui.command", {"command": "setstartstop", "value": data});
+		
 	};
 
 	exports.toggleVentilation = function toggleVentilation() {
@@ -149,7 +138,7 @@
 		} else {
 			data = '1';
 		}
-		localeventbus.emit ("device.set.ventilation", [data])
+		localeventbus.emit ("ui.command", {"command": "setventilation", "value": data});
 	}
 
 	exports.toggleCoolant = function toggleCoolant() {
@@ -158,16 +147,21 @@
 		} else {
 			data = '1';
 		}
-		localeventbus.emit ("device.set.coolant", [data])
+		localeventbus.emit ("ui.command", {"command": "setcoolant", "value": data});
+		
 	}
 
-	exports.setPower = function setPower(value) {
-		localeventbus.emit ("device.set.power", [value]);
+	exports.setPower = function setPower(data) {
+		localeventbus.emit ("ui.command", {"command": "setpower", "value": data});
+	
 	}
 
-	exports.setSetpoint = function setSetpoint(value) {
-		localeventbus.emit ("device.set.setpoint", [value]);
+	exports.setSetpoint = function setSetpoint(data) {
+		localeventbus.emit ("ui.command", {"command": "setsetpoint", "value": data});
+
 	}
+
+
 
 
 	exports.edit_cell = function edit_cell(row) 

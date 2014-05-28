@@ -33,7 +33,7 @@
 
             device_model = param;
 
-            eventbus.emit('ui.update', [{"component": "all", "model": device_model}]);
+            eventbus.emit('ui.update', {"component": "all", "model": device_model});
         });
         
 

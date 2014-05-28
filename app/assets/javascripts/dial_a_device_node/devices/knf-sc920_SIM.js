@@ -96,8 +96,8 @@
 
         }, 500);
 
-        eventbus.emit ("serial.simulation", []);
-        eventbus.emit ("serial.portopened", []);
+        eventbus.emit ("serial.simulation");
+        eventbus.emit ("serial.portopened");
 
 
         if (typeof String.prototype.startsWith != 'function') {
@@ -106,15 +106,13 @@
             };
         }
 
-        eventbus.on ("device.command", function(params) {
+        eventbus.on ("device.command", function(message) {
 
         	var data = "1";
 
-            (typeof params.command == 'string'? message = params : message = params[0]);
-
         	// get
 
-            if (message.command.startsWith ('pP')) {
+            if (message.startsWith ('pP')) {
             	data = device_model_simulation.runtime + ";" 
             		+ device_model_simulation.pressure + ";"
             		+ device_model_simulation.setpoint + ";"
@@ -122,37 +120,37 @@
             		+ "  50";
             }
 
-            if (message.command.startsWith ('gM')) {
+            if (message.startsWith ('gM')) {
             	data = device_model_simulation.runmode + ";"
             		+ "  1";
             }
 
-            if (message.command.startsWith ('gUp')) {
+            if (message.startsWith ('gUp')) {
             	data = device_model_simulation.pressureunit + ";"
             		+ "  1";
             }
 
-            if (message.command.startsWith ('gV')) {
+            if (message.startsWith ('gV')) {
             	data = device_model_simulation.ventilation + ";"
             		+ "  1";
             }
 
-            if (message.command.startsWith ('gW')) {
+            if (message.startsWith ('gW')) {
             	data = device_model_simulation.coolant + ";"
             		+ "  1";
             }
 
-             if (message.command.startsWith ('gFv')) {
+             if (message.startsWith ('gFv')) {
                 data = "1";
-                value = message.command.substr(3);
+                value = message.substr(3);
                 splitter = value.split(';');
                 index_chk = parseInt(splitter[0].trim());
                 data = index_chk +";"+ device_model_simulation.jashon[index_chk].jso_time + ";" + device_model_simulation.jashon[index_chk].jso_pressure +" ; "+ device_model_simulation.jashon[index_chk].jso_coolant +";1" ;
             }
             // set
 
-            if (message.command.startsWith ('cM')) {
-            	value = message.command.substr(2);
+            if (message.startsWith ('cM')) {
+            	value = message.substr(2);
 
                 switch ( value ) {
 
@@ -175,47 +173,47 @@
 
             }
 
-            if (message.command.startsWith ('cUp')) {
-            	value = message.command.substr(3);
+            if (message.startsWith ('cUp')) {
+            	value = message.substr(3);
             	device_model_simulation.pressureunit = value;
             }
 
-            if (message.command.startsWith ('dV')) {
-            	value = message.command.substr(2);
+            if (message.startsWith ('dV')) {
+            	value = message.substr(2);
             	device_model_simulation.ventilation = value;
             }
 
-            if (message.command.startsWith ('dW')) {
-            	value = message.command.substr(2);
+            if (message.startsWith ('dW')) {
+            	value = message.substr(2);
             	device_model_simulation.coolant = value;
             }
 
-            if (message.command.startsWith ('dB')) {
+            if (message.startsWith ('dB')) {
             	device_model_simulation.pumpengine = true;
             }
 
-            if (message.command.startsWith ('dE')) {
+            if (message.startsWith ('dE')) {
             	device_model_simulation.pumpengine = false;
             	device_model_simulation.runtime = "0.0";
             }
 
-             if (message.command.startsWith ('cS')) {
+             if (message.startsWith ('cS')) {
                 
-                value = message.command.substr(2);
+                value = message.substr(2);
                 device_model_simulation.power = value;
             }
 
-             if (message.command.startsWith ('cC')) {
+             if (message.startsWith ('cC')) {
                 
-                value = message.command.substr(2);
+                value = message.substr(2);
 
                 device_model_simulation.setpoint = value;
             }
 
-             if (message.command.startsWith ('cFs')) {
+             if (message.startsWith ('cFs')) {
                 
 
-                value = message.command.substr(3);
+                value = message.substr(3);
                  splitter = value.split(';');
                  index_chk = parseInt(splitter[0].trim());
                
@@ -227,9 +225,9 @@
             }
 
 
-             if (message.command.startsWith ('cFd')) {
+             if (message.startsWith ('cFd')) {
           
-                value = message.command.substr(3);
+                value = message.substr(3);
                 splitter = value.split(';');
                  index_chk = parseInt(splitter[0].trim());
                 for(i=index_chk ; i<11 ; i++)
@@ -244,9 +242,9 @@
                 device_model_simulation.jashon[11].jso_coolant = "";
             }
 
-             if (message.command.startsWith ('cFc')) {
+             if (message.startsWith ('cFc')) {
                 
-                value = message.command.substr(3);
+                value = message.substr(3);
                 splitter = value.split(';');
                 index_chk = parseInt(splitter[0].trim());
                 for(i=index_chk ; i<12 ; i++)
@@ -257,7 +255,7 @@
             }           
             }
 
-            eventbus.emit ("device.reply", [message, data]);
+            eventbus.emit ("device.reply", message, data);
     	});
 
 	

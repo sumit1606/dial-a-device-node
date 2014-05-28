@@ -32,7 +32,7 @@
 
             if (data.command == "power") {
 
-                eventbus.emit ("device.immediatecommand", {"command": "Q"});
+                eventbus.emit ("device.immediatecommand", "Q");
 
                 device_model.power = '' + data.value;
 
@@ -42,7 +42,7 @@
 
             if (data.command == "calibration") {
 
-                eventbus.emit ("device.immediatecommand", {"command": "CAL"});
+                eventbus.emit ("device.immediatecommand", "CAL");
 
                 eventbus.emit('ui.update', {"component": "all", "model": device_model});
 
@@ -50,7 +50,7 @@
 
             if (data.command == "tare") {
 
-                eventbus.emit ("device.immediatecommand", {"command": "T"});
+                eventbus.emit ("device.immediatecommand", "T");
 
                 eventbus.emit('ui.update', {"component": "all", "model": device_model});
 
@@ -58,7 +58,7 @@
 
             if (data.command == "print") {
 
-                eventbus.emit ("device.command", {"command": "D05"});
+                eventbus.emit ("device.command", "D05");
 
             }
 
@@ -66,14 +66,14 @@
 
                 if(data.value == "1") {
             
-                    eventbus.emit ("device.immediatecommand", {"command": "D06"});
+                    eventbus.emit ("device.immediatecommand", "D06");
 
                     device_model.autoprint='1';
 
                     eventbus.emit('ui.update', {"component": "all", "model": device_model});
                 } 
                 else {  
-                    eventbus.emit ("device.immediatecommand", {"command": "D09"}); 
+                    eventbus.emit ("device.immediatecommand", "D09"); 
 
                     device_model.autoprint='0';
 
@@ -85,7 +85,7 @@
 
             if (data.command == "reset") {
 
-                eventbus.emit ("device.immediatecommand", {"command": "R"});
+                eventbus.emit ("device.immediatecommand", "R");
 
             }
 
