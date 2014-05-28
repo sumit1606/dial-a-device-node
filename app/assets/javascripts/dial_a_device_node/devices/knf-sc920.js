@@ -234,7 +234,7 @@
         });
 
 
-         eventbus.on ("device.update.list", function (device_model) {;
+         eventbus.on ("device.update.list", function (device_model) {
 
             for(index = 0; index < 12 ; index ++)
             {

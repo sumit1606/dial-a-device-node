@@ -45,7 +45,7 @@
           
         eventbus.on ("device.command", function (data) {
 
-            if (data.command.startsWith ('D05')) {
+            if (data.startsWith ('D05')) {
 
                 w = Math.floor((Math.random() * 100) + 1)
 
@@ -62,14 +62,14 @@
           eventbus.on ("device.immediatecommand", function (data) {
 
 
-            if (data.command.startsWith ('T')) {
+            if (data.startsWith ('T')) {
 
                 device_model_simulation.weight="0.000[0]g";
 
                eventbus.emit ("device.reply", "heartbeat", device_model_simulation.weight);
             }
             
-            if (data.command.startsWith ('R')) {
+            if (data.startsWith ('R')) {
 
                 device_model_simulation.weight="0.000[0]g";
 
@@ -77,14 +77,14 @@
             }
 
         
-            if (data.command.startsWith ('C')) {
+            if (data.startsWith ('C')) {
 
                 device_model_simulation.weight="0.000[0]g";
 
                eventbus.emit ("device.reply", "heartbeat", device_model_simulation.weight);
             }
              
-            if (data.command.startsWith ('D06')) {
+            if (data.startsWith ('D06')) {
 
                 if (device_model_simulation.power == "1") {
 
@@ -94,7 +94,7 @@
             }
              
               
-            if (data.command.startsWith ('D09')) {
+            if (data.startsWith ('D09')) {
 
                 if (device_model_simulation.power == "1") {
 
@@ -102,7 +102,7 @@
                 }
             }
                 
-              if (data.command.startsWith ('Q')) {
+              if (data.startsWith ('Q')) {
                 if(device_model_simulation.power=="1"){
                     device_model_simulation.power="0";
                 }

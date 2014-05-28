@@ -376,7 +376,7 @@
             series: ui.getData()
         });
 	
-}
+	}
 
 
 })(typeof exports == 'undefined'? this['ui'] = {}: exports);
