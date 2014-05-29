@@ -1,9 +1,9 @@
-var util = require ('util');
-var os = require ('os');
+var util = require('util');
+var os = require('os');
 
-(function(exports) {
+(function (exports) {
 
-	exports.getSerialNumber = function (callback) {
+    exports.getSerialNumber = function (callback) {
 
         var b = require('bonescript');
 
@@ -15,12 +15,12 @@ var os = require ('os');
 
                 callback(x.serialNumber);
 
-            
+
             } else {
 
-                require('getmac').getMac(function(err,macAddress){
+                require('getmac').getMac(function (err, macAddress) {
 
-                    if (err)  throw err;
+                    if (err) throw err;
                     serialnumber = macAddress.replace(/\:/g, "");
                     callback(serialnumber);
                 });
@@ -33,25 +33,25 @@ var os = require ('os');
 
     exports.getIPAddress = function (callback) {
 
-    	var interfaces = os.networkInterfaces();
-    	var addresses = [];
-    	for (k in interfaces) {
-    		for (k2 in interfaces[k]) {
-    			var address = interfaces[k][k2];
-    			if (address.family == "IPv4" && !address.internal) {
-    				ipaddress = address.address;
-    			}
-    		}
-    	}
+        var interfaces = os.networkInterfaces();
+        var addresses = [];
+        for (k in interfaces) {
+            for (k2 in interfaces[k]) {
+                var address = interfaces[k][k2];
+                if (address.family == "IPv4" && !address.internal) {
+                    ipaddress = address.address;
+                }
+            }
+        }
 
-    	if (!ipaddress) {
-    		ipaddress = "127.0.0.1";
-    	}
+        if (!ipaddress) {
+            ipaddress = "127.0.0.1";
+        }
 
         callback(ipaddress);
 
     }
-  
 
 
-})(typeof exports == 'undefined'? this['beaglebonechip'] = {}: exports);
+
+})(typeof exports == 'undefined' ? this['beaglebonechip'] = {} : exports);

@@ -1,44 +1,60 @@
-(function(exports) {
+(function (exports) {
 
     var localeventbus;
     var data;
 
     exports.init = function (eventbus) {
- 
+
         localeventbus = eventbus;
 
         if (typeof String.prototype.startsWith != 'function') {
-            String.prototype.startsWith = function (str){
+            String.prototype.startsWith = function (str) {
                 return this.indexOf(str) == 0;
             };
         }
 
 
-        eventbus.on ("ui.update", function(data) {   
+        eventbus.on("ui.update", function (data) {
 
             switch (parseInt(data.model.usrled0)) {
-                    case 0: $('#usrled0button').removeClass('active'); break;
-                    case 1: $('#usrled0button').addClass('active'); break;
+                case 0:
+                    $('#usrled0button').removeClass('active');
+                    break;
+                case 1:
+                    $('#usrled0button').addClass('active');
+                    break;
             }
 
             switch (parseInt(data.model.usrled1)) {
-                    case 0: $('#usrled1button').removeClass('active'); break;
-                    case 1: $('#usrled1button').addClass('active'); break;
+                case 0:
+                    $('#usrled1button').removeClass('active');
+                    break;
+                case 1:
+                    $('#usrled1button').addClass('active');
+                    break;
             }
 
             switch (parseInt(data.model.usrled2)) {
-                    case 0: $('#usrled2button').removeClass('active'); break;
-                    case 1: $('#usrled2button').addClass('active'); break;
+                case 0:
+                    $('#usrled2button').removeClass('active');
+                    break;
+                case 1:
+                    $('#usrled2button').addClass('active');
+                    break;
             }
 
             switch (parseInt(data.model.usrled3)) {
-                    case 0: $('#usrled3button').removeClass('active'); break;
-                    case 1: $('#usrled3button').addClass('active'); break;
+                case 0:
+                    $('#usrled3button').removeClass('active');
+                    break;
+                case 1:
+                    $('#usrled3button').addClass('active');
+                    break;
             }
 
             if (data.model.lastserialmessage != "") {
 
-                $('#serialconsole').val( $('#serialconsole').val() + data.model.lastserialmessage + "\n" );
+                $('#serialconsole').val($('#serialconsole').val() + data.model.lastserialmessage + "\n");
 
             }
         });
@@ -46,19 +62,29 @@
     };
 
     exports.serialopen = function serialopen() {
-        localeventbus.emit ("ui.command", {"command": "serialopen"});
+        localeventbus.emit("ui.command", {
+            "command": "serialopen"
+        });
     };
 
     exports.serialclose = function serialclose() {
-        localeventbus.emit ("ui.command", {"command": "serialclose"});
+        localeventbus.emit("ui.command", {
+            "command": "serialclose"
+        });
     };
 
     exports.serialsetbaud = function serialsetbaud() {
-        localeventbus.emit ("ui.command", {"command": "serialsetbaud", "value": $('#serialbaud').val()});
+        localeventbus.emit("ui.command", {
+            "command": "serialsetbaud",
+            "value": $('#serialbaud').val()
+        });
     };
 
     exports.serialsetport = function serialsetport() {
-        localeventbus.emit ("ui.command", {"command": "serialsetport", "value": $('#serialport').val()});
+        localeventbus.emit("ui.command", {
+            "command": "serialsetport",
+            "value": $('#serialport').val()
+        });
     };
 
     exports.sendserial = function sendserial() {
@@ -67,7 +93,10 @@
 
         data = $('#sendserial').val();
 
-        localeventbus.emit ("ui.command", {"command": "sendserial", "value": data});
+        localeventbus.emit("ui.command", {
+            "command": "sendserial",
+            "value": data
+        });
 
     };
 
@@ -76,12 +105,16 @@
         var data = "";
 
         if ($('#usrled0button').hasClass('active')) {
-            data= "0";
+            data = "0";
         } else {
             data = "1";
         }
 
-        localeventbus.emit ("ui.command", {"command": "setled", "led": "USR0", "value": data});
+        localeventbus.emit("ui.command", {
+            "command": "setled",
+            "led": "USR0",
+            "value": data
+        });
 
     };
 
@@ -90,12 +123,16 @@
         var data = "";
 
         if ($('#usrled1button').hasClass('active')) {
-            data= "0";
+            data = "0";
         } else {
             data = "1";
         }
 
-        localeventbus.emit ("ui.command", {"command": "setled", "led": "USR1", "value": data});
+        localeventbus.emit("ui.command", {
+            "command": "setled",
+            "led": "USR1",
+            "value": data
+        });
     };
 
     exports.toggleusrled2 = function toggleusrled2() {
@@ -103,12 +140,16 @@
         var data = "";
 
         if ($('#usrled2button').hasClass('active')) {
-            data= "0";
+            data = "0";
         } else {
             data = "1";
         }
 
-        localeventbus.emit ("ui.command", {"command": "setled", "led": "USR2", "value": data});
+        localeventbus.emit("ui.command", {
+            "command": "setled",
+            "led": "USR2",
+            "value": data
+        });
     };
 
     exports.toggleusrled3 = function toggleusrled3() {
@@ -116,14 +157,18 @@
         var data = "";
 
         if ($('#usrled3button').hasClass('active')) {
-            data= "0";
+            data = "0";
         } else {
             data = "1";
         }
 
-        localeventbus.emit ("ui.command", {"command": "setled", "led": "USR3", "value": data});
+        localeventbus.emit("ui.command", {
+            "command": "setled",
+            "led": "USR3",
+            "value": data
+        });
     };
-  
-  
 
-})(typeof exports == 'undefined'? this['ui'] = {}: exports);
+
+
+})(typeof exports == 'undefined' ? this['ui'] = {} : exports);

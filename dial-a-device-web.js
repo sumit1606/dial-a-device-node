@@ -1,7 +1,7 @@
-var myhttp = require ('http');
-var querystring = require ('querystring');
+var myhttp = require('http');
+var querystring = require('querystring');
 
-(function(exports) {
+(function (exports) {
 
     exports.getBBInfo = function (host, myip, myserial, callback, callback_error) {
 
@@ -9,7 +9,7 @@ var querystring = require ('querystring');
 
             var hn = host.substr(0, host.indexOf(":"));
 
-            var port = host.substr(host.indexOf(":")+1);
+            var port = host.substr(host.indexOf(":") + 1);
 
         } else {
 
@@ -21,62 +21,64 @@ var querystring = require ('querystring');
 
             "beaglebone[ipaddress]": myip,
 
-            "beaglebone[serialnumber]": myserial,
+                "beaglebone[serialnumber]": myserial,
 
             commit: "Update Beaglebone"
 
         });
 
-    	var options =  {
-    		hostname: hn,
-    		port: port,
-    		path: "/connect/"+myserial,
-    		method: "POST",
-    		headers: {'content-type': 'application/x-www-form-urlencoded'}
-    	}
+        var options = {
+            hostname: hn,
+            port: port,
+            path: "/connect/" + myserial,
+            method: "POST",
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded'
+            }
+        }
 
 
-    	var request = myhttp.request (options, function (res) {
+        var request = myhttp.request(options, function (res) {
 
-    		var body = "";
+            var body = "";
 
             res.setEncoding("utf8");
 
-            res.on ('data', function (chunk) {
+            res.on('data', function (chunk) {
                 body += chunk;
             });
 
-            res.on ('end', function () {
-                var myResponse = JSON.parse (body);
+            res.on('end', function () {
+                var myResponse = JSON.parse(body);
 
                 if (myResponse) {
 
                     if (typeof myResponse.table === "undefined") {
 
-                        callback (myResponse);
+                        callback(myResponse);
 
                     } else {
 
-                        callback (myResponse.table);
+                        callback(myResponse.table);
 
                     }
                 } else {
-                    callback ({});
+                    callback({});
                 }
             });
 
-      
-    	}).on ('error', function (e) {
 
-            callback_error (e.message);
+        }).on('error', function (e) {
 
-    	});
+            callback_error(e.message);
 
-        request.write (postdata);
+        });
+
+        request.write(postdata);
         request.end();
 
     }
-  
 
 
-})(typeof exports == 'undefined'? this['dialadeviceweb'] = {}: exports);
+
+})(typeof exports == 'undefined' ? this['dialadeviceweb'] = {} : exports);

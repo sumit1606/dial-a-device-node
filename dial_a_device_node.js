@@ -1,291 +1,303 @@
-(function(exports) {
+(function (exports) {
 
-var consolelogger, simulate, device, device_id, device_library, device_type, deviceconnection, ev, eventbus, heartbeat, http, ser_baud, ser_string, simulation, status, unique_id, url_string, util, webconnection;
+    var consolelogger, simulate, device, device_id, device_library, device_type, deviceconnection, ev, eventbus, heartbeat, http, ser_baud, ser_string, simulation, status, unique_id, url_string, util, webconnection;
 
-var serialnumber, ipaddress, server;
+    var serialnumber, ipaddress, server;
 
-var bbinfo;
+    var bbinfo;
 
-var updateBB_loop = false;
+    var updateBB_loop = false;
 
-var dialadevicenode;
+    var dialadevicenode;
 
-var heartbeatinterval;
+    var heartbeatinterval;
 
-// default parameters
-ser_string = '/dev/ttyUSB0';
+    // default parameters
+    ser_string = '/dev/ttyUSB0';
 
-ser_baud = 115200;
-device_id = 0;
+    ser_baud = 115200;
+    device_id = 0;
 
-url_string = '192.168.7.1:3000/websocket';
+    url_string = '192.168.7.1:3000/websocket';
 
-device_type = 'purebeaglebone';
-unique_id = '';
-simulate = false;
+    device_type = 'purebeaglebone';
+    unique_id = '';
+    simulate = false;
 
-exports.set_url_string = function (param) {
-	url_string = param;
-};
+    exports.set_url_string = function (param) {
+        url_string = param;
+    };
 
-exports.set_device_type = function (param) {
-	device_type = param;
-};
+    exports.set_device_type = function (param) {
+        device_type = param;
+    };
 
-exports.set_ser_string = function (param) {
-	ser_string = param;
-};
+    exports.set_ser_string = function (param) {
+        ser_string = param;
+    };
 
-exports.set_simulate = function (param) {
-	simulate = param;
-};
+    exports.set_simulate = function (param) {
+        simulate = param;
+    };
 
-exports.set_device_id = function (param) {
-	device_id = param;
-};
+    exports.set_device_id = function (param) {
+        device_id = param;
+    };
 
-exports.set_unique_id = function (param) {
-	unique_id = param;
-};
+    exports.set_unique_id = function (param) {
+        unique_id = param;
+    };
 
-exports.set_ser_baud = function (param) {
-	ser_baud = param;
-};
+    exports.set_ser_baud = function (param) {
+        ser_baud = param;
+    };
 
 
-function getBBInfo(interval, action) {
+    function getBBInfo(interval, action) {
 
-	if (typeof interval === "undefined") {interval = 1000}
+        if (typeof interval === "undefined") {
+            interval = 1000
+        }
 
-	if (typeof action === "undefined") {action = "start"}
+        if (typeof action === "undefined") {
+            action = "start"
+        }
 
 
-	var intervalIDcheck = setInterval (function() {
+        var intervalIDcheck = setInterval(function () {
 
-		if (bbinfo && action != "heartbeat") {
-			clearInterval(intervalIDcheck);
+            if (bbinfo && action != "heartbeat") {
+                clearInterval(intervalIDcheck);
 
-			bbinfo.ipaddress = ipaddress;
+                bbinfo.ipaddress = ipaddress;
 
-			if (bbinfo.id > 0) {
+                if (bbinfo.id > 0) {
 
-				if (action == "start") {
+                    if (action == "start") {
 
-					run_dial_a_device();
+                        run_dial_a_device();
 
-				} else if (action == "heartbeat") {
+                    } else if (action == "heartbeat") {
 
-					getBBInfo(10000, "heartbeat");
+                        getBBInfo(10000, "heartbeat");
 
-				}
+                    }
 
-			} else {
+                } else {
 
-				console.log ("beaglebone not registered");
+                    console.log("beaglebone not registered");
 
-				if (typeof dialadevicenode === "undefined") { process.exit(1); } else { dialadevicenode.halt(); }
-		
-				
-			}
-		} else {
+                    if (typeof dialadevicenode === "undefined") {
+                        process.exit(1);
+                    } else {
+                        dialadevicenode.halt();
+                    }
 
-			var dialadeviceweb = require ('./dial-a-device-web.js');
 
-			dialadeviceweb.getBBInfo(server, ipaddress, serialnumber, function (message) {
-				
-				console.log ("beaglebone registration response");
-				console.log (message);
+                }
+            } else {
 
-				bbinfo = message;
+                var dialadeviceweb = require('./dial-a-device-web.js');
 
-			}, function (message) {
-				clearInterval(intervalIDcheck);
-				console.log ("beaglebone registration failed ("+message+")");
+                dialadeviceweb.getBBInfo(server, ipaddress, serialnumber, function (message) {
 
-				var exec = require ('child_process').exec;
+                    console.log("beaglebone registration response");
+                    console.log(message);
 
-				exec ('udhcpc -i eth0', function(error, stdout, stderr) {
+                    bbinfo = message;
 
-					console.log ("resetting DHCP on eth0...");
+                }, function (message) {
+                    clearInterval(intervalIDcheck);
+                    console.log("beaglebone registration failed (" + message + ")");
 
-					bbinfo = undefined;
+                    var exec = require('child_process').exec;
 
-					getBBInfo(8000, "start");
+                    exec('udhcpc -i eth0', function (error, stdout, stderr) {
 
-				});
+                        console.log("resetting DHCP on eth0...");
 
-				if (typeof dialadevicenode === "undefined") { process.exit(1); } else { dialadevicenode.halt(); }
+                        bbinfo = undefined;
 
-				
+                        getBBInfo(8000, "start");
 
-			});
+                    });
 
+                    if (typeof dialadevicenode === "undefined") {
+                        process.exit(1);
+                    } else {
+                        dialadevicenode.halt();
+                    }
 
-		}
 
-	}, interval);
 
-}
+                });
 
 
-exports.run_beaglebone = function(host) {
+            }
 
-	server = host;
+        }, interval);
 
-	console.log ("connecting to "+host);
+    }
 
-	var beaglebonechip = require ('./beaglebonechip.js');
 
-	beaglebonechip.getSerialNumber(function(ser) {
+    exports.run_beaglebone = function (host) {
 
-		console.log ("serialnumber " +ser);
+        server = host;
 
-		serialnumber = ser;
+        console.log("connecting to " + host);
 
-		beaglebonechip.getIPAddress(function(ip) {
+        var beaglebonechip = require('./beaglebonechip.js');
 
-			ipaddress = ip;
+        beaglebonechip.getSerialNumber(function (ser) {
 
-			getBBInfo(2000, "start");
+            console.log("serialnumber " + ser);
 
-		});
+            serialnumber = ser;
 
-	});
+            beaglebonechip.getIPAddress(function (ip) {
 
+                ipaddress = ip;
 
-};
+                getBBInfo(2000, "start");
 
-function run_dial_a_device() {
+            });
 
-	if (!bbinfo.device) {
+        });
 
-		console.log ("no device registered for this beaglebone");
 
-		getBBInfo(5000);
+    };
 
+    function run_dial_a_device() {
 
-	} else {
+        if (!bbinfo.device) {
 
-		getBBInfo(10000, "heartbeat");
+            console.log("no device registered for this beaglebone");
 
-		// successfully connected
+            getBBInfo(5000);
 
-		dialadevicenode = require ('./dial_a_device_node.js');
 
-		dialadevicenode.set_ser_string (bbinfo.device.portname);
+        } else {
 
-		dialadevicenode.set_ser_baud (parseInt(bbinfo.device.portbaud));
+            getBBInfo(10000, "heartbeat");
 
-		dialadevicenode.set_device_id (bbinfo.device.id);
+            // successfully connected
 
-		dialadevicenode.set_url_string (server+'/websocket');
+            dialadevicenode = require('./dial_a_device_node.js');
 
-		dialadevicenode.set_device_type (bbinfo.devicetype.name);
+            dialadevicenode.set_ser_string(bbinfo.device.portname);
 
-		dialadevicenode.set_unique_id (serialnumber);
+            dialadevicenode.set_ser_baud(parseInt(bbinfo.device.portbaud));
 
-		dialadevicenode.set_simulate (false);
+            dialadevicenode.set_device_id(bbinfo.device.id);
 
-		dialadevicenode.run();
+            dialadevicenode.set_url_string(server + '/websocket');
 
-	}
+            dialadevicenode.set_device_type(bbinfo.devicetype.name);
 
+            dialadevicenode.set_unique_id(serialnumber);
 
-};
+            dialadevicenode.set_simulate(false);
 
+            dialadevicenode.run();
 
-exports.halt = function (eventbus) {
+        }
 
-	webconnection.halt;
 
-	clearInterval(heartbeatinterval);
+    };
 
-	process.exit(1);
 
-}
+    exports.halt = function (eventbus) {
 
-exports.run = function (eventbus) {
+        webconnection.halt;
 
-require ('coffee-script');
+        clearInterval(heartbeatinterval);
 
-require('./app/assets/javascripts/dial_a_device_node/websocket_rails/websocket_rails.js.coffee');
+        process.exit(1);
 
-require('./app/assets/javascripts/dial_a_device_node/websocket_rails/event.js.coffee');
+    }
 
-require('./app/assets/javascripts/dial_a_device_node/websocket_rails/abstract_connection.js.coffee');
+    exports.run = function (eventbus) {
 
-require('./app/assets/javascripts/dial_a_device_node/websocket_rails/http_connection.js.coffee');
+        require('coffee-script');
 
-require('./app/assets/javascripts/dial_a_device_node/websocket_rails/websocket_connection.js.coffee');
+        require('./app/assets/javascripts/dial_a_device_node/websocket_rails/websocket_rails.js.coffee');
 
-require('./app/assets/javascripts/dial_a_device_node/websocket_rails/channel.js.coffee');
+        require('./app/assets/javascripts/dial_a_device_node/websocket_rails/event.js.coffee');
 
-util = require('util');
+        require('./app/assets/javascripts/dial_a_device_node/websocket_rails/abstract_connection.js.coffee');
 
-ev = require('events');
+        require('./app/assets/javascripts/dial_a_device_node/websocket_rails/http_connection.js.coffee');
 
-http = require('http');
+        require('./app/assets/javascripts/dial_a_device_node/websocket_rails/websocket_connection.js.coffee');
 
-device_library = './app/assets/javascripts/dial_a_device_node/devices/' + device_type + '.js';
+        require('./app/assets/javascripts/dial_a_device_node/websocket_rails/channel.js.coffee');
 
-device = require(device_library);
+        util = require('util');
 
-simulation = require('./app/assets/javascripts/dial_a_device_node/devices/'+ device_type +'_SIM.js');
+        ev = require('events');
 
-deviceconnection = require('./app/assets/javascripts/dial_a_device_node/deviceconnection.js');
+        http = require('http');
 
-webconnection = require('./app/assets/javascripts/dial_a_device_node/webconnection.js');
+        device_library = './app/assets/javascripts/dial_a_device_node/devices/' + device_type + '.js';
 
-consolelogger = require('./app/assets/javascripts/dial_a_device_node/consolelogger.js');
+        device = require(device_library);
 
-status = require('./app/assets/javascripts/dial_a_device_node/systemstatus.js');
+        simulation = require('./app/assets/javascripts/dial_a_device_node/devices/' + device_type + '_SIM.js');
 
-eventbus = new ev.EventEmitter;
+        deviceconnection = require('./app/assets/javascripts/dial_a_device_node/deviceconnection.js');
 
-status.init(eventbus);
+        webconnection = require('./app/assets/javascripts/dial_a_device_node/webconnection.js');
 
-webconnection.init(eventbus, true);
+        consolelogger = require('./app/assets/javascripts/dial_a_device_node/consolelogger.js');
 
-webconnection.initsubscribe;
+        status = require('./app/assets/javascripts/dial_a_device_node/systemstatus.js');
 
-eventbus.emit("device.announce.deviceid", device_id);
+        eventbus = new ev.EventEmitter;
 
-eventbus.emit("device.announce.devicetype", device_type);
+        status.init(eventbus);
 
-device.init(eventbus);
+        webconnection.init(eventbus, true);
 
-consolelogger.init(eventbus);
+        webconnection.initsubscribe;
 
-deviceconnection.init(eventbus);
+        eventbus.emit("device.announce.deviceid", device_id);
 
-eventbus.emit("serial.set.baud", ser_baud);
+        eventbus.emit("device.announce.devicetype", device_type);
 
-eventbus.emit("serial.set.port", ser_string);
+        device.init(eventbus);
 
-if (ser_string == "serial") {
+        consolelogger.init(eventbus);
 
-	eventbus.emit("serial.connect");
+        deviceconnection.init(eventbus);
 
-}
+        eventbus.emit("serial.set.baud", ser_baud);
 
-eventbus.emit("webconnection.set.channelname", 'channel_dev_' + device_id);
+        eventbus.emit("serial.set.port", ser_string);
 
-eventbus.emit("webconnection.set.url", url_string);
+        if (ser_string == "serial") {
 
-eventbus.emit("webconnection.set.deviceendpoint", true);
+            eventbus.emit("serial.connect");
 
-eventbus.emit("webconnection.connect");
+        }
 
-if (simulate) {
-	simulation.init(eventbus);
-}
+        eventbus.emit("webconnection.set.channelname", 'channel_dev_' + device_id);
 
-heartbeat = function() {
-  return eventbus.emit("device.heartbeat");
-};
+        eventbus.emit("webconnection.set.url", url_string);
 
-heartbeatinterval = setInterval(heartbeat, 1000);
+        eventbus.emit("webconnection.set.deviceendpoint", true);
 
-};
+        eventbus.emit("webconnection.connect");
 
-})(typeof exports == 'undefined'? this['dialadevicenode'] = {}: exports);
+        if (simulate) {
+            simulation.init(eventbus);
+        }
+
+        heartbeat = function () {
+            return eventbus.emit("device.heartbeat");
+        };
+
+        heartbeatinterval = setInterval(heartbeat, 1000);
+
+    };
+
+})(typeof exports == 'undefined' ? this['dialadevicenode'] = {} : exports);

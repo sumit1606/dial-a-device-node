@@ -1,4 +1,4 @@
-(function(exports) {
+(function (exports) {
 
     var device_model = {
 
@@ -12,24 +12,24 @@
     exports.init = function (eventbus) {
 
         if (typeof String.prototype.startsWith != 'function') {
-            String.prototype.startsWith = function (str){
+            String.prototype.startsWith = function (str) {
                 return this.indexOf(str) == 0;
             };
         }
 
-        eventbus.on ("device.initialized", function () {
+        eventbus.on("device.initialized", function () {
 
         });
 
-        eventbus.on ("device.requestheartbeat", function () {
+        eventbus.on("device.requestheartbeat", function () {
 
         });
 
 
-        eventbus.on ("device.reply", function(lastmessage, data) {
+        eventbus.on("device.reply", function (lastmessage, data) {
 
 
-             if (lastmessage.startsWith ('heartbeat')) {
+            if (lastmessage.startsWith('heartbeat')) {
 
                 eventbus.emit('device.assumeconnected');
 
@@ -42,18 +42,21 @@
                     device_model.exttemperature = re[2].trim();
                     device_model.vacuum = re[3].trim();
 
-                    eventbus.emit('ui.update', {"component": "all", "model": device_model});
-            
+                    eventbus.emit('ui.update', {
+                        "component": "all",
+                        "model": device_model
+                    });
+
                     eventbus.emit('device.snapshot', device_model);
                 }
-             }
+            }
 
         });
-   
 
-	   eventbus.emit ("device.initialized");
+
+        eventbus.emit("device.initialized");
 
     };
 
 
-})(typeof exports == 'undefined'? this['device'] = {}: exports);
+})(typeof exports == 'undefined' ? this['device'] = {} : exports);

@@ -1,13 +1,13 @@
-(function(exports) {
+(function (exports) {
 
-	var device_model_simulation = {
+    var device_model_simulation = {
 
 
     };
 
     exports.init = function (eventbus) {
- 
-	
+
+
     };
 
-})(typeof exports == 'undefined'? this['simulator'] = {}: exports);
+})(typeof exports == 'undefined' ? this['simulator'] = {} : exports);

@@ -1,186 +1,195 @@
-(function(exports) {
+(function (exports) {
 
-	var websockets;
+    var websockets;
 
-	var localeventbus;
+    var localeventbus;
 
-	var channel;
+    var channel;
 
-	var deviceendpoint = false;
+    var deviceendpoint = false;
 
-	var simulation = false;
+    var simulation = false;
 
-	var device_info = {
+    var device_info = {
 
-		deviceid: "", 
-		operationid: "",
-		devicetype: ""
+        deviceid: "",
+        operationid: "",
+        devicetype: ""
 
-	}
+    }
 
-	var channelname = "";
-	var url = "";
+    var channelname = "";
+    var url = "";
 
 
-	exports.websockets = websockets;
+    exports.websockets = websockets;
 
-	exports.halt = function () {
+    exports.halt = function () {
 
-		if (!(typeof websockets === "undefined")) { websockets.close(); }	
+        if (!(typeof websockets === "undefined")) {
+            websockets.close();
+        }
 
-	}
+    }
 
-	exports.init = function (eventbus, de) {
-    	localeventbus = eventbus;
+    exports.init = function (eventbus, de) {
+        localeventbus = eventbus;
 
-    	deviceendpoint = de;
+        deviceendpoint = de;
 
 
 
-    	localeventbus.emit ("initialized");
+        localeventbus.emit("initialized");
 
-    	localeventbus.emit ("status.deviceendpoint", deviceendpoint);
+        localeventbus.emit("status.deviceendpoint", deviceendpoint);
 
-    	localeventbus.on ("serial.simulation", function () {
-        
-	        simulation = true;
-	        
-	    });
+        localeventbus.on("serial.simulation", function () {
 
-    	localeventbus.on ("device.announce.deviceid", function (data) {
-    		device_info.deviceid = data;
-    	});
+            simulation = true;
 
-    	localeventbus.on ("device.announce.operationid", function (data) {
-    		device_info.operationid = data;
-    	});
+        });
 
-    	localeventbus.on ("device.announce.devicetype", function (data) {
-    		device_info.devicetype = data;
-    	});
+        localeventbus.on("device.announce.deviceid", function (data) {
+            device_info.deviceid = data;
+        });
 
-    	localeventbus.on ("webconnection.set.channelname", function (data) {
-    		channelname = data;
-    	});
+        localeventbus.on("device.announce.operationid", function (data) {
+            device_info.operationid = data;
+        });
 
-    	localeventbus.on ("webconnection.set.url", function (data) {
-    		url = data;
-    	});
+        localeventbus.on("device.announce.devicetype", function (data) {
+            device_info.devicetype = data;
+        });
 
-    	localeventbus.on ("webconnection.set.deviceendpoint", function (data) {
-    		(typeof data == 'object'? deviceendpoint = data[0] : deviceendpoint = data);
-    	});
+        localeventbus.on("webconnection.set.channelname", function (data) {
+            channelname = data;
+        });
 
-    	localeventbus.on ("webconnection.connect", function (data) {
+        localeventbus.on("webconnection.set.url", function (data) {
+            url = data;
+        });
 
-    		localeventbus.emit('connecting', url);	
+        localeventbus.on("webconnection.set.deviceendpoint", function (data) {
+            (typeof data == 'object' ? deviceendpoint = data[0] : deviceendpoint = data);
+        });
 
-	    	websockets = new WebSocketRails (url, true);
+        localeventbus.on("webconnection.connect", function (data) {
 
-			websockets.bind ("connection_closed", function (data) {
-				localeventbus.emit('webconnection.closed');
-			});
-		
-			websockets.bind ("connection_error", function (data) {
-				localeventbus.emit('webconnection.closed');
-			});
+            localeventbus.emit('connecting', url);
 
+            websockets = new WebSocketRails(url, true);
 
-			localeventbus.on ("device.snapshot", function (data) {
+            websockets.bind("connection_closed", function (data) {
+                localeventbus.emit('webconnection.closed');
+            });
 
-				websockets.trigger ("device.log", {"metainfo": device_info, "data": data});
-			});
+            websockets.bind("connection_error", function (data) {
+                localeventbus.emit('webconnection.closed');
+            });
 
-			websockets.on_open = function(data) {
-				localeventbus.emit('webconnection.connected', url);
 
-				localeventbus.emit('channel.subscribing', channelname);
+            localeventbus.on("device.snapshot", function (data) {
 
-	    		channel = websockets.subscribe (channelname);
+                websockets.trigger("device.log", {
+                    "metainfo": device_info,
+                    "data": data
+                });
+            });
 
-	    		if (simulation) {
+            websockets.on_open = function (data) {
+                localeventbus.emit('webconnection.connected', url);
 
-	    			// create a local loop for ui updates
+                localeventbus.emit('channel.subscribing', channelname);
 
-	    			localeventbus.on ("ui.command", function (data) {
+                channel = websockets.subscribe(channelname);
 
-	    				localeventbus.emit ("device.command", data);
-						
-					});
+                if (simulation) {
 
-	    		}
+                    // create a local loop for ui updates
 
+                    localeventbus.on("ui.command", function (data) {
 
-				if (deviceendpoint) {
+                        localeventbus.emit("device.command", data);
 
-					localeventbus.on ("ui.status", function (data) {
-						channel.trigger ("device.status", data);
-					});
+                    });
 
-					// device-local loop
+                }
 
-					localeventbus.on ("device.requestheartbeat", function (data) {
-						localeventbus.emit ("device.heartbeat");
-					});
 
+                if (deviceendpoint) {
 
-					// new commands
+                    localeventbus.on("ui.status", function (data) {
+                        channel.trigger("device.status", data);
+                    });
 
-					localeventbus.on ("ui.update", function (data) {
-						channel.trigger ("ui.update", data);
-					});
+                    // device-local loop
 
-					channel.bind ('subscriber_join', function (data) {
-					   localeventbus.emit ("channel.ui_connected", data);
-					});
+                    localeventbus.on("device.requestheartbeat", function (data) {
+                        localeventbus.emit("device.heartbeat");
+                    });
 
-					channel.bind ('subscriber_part', function (data) {
-					   localeventbus.emit ("channel.ui_disconnected", data);
-					});
 
+                    // new commands
 
-				} else {
+                    localeventbus.on("ui.update", function (data) {
+                        channel.trigger("ui.update", data);
+                    });
 
-					channel.bind ("device.status", function (data) {
-						localeventbus.emit ("status.incoming", data);
-					});
+                    channel.bind('subscriber_join', function (data) {
+                        localeventbus.emit("channel.ui_connected", data);
+                    });
 
-					// new commands
+                    channel.bind('subscriber_part', function (data) {
+                        localeventbus.emit("channel.ui_disconnected", data);
+                    });
 
-					channel.bind ("ui.update", function (data) {
-						localeventbus.emit ("ui.update", data);
-					});
+                    channel.bind('device.command', function (data) {
+                        localeventbus.emit("device.command", data);
+                    });
 
-					channel.bind ("ui.status", function (data) {
-						localeventbus.emit ("status.incoming", data);
-					});
 
-					localeventbus.on ("ui.command", function (data) {
-						channel.trigger ("device.command", data);
-					});
+                } else {
 
-					channel.bind ('subscriber_join', function (data) {
-					   localeventbus.emit ("channel.dev_connected", data);
-					});
+                    channel.bind("device.status", function (data) {
+                        localeventbus.emit("status.incoming", data);
+                    });
 
-					channel.bind ('subscriber_part', function (data) {
-					   localeventbus.emit ("channel.dev_disconnected", data);
-					});
+                    // new commands
 
-				}
-		
-	    		localeventbus.emit('channel.subscription', channelname, channel);
-			}
+                    channel.bind("ui.update", function (data) {
+                        localeventbus.emit("ui.update", data);
+                    });
 
-    	});
-	
-	};
+                    channel.bind("ui.status", function (data) {
+                        localeventbus.emit("status.incoming", data);
+                    });
 
-	exports.webconnect = function (url) {
-    	
-	
-  	};
-  
+                    localeventbus.on("ui.command", function (data) {
+                        channel.trigger("device.command", data);
+                    });
 
+                    channel.bind('subscriber_join', function (data) {
+                        localeventbus.emit("channel.dev_connected", data);
+                    });
 
-})(typeof exports == 'undefined'? this['webconnection'] = {}: exports);
+                    channel.bind('subscriber_part', function (data) {
+                        localeventbus.emit("channel.dev_disconnected", data);
+                    });
+
+                }
+
+                localeventbus.emit('channel.subscription', channelname, channel);
+            }
+
+        });
+
+    };
+
+    exports.webconnect = function (url) {
+
+
+    };
+
+
+
+})(typeof exports == 'undefined' ? this['webconnection'] = {} : exports);
