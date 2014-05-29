@@ -170,7 +170,7 @@ function run_dial_a_device() {
 
 		// successfully connected
 
-		dialadevicenode = require ('dial-a-device-node');
+		dialadevicenode = require ('./dial_a_device_node.js');
 
 		dialadevicenode.set_ser_string (bbinfo.device.portname);
 
