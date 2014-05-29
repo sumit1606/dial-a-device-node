@@ -43,7 +43,7 @@
         }
   
           
-        eventbus.on ("device.command", function (data) {
+        eventbus.on ("serial.command", function (data) {
 
             if (data.startsWith ('D05')) {
 
@@ -59,7 +59,7 @@
         });
 
 
-          eventbus.on ("device.immediatecommand", function (data) {
+          eventbus.on ("serial.immediatecommand", function (data) {
 
 
             if (data.startsWith ('T')) {

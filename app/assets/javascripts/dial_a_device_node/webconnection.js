@@ -113,28 +113,8 @@
 
 				if (deviceendpoint) {
 
-					channel.bind ("device.command", function (data) {
-						localeventbus.emit ("device.command", data);
-					});
-
-					channel.bind ("device.immediatecommand", function (data) {
-						localeventbus.emit ("device.immediatecommand", data);
-					});
-
-					channel.bind ("device.remotecommand", function (data) {
-						localeventbus.emit ("device.immediatecommand", data);
-					});
-
-					localeventbus.on ("device.reply", function (data) {
-						channel.trigger ("device.reply", data);
-					});
-
 					localeventbus.on ("ui.status", function (data) {
 						channel.trigger ("device.status", data);
-					});
-
-					localeventbus.on ("device.snapshot", function (data) {
-						channel.trigger ("device.updatemodel", data);
 					});
 
 					// device-local loop
@@ -161,28 +141,8 @@
 
 				} else {
 
-					channel.bind ("device.reply", function (data) {
-						localeventbus.emit ("device.reply", data);
-					});
-
-					localeventbus.on ("device.command", function (data) {
-						channel.trigger ("device.command", data);
-					});
-
-					localeventbus.on ("device.immediatecommand", function (data) {
-						channel.trigger ("device.immediatecommand", data);
-					});
-
 					channel.bind ("device.status", function (data) {
 						localeventbus.emit ("status.incoming", data);
-					});
-
-					channel.bind ("device.updatemodel", function (data) {
-						localeventbus.emit ("device.updatemodel", data);
-					});
-
-					localeventbus.on ("device.remotecommand", function (data) {
-						channel.trigger ("device.remotecommand", data);
 					});
 
 					// new commands

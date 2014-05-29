@@ -25,17 +25,6 @@
 
         });
 
-        eventbus.on ("serial.received", function(lm, data) {
-            eventbus.emit('device.received', lm, data);        
-        });
-
-        eventbus.on ("device.updatemodel", function (param) {
-
-            device_model = param;
-
-            eventbus.emit('ui.update', {"component": "all", "model": device_model});
-        });
-        
 
         eventbus.on ("device.reply", function(lastmessage, data) {
 

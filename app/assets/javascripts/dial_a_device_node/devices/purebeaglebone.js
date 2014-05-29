@@ -23,13 +23,6 @@
 
         });
 
-        eventbus.on ("device.updatemodel", function (param) {
-
-            device_model = param;
-
-            eventbus.emit('ui.update', {"component": "all", "model": device_model});
-    
-        });
 
         eventbus.on ("device.heartbeat", function () {
 
@@ -101,7 +94,7 @@
 
             if (data.command == "sendserial") {
 
-                localeventbus.emit ("serial.send", data.value);
+                localeventbus.emit ("serial.immediatecommand", data.value);
             }
 
             if (data.command == "serialsetport") {

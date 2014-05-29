@@ -43,14 +43,6 @@
         eventbus.on ("device.initialized", function () {
 
         });
-
-
-        eventbus.on ("device.updatemodel", function (param) {
-
-            device_model = param;
-
-            eventbus.emit('ui.update', {"component": "all", "model": device_model});
-        });
         
 
         eventbus.on ("device.snapshot", function (param) {
@@ -73,12 +65,54 @@
 
         eventbus.on ("device.heartbeat", function () {
 
-            eventbus.emit ("device.command", "pP");
-            eventbus.emit ("device.command", "gM");
-            eventbus.emit ("device.command", "gUp");
-            eventbus.emit ("device.command", "gV");
-            eventbus.emit ("device.command", "gW");
+            eventbus.emit ("serial.command", "pP");
+            eventbus.emit ("serial.command", "gM");
+            eventbus.emit ("serial.command", "gUp");
+            eventbus.emit ("serial.command", "gV");
+            eventbus.emit ("serial.command", "gW");
             
+        });
+
+        
+
+
+        eventbus.on ("device.command", function(data) {
+
+            if (data.command == "setrunmode") {
+
+                eventbus.emit ("serial.command", "cM"+data.value)
+            }
+
+            if (data.command == "setstartstop") {
+
+                eventbus.emit ("serial.command", "d"+data.value)
+            }
+
+            if (data.command == "setpressureunit") {
+
+                eventbus.emit ("serial.command", "cUP"+data.value)
+            }
+
+            if (data.command == "setventilation") {
+
+                eventbus.emit ("serial.command", "dV"+data.value)
+            }
+
+            if (data.command == "setcoolant") {
+
+                eventbus.emit ("serial.command", "dW"+data.value)
+            }
+
+            if (data.command == "setpower") {
+
+                eventbus.emit ("serial.command", "cS"+data.value)
+            }
+
+            if (data.command == "setsetpoint") {
+
+                eventbus.emit ("serial.command", "cC"+data.value)
+            }
+
         });
 
         eventbus.on ("device.reply", function(lastmessage, data) {
@@ -194,85 +228,46 @@
         });
 
 
-        eventbus.on ("device.command", function(data) {
+        eventbus.on ("device.update.list", function (device_model) {
 
-            if (data.command == "setrunmode") {
-
-                eventbus.emit ("device.command", "cM"+data.value)
-            }
-
-            if (data.command == "setstartstop") {
-
-                eventbus.emit ("device.command", "d"+data.value)
-            }
-
-            if (data.command == "setpressureunit") {
-
-                eventbus.emit ("device.command", "cUP"+data.value)
-            }
-
-            if (data.command == "setventilation") {
-
-                eventbus.emit ("device.command", "dV"+data.value)
-            }
-
-            if (data.command == "setcoolant") {
-
-                eventbus.emit ("device.command", "dW"+data.value)
-            }
-
-            if (data.command == "setpower") {
-
-                eventbus.emit ("device.command", "cS"+data.value)
-            }
-
-            if (data.command == "setsetpoint") {
-
-                eventbus.emit ("device.command", "cC"+data.value)
-            }
-
-        });
-
-
-         eventbus.on ("device.update.list", function (device_model) {
-
-            for(index = 0; index < 12 ; index ++)
+            for (index = 0; index < 12 ; index ++)
             {
             
             localeventbus.emit ("device.update.row", index);
             }
         });
 
-         eventbus.on ("device.update.row", function(data) {
+        eventbus.on ("device.update.row", function(data) {
 
-              eventbus.emit ("device.command", "gFv"+data)
+              eventbus.emit ("serial.command", "gFv"+data)
         });
 
-         eventbus.on ("device.set.function", function(temp_obj , o1, o2, o3) {
+        eventbus.on ("device.set.function", function(temp_obj , o1, o2, o3) {
             
             var main_i = parseInt(temp_obj);
             var main_t = o1;
             var main_p = o2;
             var main_c = o3;
-            eventbus.emit ("device.command", "cFs "+main_i+";"+main_t+";"+main_p+";"+main_c+";");
+            eventbus.emit ("serial.command", "cFs "+main_i+";"+main_t+";"+main_p+";"+main_c+";");
 
 
         });
 
-          eventbus.on ("device.delAll.function", function(temp_obj_2) {
+        eventbus.on ("device.delAll.function", function(temp_obj_2) {
             
-            eventbus.emit ("device.command", "cFd "+temp_obj_2+";");
+            eventbus.emit ("serial.command", "cFd "+temp_obj_2+";");
 
         });
 
-           eventbus.on ("device.del1.function", function(temp_obj_3) {
+        eventbus.on ("device.del1.function", function(temp_obj_3) {
             
-            eventbus.emit ("device.command", "cFc "+temp_obj_3+";");
+            eventbus.emit ("serial.command", "cFc "+temp_obj_3+";");
 
         });
 
         eventbus.emit ("device.initialized");
     };
+
 
 
 })(typeof exports == 'undefined'? this['device'] = {}: exports);

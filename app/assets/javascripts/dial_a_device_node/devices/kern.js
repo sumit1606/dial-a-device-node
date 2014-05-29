@@ -20,19 +20,11 @@
 
         });
 
-        eventbus.on ("device.updatemodel", function (param) {
-
-            device_model = param;
-
-            eventbus.emit('ui.update', {"component": "all", "model": device_model});
-            
-        });
-
         eventbus.on ("device.command", function(data) {
 
             if (data.command == "power") {
 
-                eventbus.emit ("device.immediatecommand", "Q");
+                eventbus.emit ("serial.immediatecommand", "Q");
 
                 device_model.power = '' + data.value;
 
@@ -42,7 +34,7 @@
 
             if (data.command == "calibration") {
 
-                eventbus.emit ("device.immediatecommand", "CAL");
+                eventbus.emit ("serial.immediatecommand", "CAL");
 
                 eventbus.emit('ui.update', {"component": "all", "model": device_model});
 
@@ -50,7 +42,7 @@
 
             if (data.command == "tare") {
 
-                eventbus.emit ("device.immediatecommand", "T");
+                eventbus.emit ("serial.immediatecommand", "T");
 
                 eventbus.emit('ui.update', {"component": "all", "model": device_model});
 
@@ -58,7 +50,7 @@
 
             if (data.command == "print") {
 
-                eventbus.emit ("device.command", "D05");
+                eventbus.emit ("serial.command", "D05");
 
             }
 
@@ -66,14 +58,14 @@
 
                 if(data.value == "1") {
             
-                    eventbus.emit ("device.immediatecommand", "D06");
+                    eventbus.emit ("serial.immediatecommand", "D06");
 
                     device_model.autoprint='1';
 
                     eventbus.emit('ui.update', {"component": "all", "model": device_model});
                 } 
                 else {  
-                    eventbus.emit ("device.immediatecommand", "D09"); 
+                    eventbus.emit ("serial.immediatecommand", "D09"); 
 
                     device_model.autoprint='0';
 
@@ -85,7 +77,7 @@
 
             if (data.command == "reset") {
 
-                eventbus.emit ("device.immediatecommand", "R");
+                eventbus.emit ("serial.immediatecommand", "R");
 
             }
 
