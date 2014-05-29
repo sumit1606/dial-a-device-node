@@ -218,7 +218,7 @@
 
     exports.run = function (eventbus) {
 
-        require('coffee-script');
+        require('coffee-script/register');
 
         require('./app/assets/javascripts/dial_a_device_node/websocket_rails/websocket_rails.js.coffee');
 

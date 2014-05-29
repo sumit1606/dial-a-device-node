@@ -149,6 +149,176 @@
 
         });
 
+        
+        eventbus.on("device.reply", function (lastmessage, data) {
+
+            if (lastmessage.startsWith('pP')) {
+
+                try {
+
+                    var re = ("" + data).split(';');
+
+                    device_model.runtime = re[0].trim();
+                    device_model.pressure = re[1].trim();
+                    device_model.setpoint = re[2].trim();
+                    device_model.power = re[3].trim();
+
+                    eventbus.emit('ui.update', {
+                        "component": "all",
+                        "model": device_model
+                    });
+
+                    eventbus.emit('device.snapshot', [device_model]);
+
+                } catch (e) {
+
+                }
+            }
+
+            if (lastmessage.startsWith('gM')) {
+
+                try {
+
+                    var re = ("" + data).split(';');
+
+                    device_model.runmode = re[0].trim();
+
+                    eventbus.emit('ui.update', {
+                        "component": "all",
+                        "model": device_model
+                    });
+
+                } catch (e) {
+
+                }
+            }
+
+            if (lastmessage.startsWith('gUp')) {
+
+                try {
+
+                    var re = ("" + data).split(';');
+
+                    device_model.pressureunit = re[0].trim();
+
+                    eventbus.emit('ui.update', {
+                        "component": "all",
+                        "model": device_model
+                    });
+
+                } catch (e) {
+
+                }
+            }
+
+            if (lastmessage.startsWith('gV')) {
+
+                try {
+
+                    var re = ("" + data).split(';');
+
+                    device_model.ventilation = re[0].trim();
+
+                    eventbus.emit('ui.update', {
+                        "component": "all",
+                        "model": device_model
+                    });
+                } catch (e) {
+
+                }
+            }
+
+            if (lastmessage.startsWith('gW')) {
+
+                try {
+
+                    var re = ("" + data).split(';');
+
+                    device_model.coolant = re[0].trim();
+
+                    eventbus.emit('ui.update', {
+                        "component": "all",
+                        "model": device_model
+                    });
+
+                } catch (e) {
+
+                }
+            }
+
+            if (lastmessage.startsWith('gFv')) {
+
+                var re = ("" + data).split(';');
+
+                if (re.length > 4) {
+
+                    var x = re[0].trim();
+                    device_model.jashon[x].jso_time = re[1].trim();
+                    device_model.jashon[x].jso_pressure = re[2].trim();
+                    device_model.jashon[x].jso_coolant = re[3].trim();
+
+                    eventbus.emit('ui.update', {
+                        "component": "all",
+                        "model": device_model
+                    });
+
+
+                } else {
+                    console.log('wrong reply gFv');
+                    console.log(lastmessage);
+                    console.log(data);
+
+                }
+
+
+            }
+
+            if (lastmessage.startsWith('cFd') || lastmessage.startsWith('cFc') || lastmessage.startsWith('cFs')) {
+
+                eventbus.emit('device.update.list', device_model);
+            }
+
+        });
+
+
+        eventbus.on("device.update.list", function (device_model) {
+
+            for (index = 0; index < 12; index++) {
+
+                localeventbus.emit("device.update.row", index);
+            }
+        });
+
+        eventbus.on("device.update.row", function (data) {
+
+            eventbus.emit("serial.command", "gFv" + data)
+        });
+
+        eventbus.on("device.set.function", function (temp_obj, o1, o2, o3) {
+
+            var main_i = parseInt(temp_obj);
+            var main_t = o1;
+            var main_p = o2;
+            var main_c = o3;
+            eventbus.emit("serial.command", "cFs " + main_i + ";" + main_t + ";" + main_p + ";" + main_c + ";");
+
+
+        });
+
+        eventbus.on("device.delAll.function", function (temp_obj_2) {
+
+            eventbus.emit("serial.command", "cFd " + temp_obj_2 + ";");
+
+        });
+
+        eventbus.on("device.del1.function", function (temp_obj_3) {
+
+            eventbus.emit("serial.command", "cFc " + temp_obj_3 + ";");
+
+        });
+
+        eventbus.emit("device.initialized");        
+
 
     };
 
