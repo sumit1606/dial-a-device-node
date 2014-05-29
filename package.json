@@ -1,9 +1,9 @@
 {
   "name": "dial-a-device-node",
-  "version": "0.0.48",
+  "version": "0.0.49",
   "description": "dial-a-device-node is the device interface for dial-a-device",
   "main": "dial_a_device_node.js",
-  "optionalDependencies": {
+  "dependencies": {
     "serialport": "*",
     "coffee-script": "*",
     "websocket": "*",
