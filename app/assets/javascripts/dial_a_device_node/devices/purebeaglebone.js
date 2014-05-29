@@ -7,7 +7,10 @@
         usrled0: '0',
         usrled1: '0',
         usrled2: '0',
-        usrled3: '0'
+        usrled3: '0',
+        serialstatus: false,
+        serialport: "",
+        serialbaud: ""
 
     };
 
@@ -44,10 +47,10 @@
 
                 if (x.err == null) {
                     device_model.usrled0 = x.value;
-                    eventbus.emit('ui.update', [{
+                    eventbus.emit('ui.update', {
                         "component": "usrled0",
                         "model": device_model
-                    }]);
+                    });
 
                 }
             });
@@ -56,10 +59,10 @@
             b.digitalRead("USR1", function (x) {
                 if (x.err == null) {
                     device_model.usrled1 = x.value;
-                    eventbus.emit('ui.update', [{
+                    eventbus.emit('ui.update', {
                         "component": "usrled1",
                         "model": device_model
-                    }]);
+                    });
 
                 }
             });
@@ -68,10 +71,10 @@
             b.digitalRead("USR2", function (x) {
                 if (x.err == null) {
                     device_model.usrled2 = x.value;
-                    eventbus.emit('ui.update', [{
+                    eventbus.emit('ui.update', {
                         "component": "usrled2",
                         "model": device_model
-                    }]);
+                    });
 
                 }
             });
@@ -80,10 +83,10 @@
             b.digitalRead("USR3", function (x) {
                 if (x.err == null) {
                     device_model.usrled3 = x.value;
-                    eventbus.emit('ui.update', [{
+                    eventbus.emit('ui.update', {
                         "component": "usrled3",
                         "model": device_model
-                    }]);
+                    });
 
                 }
             });
@@ -126,21 +129,50 @@
             if (data.command == "serialsetport") {
 
                 localeventbus.emit("serial.set.port", data.value);
+
+                device_model.serialport = data.value;
+
+                eventbus.emit('ui.update', {
+                "component": "all",
+                "model": device_model
+            });
+                
             }
 
             if (data.command == "serialsetbaud") {
 
                 localeventbus.emit("serial.set.baud", data.value);
+
+                device_model.serialbaud = data.value;
+
+                eventbus.emit('ui.update', {
+                "component": "all",
+                "model": device_model
+            });
             }
 
             if (data.command == "serialopen") {
 
                 localeventbus.emit("serial.connect", data.value);
+
+                device_model.serialstatus = true;
+
+                eventbus.emit('ui.update', {
+                "component": "all",
+                "model": device_model
+            });
             }
 
             if (data.command == "serialclose") {
 
                 localeventbus.emit("serial.close", data.value);
+
+                device_model.serialstatus = false;
+
+                eventbus.emit('ui.update', {
+                "component": "all",
+                "model": device_model
+            });
             }
 
         });

@@ -22,7 +22,7 @@
         <br>
         <br>
         <span>
-            <h4>Serial console</h4>
+            <h4>Serial console</h4><span id="serialstatus"></span>
             <textarea rows="4" cols="80" id="serialconsole"></textarea>
 
             <br/>
@@ -37,13 +37,19 @@
             <h4>Serial connection</h4>
             <br/>
 
-            <input type="text" id="serialport" /> <input type="button" value="set port" onClick="ui.serialsetport();" />
-            <br>
-            <input type="text" id="serialbaud" /> <input type="button" value="set baud" onClick="ui.serialsetbaud();" />
-            <br>
-            <input type="button" value="open" onClick="ui.serialopen();" />
-            <br>
-            <input type="button" value="close" onClick="ui.serialclose();" />
+            <span id="serialconnect">
+
+                Port: <input type="text" id="serialport" />
+                <br>
+                Baud: <input type="text" id="serialbaud" />
+                <br>
+                <input type="button" value="open" onClick="ui.serialsetport(); ui.serialsetbaud(); ui.serialopen();" />
+
+            </span>
+
+            <span id="serialdisconnect">
+                <input type="button" value="close" onClick="ui.serialclose();" />
+            </span>
 
         </span>
     </div>

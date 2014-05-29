@@ -57,6 +57,23 @@
                 $('#serialconsole').val($('#serialconsole').val() + data.model.lastserialmessage + "\n");
 
             }
+
+            if (data.model.serialstatus == true) {
+
+                $('#serialconnect').css('display') = "none";
+                $('#serialdisconnect').css('display') = "";
+
+                document.getElementById("serialstatus").innerHTML = data.model.serialport + " ("+data.model.serialbaud+")";
+
+            } else {
+
+                $('#serialconnect').css('display') = "";
+                $('#serialdisconnect').css('display') = "none;";
+
+                document.getElementById("serialstatus").innerHTML = "closed";
+            }
+
+
         });
 
     };
