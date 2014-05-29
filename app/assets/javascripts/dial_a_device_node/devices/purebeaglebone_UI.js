@@ -60,15 +60,15 @@
 
             if (data.model.serialstatus == true) {
 
-                document.getElementById('#serialconnect').style.display = "none";
-                document.getElementById('#serialdisconnect').style.display = "";
+                document.getElementById('serialconnect').style.display = "none";
+                document.getElementById('serialdisconnect').style.display = "";
 
                 document.getElementById("serialstatus").innerHTML = data.model.serialport + " ("+data.model.serialbaud+")";
 
             } else {
 
-                document.getElementById('#serialconnect').style.display = "";
-                document.getElementById('#serialdisconnect').style.display = "none";
+                document.getElementById('serialconnect').style.display = "";
+                document.getElementById('serialdisconnect').style.display = "none";
 
                 document.getElementById("serialstatus").innerHTML = "closed";
             }
