@@ -136,7 +136,7 @@
                 "component": "all",
                 "model": device_model
             });
-                
+
             }
 
             if (data.command == "serialsetbaud") {
@@ -155,8 +155,6 @@
 
                 localeventbus.emit("serial.connect", data.value);
 
-                device_model.serialstatus = true;
-
                 eventbus.emit('ui.update', {
                 "component": "all",
                 "model": device_model
@@ -167,13 +165,25 @@
 
                 localeventbus.emit("serial.close", data.value);
 
-                device_model.serialstatus = false;
-
                 eventbus.emit('ui.update', {
                 "component": "all",
                 "model": device_model
             });
             }
+
+        });
+
+        eventbus.on("serial.portopened", function(port, baud) {
+
+            device_model.serialstatus = true;
+            device_model.serialport = port;
+            device_model.serialbaud = baud;
+
+        });
+
+        eventbus.on("serial.portclosed", function(port) {
+
+            device_model.serialstatus = false;
 
         });
 

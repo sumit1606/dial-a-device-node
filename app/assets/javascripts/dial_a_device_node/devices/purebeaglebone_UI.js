@@ -63,14 +63,14 @@
                 document.getElementById('serialconnect').style.display = "none";
                 document.getElementById('serialdisconnect').style.display = "";
 
-                document.getElementById("serialstatus").innerHTML = data.model.serialport + " ("+data.model.serialbaud+")";
+                document.getElementById("serialstatus").innerHTML = "(connected to "+data.model.serialport + " - "+data.model.serialbaud+" baud)";
 
             } else {
 
                 document.getElementById('serialconnect').style.display = "";
                 document.getElementById('serialdisconnect').style.display = "none";
 
-                document.getElementById("serialstatus").innerHTML = "closed";
+                document.getElementById("serialstatus").innerHTML = "(closed)";
             }
 
 

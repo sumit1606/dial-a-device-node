@@ -35,13 +35,13 @@ exports.init = function (eventbus) {
         });
 
         serialport.on("close", function () {
-            localeventbus.emit("serial.portclosed");
+            localeventbus.emit("serial.portclosed", port);
 
         });
 
 
         serialport.on("open", function () {
-            localeventbus.emit("serial.portopened");
+            localeventbus.emit("serial.portopened", port, baud);
 
             serialport.on("data", function (data) {
                 localeventbus.emit("serial.incoming", data);
