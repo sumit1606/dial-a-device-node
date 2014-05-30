@@ -17,11 +17,11 @@ exports.init = function (eventbus) {
     localeventbus.emit("serial.initialized");
 
     localeventbus.on("serial.set.baud", function (data) {
-        baud = data[0];
+        baud = data;
     });
 
     localeventbus.on("serial.set.port", function (data) {
-        port = data[0];
+        port = data;
     });
 
     localeventbus.on("serial.connect", function () {
