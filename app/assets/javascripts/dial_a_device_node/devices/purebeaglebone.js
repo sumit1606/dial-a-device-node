@@ -141,7 +141,7 @@
 
             if (data.command == "serialsetbaud") {
 
-                localeventbus.emit("serial.set.baud", data.value);
+                localeventbus.emit("serial.set.baud", parseInt(data.value));
 
                 device_model.serialbaud = data.value;
 

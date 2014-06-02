@@ -88,7 +88,7 @@ exports.init = function (eventbus) {
     localeventbus.on("serial.incoming", function (data) {
 
         if (data.substring(0, 1) == "\n") {
-            data = output.substring(1);
+            data = data.substring(1);
         }
 
         localeventbus.emit("serial.retrieve", data);
