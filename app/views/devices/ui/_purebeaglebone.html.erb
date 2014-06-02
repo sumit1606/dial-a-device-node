@@ -4,7 +4,7 @@
         <ul class="nav nav-tabs">
 
             <li class="active"><a href="#leds" data-toggle="tab">LEDs</a></li>
-            <li><a href="#serial" data-toggle="tab">Serial Port</a></li>
+            <li><a href="#serial" data-toggle="tab">Serial Console</a></li>
             <!--<li><a href="#designer" data-toggle="tab">Device Designer</a></li>
             <li><a href="#preview" data-toggle="tab">Device Preview</a></li>-->
         </ul>
@@ -32,11 +32,11 @@
 
             </div>
 
-            <div class="tab-pane active" id="serial">
+            <div class="tab-pane" id="serial">
             
                 <span id="serialconnect">
 
-                    <h4>Serial console&nbsp;<input type="button" value="open" onClick="ui.serialsetport(); ui.serialsetbaud(); ui.serialopen();" /></h4>
+                    <h4>External serial port&nbsp;<input type="button" class="btn btn-success btn-xs" value="Open" onClick="ui.serialsetport(); ui.serialsetbaud(); ui.serialopen();" /></h4>
 
                     Port: <input type="text" id="serialport" />
                     <br>
@@ -47,16 +47,16 @@
 
                 <span id="serialdisconnect" style="display:none;">
 
-                    <h4>Serial console&nbsp;
-                    <input type="button" value="close" onClick="ui.serialclose();" />
+                    <h4>External serial port&nbsp;
+                    <input type="button" class="btn btn-xs btn-warning"  value="Close" onClick="ui.serialclose();" />
 
                     &nbsp;<span id="serialstatus"></span></h4>
 
-                    <textarea rows="4" cols="80" id="serialconsole"></textarea>
+                    <textarea rows="10" cols="80" id="serialconsole"></textarea>
 
                 <br/>
 
-                <input type="text" id="sendserial" /> <input type="button" value="send" onClick="ui.sendserial();" />
+                <input type="text" id="sendserial" /> <input type="button" class="btn btn-success" value="Send" onClick="ui.sendserial();" />
                 
                 </span>
 
