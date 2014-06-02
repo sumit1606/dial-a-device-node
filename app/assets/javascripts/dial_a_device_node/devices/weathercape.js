@@ -28,6 +28,12 @@
 
             eventbus.emit('device.assumeconnected');
 
+            var pressureInput = '/sys/bus/i2c/devices/1-0077/pressure0_input';
+            var humidityInput = '/sys/bus/i2c/devices/1-0040/humidity1_input';
+            var temperatureInput0= '/sys/bus/i2c/devices/1-0077/temp0_input';
+            var luxInput= '/sys/bus/i2c/devices/1-0039/lux1_input';
+            var temperatureInput1= '/sys/bus/i2c/devices/1-0040/temp1_input';
+
             function printPressure(x) {
                 device_model.pressure = x.data/100;
 
