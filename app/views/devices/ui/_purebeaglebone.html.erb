@@ -1,57 +1,68 @@
 <div class="row-fluid">
     <div class="span12">
 
+        <ul class="nav nav-tabs">
 
-        <span class="btn-group inline">
-            <button id="usrled0button" name="usrled0button" class=" btn btn-success btn-large" onclick="ui.toggleusrled0();" data-toggle="button"><span id="usrled0">USR LED 0</span></button>
-        </span>
-
-        <span class="btn-group inline">
-            <button id="usrled1button" name="usrled1button" class=" btn btn-success btn-large" onclick="ui.toggleusrled1();" data-toggle="button"><span id="usrled0">USR LED 1</span></button>
-        </span>
-
-        <span class="btn-group inline">
-            <button id="usrled2button" name="usrled2button" class=" btn btn-success btn-large" onclick="ui.toggleusrled2();" data-toggle="button"><span id="usrled0">USR LED 2</span></button>
-        </span>
-
-        <span class="btn-group inline">
-            <button id="usrled3button" name="usrled3button" class=" btn btn-success btn-large" onclick="ui.toggleusrled3();" data-toggle="button"><span id="usrled0">USR LED 3</span></button>
-        </span>
+            <li class="active"><a href="#leds" data-toggle="tab">LEDs</a></li>
+            <li><a href="#serial" data-toggle="tab">Serial Port</a></li>
+            <!--<li><a href="#designer" data-toggle="tab">Device Designer</a></li>
+            <li><a href="#preview" data-toggle="tab">Device Preview</a></li>-->
+        </ul>
 
 
-        <br>
-        <br>
-        
-        <span>
-            <h4>Serial console&nbsp;<span id="serialstatus"></span></h4>
-            <textarea rows="4" cols="80" id="serialconsole"></textarea>
+        <div class="tab-content">
 
-            <br/>
+            <div class="tab-pane active" id="leds">
+                <span class="btn-group inline">
+                    <button id="usrled0button" name="usrled0button" class=" btn btn-success btn-large" onclick="ui.toggleusrled0();" data-toggle="button"><span id="usrled0">USR LED 0</span></button>
+                </span>
 
-            <input type="text" id="sendserial" /> <input type="button" value="send" onClick="ui.sendserial();" />
+                <span class="btn-group inline">
+                    <button id="usrled1button" name="usrled1button" class=" btn btn-success btn-large" onclick="ui.toggleusrled1();" data-toggle="button"><span id="usrled0">USR LED 1</span></button>
+                </span>
 
-        </span>
+                <span class="btn-group inline">
+                    <button id="usrled2button" name="usrled2button" class=" btn btn-success btn-large" onclick="ui.toggleusrled2();" data-toggle="button"><span id="usrled0">USR LED 2</span></button>
+                </span>
 
-        <br>
-        <br>
-        <span>
-            <h4>Serial connection</h4>
-            <br/>
+                <span class="btn-group inline">
+                    <button id="usrled3button" name="usrled3button" class=" btn btn-success btn-large" onclick="ui.toggleusrled3();" data-toggle="button"><span id="usrled0">USR LED 3</span></button>
+                </span>
 
-            <span id="serialconnect">
 
-                Port: <input type="text" id="serialport" />
-                <br>
-                Baud: <input type="text" id="serialbaud" />
-                <br>
-                <input type="button" value="open" onClick="ui.serialsetport(); ui.serialsetbaud(); ui.serialopen();" />
+            </div>
 
-            </span>
+            <div class="tab-pane active" id="serial">
+            
+                <span id="serialconnect">
 
-            <span id="serialdisconnect" style="display:none;">
-                <input type="button" value="close" onClick="ui.serialclose();" />
-            </span>
+                    <h4>Serial console&nbsp;<input type="button" value="open" onClick="ui.serialsetport(); ui.serialsetbaud(); ui.serialopen();" /></h4>
 
-        </span>
+                    Port: <input type="text" id="serialport" />
+                    <br>
+                    Baud: <input type="text" id="serialbaud" />
+                    <br>
+                    
+                </span>
+
+                <span id="serialdisconnect" style="display:none;">
+
+                    <h4>Serial console&nbsp;
+                    <input type="button" value="close" onClick="ui.serialclose();" />
+
+                    &nbsp;<span id="serialstatus"></span></h4>
+
+                    <textarea rows="4" cols="80" id="serialconsole"></textarea>
+
+                <br/>
+
+                <input type="text" id="sendserial" /> <input type="button" value="send" onClick="ui.sendserial();" />
+                
+                </span>
+
+            </div>
+
+        </div>
+
     </div>
 </div>
