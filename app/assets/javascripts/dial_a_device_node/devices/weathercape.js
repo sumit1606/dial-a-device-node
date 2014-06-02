@@ -41,7 +41,7 @@
             }
 
             function printHumidity(x){
-                data_model.humidity = x.data/1000;
+                device_model.humidity = x.data/1000;
                 b.readTextFile(temperatureInput0, printTemperature);
             }
 
