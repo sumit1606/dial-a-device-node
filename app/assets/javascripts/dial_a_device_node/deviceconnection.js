@@ -51,10 +51,19 @@ exports.init = function (eventbus) {
 
 
     localeventbus.on("serial.connect", function () {
+        
+        if (linebreak == "") {
         serialport = new ser.SerialPort(port, {
             baudrate: baud,
-            parser: (ser.parsers.readline(hex2a(linebreak)))
+            parser: (ser.parsers.raw)
         });
+        } else {
+            
+            serialport = new ser.SerialPort(port, {
+            baudrate: baud,
+            parser: (ser.parsers.readline(hex2a(linebreak)))
+            });
+        }
 
         serialport.on("error", function (err) {
             localeventbus.emit("serial.openfailed", err);
