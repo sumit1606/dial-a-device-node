@@ -5,8 +5,8 @@
 
             <li class="active"><a href="#leds" data-toggle="tab">LEDs</a></li>
             <li><a href="#serial" data-toggle="tab">Serial Console</a></li>
-            <!--<li><a href="#designer" data-toggle="tab">Device Designer</a></li>
-            <li><a href="#preview" data-toggle="tab">Device Preview</a></li>-->
+            <!--<li><a href="#designer" data-toggle="tab">Device Designer</a></li> -->
+            <li><a href="#customui" data-toggle="tab">Custom UI</a></li>
         </ul>
 
 
@@ -71,6 +71,26 @@
                 
                 </span>
 
+            </div>
+            
+            <script type="text/javascript">
+                
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                  e.target // activated tab
+                  e.relatedTarget // previous tab
+                  
+                  if (e.target.id == "customui") {
+                      
+                      console.log ("tab change detected!");
+                  }
+                })
+                
+            </script>
+            
+            <div class="tab-pane" id="customui">
+            
+            
+            
             </div>
 
         </div>
