@@ -1,6 +1,8 @@
 var util = require('util');
 var ser = require('serialport');
 
+var helperfunctions = require('');
+
 var serialport;
 
 var localeventbus;
@@ -11,6 +13,17 @@ var waiting = false;
 
 var port;
 var baud;
+var linebreak = hex2a('0D');
+var suffix = hex2a('0D');
+var prefix = "";
+
+function hex2a(hexx) {
+        var hex = hexx.toString();//force conversion
+        var str = '';
+        for (var i = 0; i < hex.length; i += 2)
+            str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+        return str;
+}
 
 exports.init = function (eventbus) {
     localeventbus = eventbus;
@@ -23,11 +36,24 @@ exports.init = function (eventbus) {
     localeventbus.on("serial.set.port", function (data) {
         port = data;
     });
+    
+    localeventbus.on("serial.set.linebreak", function (data) {
+        linebreak = data;
+    });
+    
+    localeventbus.on("serial.set.prefix", function (data) {
+        prefix = data;
+    });
+    
+    localeventbus.on("serial.set.suffix", function (data) {
+        suffix = data;
+    });
+
 
     localeventbus.on("serial.connect", function () {
         serialport = new ser.SerialPort(port, {
             baudrate: baud,
-            parser: (ser.parsers.readline(String.fromCharCode(13)))
+            parser: (ser.parsers.readline(hex2a(linebreak)))
         });
 
         serialport.on("error", function (err) {
@@ -50,7 +76,13 @@ exports.init = function (eventbus) {
             localeventbus.on("serial.immediatecommand", function (msg) {
                 waiting = false;
                 lastmessage = new Array;
-                serialport.write(msg + String.fromCharCode(13), function (err, results) {});
+                serialport.write(hex2a(prefix) + msg + hex2a(suffix), function (err, results) {});
+            });
+            
+            localeventbus.on("serial.sendraw", function (msg) {
+                waiting = false;
+                lastmessage = new Array;
+                serialport.write(hex2a(prefix) + hex2a(msg) + hex2a(suffix), function (err, results) {});
             });
 
             localeventbus.on("serial.command", function (data) {
@@ -73,7 +105,7 @@ exports.init = function (eventbus) {
 
                         waiting = true;
                         currentmessage = lastmessage.pop();
-                        serialport.write(currentmessage + String.fromCharCode(13), function (err, results) {});
+                        serialport.write(hex2a(prefix) + currentmessage + hex2a(suffix), function (err, results) {});
 
                     }
 

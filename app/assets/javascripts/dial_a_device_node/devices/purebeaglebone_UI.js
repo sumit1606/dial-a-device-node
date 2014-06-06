@@ -72,6 +72,11 @@
 
                 document.getElementById("serialstatus").innerHTML = "(closed)";
             }
+            
+            
+            $('#seriallinebreak').val(data.model.seriallinebreak);
+            $('#serialprefix').val(data.model.serialprefix);
+            $('#serialsuffix').val(data.model.serialsuffix);
 
 
         });
@@ -102,6 +107,40 @@
             "command": "serialsetport",
             "value": $('#serialport').val()
         });
+    };
+    
+    exports.serialsetlinebreak = function serialsetlinebreak() {
+        localeventbus.emit("ui.command", {
+            "command": "serialsetlinebreak",
+            "value": $('#seriallinebreak').val()
+        });
+    };
+    
+    exports.serialsetprefix = function serialsetprefix() {
+        localeventbus.emit("ui.command", {
+            "command": "serialsetprefix",
+            "value": $('#serialprefix').val()
+        });
+    };
+    
+    exports.serialsetsuffix = function serialsetsuffix() {
+        localeventbus.emit("ui.command", {
+            "command": "serialsetsuffix",
+            "value": $('#serialsuffix').val()
+        });
+    };
+    
+    exports.sendraw = function sendraw() {
+
+        var data = "";
+
+        data = $('#sendraw').val();
+
+        localeventbus.emit("ui.command", {
+            "command": "sendraw",
+            "value": data
+        });
+
     };
 
     exports.sendserial = function sendserial() {

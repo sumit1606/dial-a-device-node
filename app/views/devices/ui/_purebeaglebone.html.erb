@@ -36,11 +36,18 @@
             
                 <span id="serialconnect">
 
-                    <h4>External serial port&nbsp;<input type="button" class="btn btn-success btn-xs" value="Open" onClick="ui.serialsetport(); ui.serialsetbaud(); ui.serialopen();" /></h4>
+                    <h4>External serial port&nbsp;<input type="button" class="btn btn-success btn-xs" value="Open" onClick="ui.serialsetport(); ui.serialsetbaud(); ui.serialsetlinebreak(); ui.serialsetprefix(); ui.serialsetsuffix(); ui.serialopen();" /></h4>
 
                     Port: <input type="text" id="serialport" />
                     <br>
                     Baud: <input type="text" id="serialbaud" />
+                    <br>
+                    <br>
+                    Linebreak (hex): <input type="text" id="seriallinebreak" />
+                    <br>
+                    Prefix (hex): <input type="text" id="serialprefix" />
+                    <br>
+                    Suffix (hex): <input type="text" id="serialsuffix" />
                     <br>
                     
                 </span>
@@ -57,6 +64,10 @@
                 <br/>
 
                 <input type="text" id="sendserial" /> <input type="button" class="btn btn-success" value="Send" onClick="ui.sendserial();" />
+                
+                <br>
+                
+                <input type="text" id="sendraw" /> <input type="button" class="btn btn-warning" value="Send raw hex" onClick="ui.sendraw();" />
                 
                 </span>
 

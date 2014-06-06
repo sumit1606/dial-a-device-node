@@ -1,4 +1,12 @@
 (function (exports) {
+    
+    function hex2a(hexx) {
+        var hex = hexx.toString();//force conversion
+        var str = '';
+        for (var i = 0; i < hex.length; i += 2)
+            str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+        return str;
+    }
 
     var device_model = {
 
@@ -10,7 +18,10 @@
         usrled3: '0',
         serialstatus: false,
         serialport: "",
-        serialbaud: ""
+        serialbaud: "",
+        seriallinebreak: hex2a('0D'),
+        serialsuffix: hex2a('0D'),
+        serialprefix: ""
 
     };
 
@@ -125,6 +136,11 @@
 
                 localeventbus.emit("serial.immediatecommand", data.value);
             }
+            
+            if (data.command == "sendserialraw") {
+
+                localeventbus.emit("serial.sendraw", data.value);
+            }
 
             if (data.command == "serialsetport") {
 
@@ -144,6 +160,42 @@
                 localeventbus.emit("serial.set.baud", parseInt(data.value));
 
                 device_model.serialbaud = data.value;
+
+                eventbus.emit('ui.update', {
+                "component": "all",
+                "model": device_model
+            });
+            }
+            
+            if (data.command == "serialsetlinebreak") {
+
+                localeventbus.emit("serial.set.linebreak", data.value);
+
+                device_model.seriallinebreak = data.value;
+
+                eventbus.emit('ui.update', {
+                "component": "all",
+                "model": device_model
+            });
+            }
+            
+            if (data.command == "serialsetprefix") {
+
+                localeventbus.emit("serial.set.prefix", data.value);
+
+                device_model.serialprefix = data.value;
+
+                eventbus.emit('ui.update', {
+                "component": "all",
+                "model": device_model
+            });
+            }
+            
+            if (data.command == "serialsetsuffix") {
+
+                localeventbus.emit("serial.set.suffix", data.value);
+
+                device_model.serialsuffix = data.value;
 
                 eventbus.emit('ui.update', {
                 "component": "all",
