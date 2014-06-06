@@ -1,3 +1,5 @@
 var dialadevicenode = require ('./dial_a_device_node.js');
 
-dialadevicenode.run_beaglebone("192.168.7.1:3000");
+var b = require('bonescript'); 
+
+b.readTextFile('/var/lib/cloud9/server.txt', function(x) { if ((x.data != null) && (x.data.length != 0)) { dialadevicenode.run_beaglebone(x.data); } });

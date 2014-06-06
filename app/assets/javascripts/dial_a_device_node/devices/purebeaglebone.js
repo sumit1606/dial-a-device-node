@@ -52,61 +52,6 @@
             eventbus.emit('device.assumeconnected');
 
 
-            b.pinMode("USR0", b.INPUT);
-
-            b.digitalRead("USR0", function (x) {
-
-                if (x.err == null) {
-                    device_model.usrled0 = x.value;
-                    eventbus.emit('ui.update', {
-                        "component": "usrled0",
-                        "model": device_model
-                    });
-
-                }
-            });
-
-            b.pinMode("USR1", b.INPUT);
-            b.digitalRead("USR1", function (x) {
-                if (x.err == null) {
-                    device_model.usrled1 = x.value;
-                    eventbus.emit('ui.update', {
-                        "component": "usrled1",
-                        "model": device_model
-                    });
-
-                }
-            });
-
-            b.pinMode("USR2", b.INPUT);
-            b.digitalRead("USR2", function (x) {
-                if (x.err == null) {
-                    device_model.usrled2 = x.value;
-                    eventbus.emit('ui.update', {
-                        "component": "usrled2",
-                        "model": device_model
-                    });
-
-                }
-            });
-
-            b.pinMode("USR3", b.INPUT);
-            b.digitalRead("USR3", function (x) {
-                if (x.err == null) {
-                    device_model.usrled3 = x.value;
-                    eventbus.emit('ui.update', {
-                        "component": "usrled3",
-                        "model": device_model
-                    });
-
-                }
-            });
-
-            eventbus.emit('ui.update', {
-                "component": "all",
-                "model": device_model
-            });
-
         });
 
         eventbus.on("device.command", function (data) {

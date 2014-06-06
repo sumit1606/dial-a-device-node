@@ -1,8 +1,6 @@
 var util = require('util');
 var ser = require('serialport');
 
-var helperfunctions = require('');
-
 var serialport;
 
 var localeventbus;

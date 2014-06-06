@@ -43,11 +43,11 @@
                     Baud: <input type="text" id="serialbaud" />
                     <br>
                     <br>
-                    Linebreak (hex): <input type="text" id="seriallinebreak" />
+                    Linebreak (hex): <input type="text" id="seriallinebreak" value="0D"/>
                     <br>
                     Prefix (hex): <input type="text" id="serialprefix" />
                     <br>
-                    Suffix (hex): <input type="text" id="serialsuffix" />
+                    Suffix (hex): <input type="text" id="serialsuffix" value="0D"/>
                     <br>
                     
                 </span>
@@ -78,6 +78,10 @@
                 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                   e.target // activated tab
                   e.relatedTarget // previous tab
+                  
+                  console.log ("tab change detected!");
+                  
+                  console.log (e.target);
                   
                   if (e.target.id == "customui") {
                       

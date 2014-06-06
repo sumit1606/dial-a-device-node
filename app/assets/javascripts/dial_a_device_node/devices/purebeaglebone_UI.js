@@ -74,11 +74,6 @@
             }
             
             
-            $('#seriallinebreak').val(data.model.seriallinebreak);
-            $('#serialprefix').val(data.model.serialprefix);
-            $('#serialsuffix').val(data.model.serialsuffix);
-
-
         });
 
     };
