@@ -10,7 +10,7 @@
 
     var device_model = {
 
-        customui,
+        customui: "",
         bbplatform: [],
         lastserialmessage: "",
         usrled0: '0',
