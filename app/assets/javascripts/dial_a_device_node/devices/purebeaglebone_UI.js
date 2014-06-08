@@ -72,7 +72,11 @@
 
                 document.getElementById("serialstatus").innerHTML = "(closed)";
             }
-            
+
+            if (data.model.customui != "") {            
+
+                document.getElementById('customui').innerHTML = data.model.customui;
+            }
             
         });
 
@@ -220,6 +224,12 @@
         });
     };
 
+    exports.retrieveCustomUI = function retrieveCustomUI() {
+
+        localeventbus.emit("ui.command", {
+            "command": "retrievecustomui"
+        });
+    };
 
 
 })(typeof exports == 'undefined' ? this['ui'] = {} : exports);

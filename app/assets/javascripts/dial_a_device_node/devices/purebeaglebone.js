@@ -10,6 +10,7 @@
 
     var device_model = {
 
+        customui,
         bbplatform: [],
         lastserialmessage: "",
         usrled0: '0',
@@ -55,6 +56,21 @@
         });
 
         eventbus.on("device.command", function (data) {
+
+            if (data.command == "retrievecustomui") {
+
+                var b = require('bonescript');
+
+                device_model.customui = "<b>Hello</b>";
+
+                eventbus.emit('ui.update', {
+                    "component": "bbplatform",
+                    "model": device_model
+                });
+
+                device_model.customui = "";
+
+            }
 
             if (data.command == "setled") {
 

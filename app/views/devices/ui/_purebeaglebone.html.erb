@@ -77,23 +77,20 @@
                 
                 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                   e.target // activated tab
-                  e.relatedTarget // previous tab
                   
-                  console.log ("tab change detected!");
-                  
-                  console.log (e.target);
-                  
-                  if (e.target.id == "customui") {
-                      
-                      console.log ("tab change detected!");
+                  if ($(e.target).attr("href") == "#customui") {
+
+                    ui.retrieveCustomUI();
+
                   }
+                  
                 })
                 
             </script>
             
             <div class="tab-pane" id="customui">
             
-            
+                <p>Loading...</p>                
             
             </div>
 
