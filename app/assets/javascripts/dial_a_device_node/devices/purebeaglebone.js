@@ -61,14 +61,22 @@
 
                 var b = require('bonescript');
 
-                device_model.customui = "<b>Hello</b>";
+                b.readTextFile('/var/lib/cloud9/customui.txt', function(x) {
 
-                eventbus.emit('ui.update', {
-                    "component": "bbplatform",
-                    "model": device_model
+                    if ((x.data != null) && (x.data.length != 0)) {
+
+                        device_model.customui = x.data;
+
+                        eventbus.emit('ui.update', {
+                            "component": "bbplatform",
+                            "model": device_model
+                        });
+
+                        device_model.customui = "";
+
+                    }
+
                 });
-
-                device_model.customui = "";
 
             }
 
