@@ -36,11 +36,17 @@
             
                 <span id="serialconnect">
 
-                    <h4>External serial port&nbsp;<input type="button" class="btn btn-success btn-xs" value="Open" onClick="ui.serialsetport(); ui.serialsetbaud(); ui.serialsetlinebreak(); ui.serialsetprefix(); ui.serialsetsuffix(); ui.serialopen();" /></h4>
+                    <h4>External serial port&nbsp;<input type="button" class="btn btn-success btn-xs" value="Open" onClick="ui.serialsetport(); ui.serialsetbaud(); ui.serialsetlinebreak(); ui.serialsetprefix(); ui.serialsetsuffix(); ui.serialsetdatabit(); ui.serialsetparity(); ui.serialsetstopbit(); ui.serialopen();" /></h4>
 
-                    Port: <input type="text" id="serialport" />
+                    Port: <input type="text" id="serialport" value="/dev/ttyUSB0"/>
                     <br>
-                    Baud: <input type="text" id="serialbaud" />
+                    Baud: <input type="text" id="serialbaud" value="9600"/>
+                    <br>
+                    Databit: <input type="text" id="serialdatabit" value="8"/>
+                    <br>
+                    Parity: <input type="text" id="serialparity" value="none"/>
+                    <br>
+                    Stopbit: <input type="text" id="serialbaud" value="1"/>
                     <br>
                     <br>
                     Linebreak (hex): <input type="text" id="seriallinebreak" value="0D"/>

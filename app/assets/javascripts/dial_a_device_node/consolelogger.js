@@ -27,7 +27,12 @@
 
         localeventbus.on("serial.retrieve", function (data) {
 
-            console.log("serial retrieve: " + data);
+            console.log("serial retrieve string: " + data);
+        });
+        
+        localeventbus.on("serial.rawretrieve", function (data) {
+
+            console.log("serial retrieve raw: " + data);
         });
 
         localeventbus.on("serial.set.baud", function (data) {

@@ -11,6 +11,10 @@ var waiting = false;
 
 var port;
 var baud;
+var databit = 8;
+var parity = "none";
+var stopbit = 1;
+
 var linebreak = hex2a('0D');
 var suffix = hex2a('0D');
 var prefix = "";
@@ -46,6 +50,18 @@ exports.init = function (eventbus) {
     localeventbus.on("serial.set.suffix", function (data) {
         suffix = data;
     });
+    
+    localeventbus.on("serial.set.databit", function (data) {
+        databit = data;
+    });
+    
+    localeventbus.on("serial.set.parity", function (data) {
+        parity = data;
+    });
+    
+    localeventbus.on("serial.set.stopbit", function (data) {
+        stopbit = data;
+    });
 
 
     localeventbus.on("serial.connect", function () {
@@ -53,12 +69,18 @@ exports.init = function (eventbus) {
         if (linebreak == "") {
         serialport = new ser.SerialPort(port, {
             baudrate: baud,
+            databit: databit,
+            parity: parity,
+            stopbit: stopbit,
             parser: (ser.parsers.raw)
         });
         } else {
             
             serialport = new ser.SerialPort(port, {
             baudrate: baud,
+            databit: databit,
+            parity: parity,
+            stopbit: stopbit,
             parser: (ser.parsers.readline(hex2a(linebreak)))
             });
         }
@@ -87,6 +109,7 @@ exports.init = function (eventbus) {
             });
             
             localeventbus.on("serial.sendraw", function (msg) {
+                
                 waiting = false;
                 lastmessage = new Array;
                 serialport.write(hex2a(prefix) + hex2a(msg) + hex2a(suffix), function (err, results) {});
@@ -125,12 +148,22 @@ exports.init = function (eventbus) {
 
 
     localeventbus.on("serial.incoming", function (data) {
-
-        if (data.substring(0, 1) == "\n") {
+        
+        
+        if ((typeof data  === "string") && (data.substring(0, 1) == "\n")) {
             data = data.substring(1);
         }
+        
+        if ((typeof data === "array")) {
+            
+            localeventbus.emit("serial.rawretrieve", data);
+            
+        } else {
+            
+            localeventbus.emit("serial.retrieve", data);
+            
+        }
 
-        localeventbus.emit("serial.retrieve", data);
 
         if (waiting) {
 
@@ -138,11 +171,13 @@ exports.init = function (eventbus) {
             waiting = false;
         } else {
 
-            if (data.substring(0, 1) == "\n") {
+            if ((typeof data === "string") && (data.substring(0, 1) == "\n")) {
                 data = data.substring(1);
+                
             }
+            
             localeventbus.emit("device.reply", "heartbeat", data);
-
+            
         }
     });
 

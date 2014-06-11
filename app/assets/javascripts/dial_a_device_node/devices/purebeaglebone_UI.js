@@ -108,6 +108,27 @@
         });
     };
     
+    exports.serialsetdatabit = function serialsetdatabit() {
+        localeventbus.emit("ui.command", {
+            "command": "serialsetdatabit",
+            "value": parseInt($('#serialdatabit').val())
+        });
+    };
+    
+    exports.serialsetparity = function serialsetparity() {
+        localeventbus.emit("ui.command", {
+            "command": "serialsetparity",
+            "value": $('#serialparity').val()
+        });
+    };
+    
+    exports.serialsetstopbit = function serialsetstopbit() {
+        localeventbus.emit("ui.command", {
+            "command": "serialsetstopbit",
+            "value": parseInt($('#serialstopbit').val())
+        });
+    };
+    
     exports.serialsetlinebreak = function serialsetlinebreak() {
         localeventbus.emit("ui.command", {
             "command": "serialsetlinebreak",

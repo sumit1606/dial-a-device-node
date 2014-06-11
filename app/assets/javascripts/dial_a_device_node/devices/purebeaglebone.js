@@ -20,6 +20,9 @@
         serialstatus: false,
         serialport: "",
         serialbaud: "",
+        serialdatabit: 8,
+        serialparity: "none",
+        serialstopbit: 1,
         seriallinebreak: hex2a('0D'),
         serialsuffix: hex2a('0D'),
         serialprefix: ""
@@ -106,7 +109,7 @@
                 localeventbus.emit("serial.immediatecommand", data.value);
             }
             
-            if (data.command == "sendserialraw") {
+            if (data.command == "sendraw") {
 
                 localeventbus.emit("serial.sendraw", data.value);
             }
@@ -121,6 +124,45 @@
                 "component": "all",
                 "model": device_model
             });
+
+            }
+            
+            if (data.command == "serialsetdatabit") {
+
+                localeventbus.emit("serial.set.databit", data.value);
+
+                device_model.serialdatabit = data.value;
+
+                eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model
+                });
+
+            }
+            
+            if (data.command == "serialsetparity") {
+
+                localeventbus.emit("serial.set.parity", data.value);
+
+                device_model.serialparity = data.value;
+
+                eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model
+                });
+
+            }
+            
+            if (data.command == "serialsetstopbit") {
+
+                localeventbus.emit("serial.set.stopbit", data.value);
+
+                device_model.serialstopbit = data.value;
+
+                eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model
+                });
 
             }
 
@@ -209,6 +251,20 @@
         });
 
         eventbus.on("serial.retrieve", function (data) {
+
+            device_model.lastserialmessage = data;
+
+            eventbus.emit('ui.update', {
+                "component": "all",
+                "model": device_model
+            });
+
+            device_model.lastserialmessage = "";
+
+
+        });
+        
+        eventbus.on("serial.rawretrieve", function (data) {
 
             device_model.lastserialmessage = data;
 
