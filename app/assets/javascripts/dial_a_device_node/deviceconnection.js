@@ -149,16 +149,17 @@ exports.init = function (eventbus) {
 
     localeventbus.on("serial.incoming", function (data) {
         
+        console.log (typeof data);
         
-        if ((typeof data  === "string") && (data.substring(0, 1) == "\n")) {
-            data = data.substring(1);
-        }
-        
-        if ((typeof data === "array")) {
+        if ((typeof data === "object")) {
             
             localeventbus.emit("serial.rawretrieve", data);
             
         } else {
+            
+            if (data.substring(0, 1) == "\n") {
+                data = data.substring(1);
+            }
             
             localeventbus.emit("serial.retrieve", data);
             
@@ -170,11 +171,6 @@ exports.init = function (eventbus) {
             localeventbus.emit("device.reply", currentmessage, data);
             waiting = false;
         } else {
-
-            if ((typeof data === "string") && (data.substring(0, 1) == "\n")) {
-                data = data.substring(1);
-                
-            }
             
             localeventbus.emit("device.reply", "heartbeat", data);
             

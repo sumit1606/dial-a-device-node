@@ -38,23 +38,54 @@
 
                     <h4>External serial port&nbsp;<input type="button" class="btn btn-success btn-xs" value="Open" onClick="ui.serialsetport(); ui.serialsetbaud(); ui.serialsetlinebreak(); ui.serialsetprefix(); ui.serialsetsuffix(); ui.serialsetdatabit(); ui.serialsetparity(); ui.serialsetstopbit(); ui.serialopen();" /></h4>
 
-                    Port: <input type="text" id="serialport" value="/dev/ttyUSB0"/>
-                    <br>
-                    Baud: <input type="text" id="serialbaud" value="9600"/>
-                    <br>
-                    Databit: <input type="text" id="serialdatabit" value="8"/>
-                    <br>
-                    Parity: <input type="text" id="serialparity" value="none"/>
-                    <br>
-                    Stopbit: <input type="text" id="serialbaud" value="1"/>
-                    <br>
-                    <br>
-                    Linebreak (hex): <input type="text" id="seriallinebreak" value="0D"/>
-                    <br>
-                    Prefix (hex): <input type="text" id="serialprefix" />
-                    <br>
-                    Suffix (hex): <input type="text" id="serialsuffix" value="0D"/>
-                    <br>
+                    <form class="form-horizontal" role="form">
+                    
+                    <div class="form-group">
+                        <label for="serialport" class="col-sm2 control-label">Port</label>
+                        <input type="text" class="form-control" id="serialport" value="/dev/ttyUSB0" placeholder="/dev/tty..."/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serialbaud" class="col-sm2 control-label">Baud rate</label>
+                        <input type="text" class="form-control" id="serialbaud" value="/dev/ttyUSB0" placeholder="Baud rate"/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serialdatabit" class="col-sm2 control-label">Databit</label>
+                        <input type="text" class="form-control" id="serialdatabit" value="8" placeholder="Databit"/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serialparity" class="col-sm2 control-label">Parity</label>
+                        <input type="text" class="form-control" id="serialparity" value="none" placeholder="Parity"/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serialstopbit" class="col-sm2 control-label">Stop bit</label>
+                        <input type="text" class="form-control" id="serialstopbit" value="1" placeholder="Stop bit"/>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-group">
+                        <label for="seriallinebreak" class="col-sm2 control-label">Parser line break (hex)</label>
+                        <input type="text" class="form-control" id="seriallinebreak" value="0D" placeholder="Line Break (hex)"/>
+                        <span class="help-block">Leave blank for raw input interpreation.</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serialprefix" class="col-sm2 control-label">Prefix (hex)</label>
+                        <input type="text" class="form-control" id="serialprefix" value="" placeholder="Prefix (hex)"/>
+                        <span class="help-block">Send this hex code as prefix for every command.</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serialsuffix" class="col-sm2 control-label">Suffix (hex)</label>
+                        <input type="text" class="form-control" id="serialsuffix" value="" placeholder="Suffix (hex)"/>
+                        <span class="help-block">Send this hex code as suffix for every command.</span>
+                    </div>
+                    
+                    </form>
                     
                 </span>
 

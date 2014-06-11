@@ -22,17 +22,17 @@
 
         localeventbus.on("serial.incoming", function (data) {
 
-            console.log("serial rawincoming: " + data);
+            console.log("serial incoming: " + JSON.stringify(data));
         });
 
         localeventbus.on("serial.retrieve", function (data) {
 
-            console.log("serial retrieve string: " + data);
+            console.log("serial retrieve string: " + JSON.stringify(data));
         });
         
         localeventbus.on("serial.rawretrieve", function (data) {
 
-            console.log("serial retrieve raw: " + data);
+            console.log("serial retrieve raw: " + JSON.stringify(data));
         });
 
         localeventbus.on("serial.set.baud", function (data) {
@@ -130,9 +130,9 @@
 
         });
 
-        localeventbus.on("device.reply", function (message) {
+        localeventbus.on("device.reply", function (message, data) {
 
-            console.log("device reply: " + JSON.stringify(message));
+            console.log("device reply: " + JSON.stringify(message)+ " --> "+ JSON.stringify(data));
 
         });
 

@@ -265,7 +265,7 @@
         });
         
         eventbus.on("serial.rawretrieve", function (data) {
-
+            
             device_model.lastserialmessage = data;
 
             eventbus.emit('ui.update', {
