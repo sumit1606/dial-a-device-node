@@ -16,6 +16,10 @@
     ser_string = '/dev/ttyUSB0';
 
     ser_baud = 115200;
+    ser_databit = 8;
+    ser_parity = "none";
+    ser_stopbit = 1;
+    
     device_id = 0;
 
     url_string = '192.168.7.1:3000/websocket';
@@ -34,6 +38,25 @@
 
     exports.set_ser_string = function (param) {
         ser_string = param;
+    };
+    
+    exports.set_ser_databit = function (param) {
+        
+        if (typeof(param) != "undefined") {
+            ser_databit = param;
+        }
+    };
+    
+    exports.set_ser_parity = function (param) {
+        if (typeof(param) != "undefined") {
+            ser_parity = param;
+        }
+    };
+    
+    exports.set_ser_stopbit = function (param) {
+        if (typeof(param) != "undefined") {
+            ser_stopbit = param;
+        }
     };
 
     exports.set_simulate = function (param) {
@@ -187,6 +210,15 @@
             dialadevicenode.set_ser_string(bbinfo.device.portname);
 
             dialadevicenode.set_ser_baud(parseInt(bbinfo.device.portbaud));
+            
+            
+            dialadevicenode.set_ser_parity(bbinfo.device.portparity);
+            
+            dialadevicenode.set_ser_databit(bbinfo.device.portdatabit);
+            
+            dialadevicenode.set_ser_stopbit(bbinfo.device.portstopbit);
+            
+            
 
             dialadevicenode.set_device_id(bbinfo.device.id);
 
@@ -271,6 +303,10 @@
         deviceconnection.init(eventbus);
 
         eventbus.emit("serial.set.baud", ser_baud);
+        
+        eventbus.emit("serial.set.startbit", ser_startbit);
+        eventbus.emit("serial.set.parity", ser_parity);
+        eventbus.emit("serial.set.stopbit", ser_stopbit);
 
         eventbus.emit("serial.set.port", ser_string);
 
