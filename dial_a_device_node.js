@@ -304,7 +304,7 @@
 
         eventbus.emit("serial.set.baud", ser_baud);
         
-        eventbus.emit("serial.set.startbit", ser_startbit);
+        eventbus.emit("serial.set.databit", ser_databit);
         eventbus.emit("serial.set.parity", ser_parity);
         eventbus.emit("serial.set.stopbit", ser_stopbit);
 
