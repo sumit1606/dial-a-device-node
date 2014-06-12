@@ -26,7 +26,7 @@
         
         eventbus.on("device.heartbeat", function () {
 
-        	localeventbus.emit("ui.command", {
+        	localeventbus.emit("device.command", {
 	            "command": "get_temperature"
 	        });
 
