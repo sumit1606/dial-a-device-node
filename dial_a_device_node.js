@@ -13,7 +13,9 @@
     var heartbeatinterval;
 
     // default parameters
-    ser_string = '/dev/ttyUSB0';
+    ser_port = '/dev/ttyUSB0';
+
+    ser_string = 'simulation';
 
     ser_baud = 115200;
     ser_databit = 8;
@@ -42,6 +44,10 @@
 
     exports.set_ser_string = function (param) {
         ser_string = param;
+    };
+
+    exports.set_ser_port = function (param) {
+        ser_port = param;
     };
 
     exports.set_ser_linebreak = function (param) {
@@ -232,7 +238,9 @@
 
             dialadevicenode = require('./dial_a_device_node.js');
 
-            dialadevicenode.set_ser_string(bbinfo.devicetype.portname);
+            dialadevicenode.set_ser_string(bbinfo.devicetype.porttype);
+
+            dialadevicenode.set_ser_port(bbinfo.devicetype.portname);
 
             dialadevicenode.set_ser_baud(parseInt(bbinfo.devicetype.portbaud));
             
@@ -341,7 +349,7 @@
         eventbus.emit("serial.set.prefix", ser_prefix);
         eventbus.emit("serial.set.suffix", ser_suffix);
 
-        eventbus.emit("serial.set.port", ser_string);
+        eventbus.emit("serial.set.port", ser_port);
 
         if (ser_string == "serial") {
 

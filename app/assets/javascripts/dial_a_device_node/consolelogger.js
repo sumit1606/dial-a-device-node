@@ -20,6 +20,21 @@
             console.log("serial port closed");
         });
 
+        localeventbus.on("serial.command", function (data) {
+
+            console.log("serial send command: " + data);
+        });
+
+        localeventbus.on("serial.immediatecommand", function (data) {
+
+            console.log("serial send immediatecommand: " + data);
+        });
+
+        localeventbus.on("serial.writenext", function (data) {
+
+            console.log("serial command sent!");
+        });
+
         localeventbus.on("serial.incoming", function (data) {
 
             console.log("serial incoming: " + JSON.stringify(data));
