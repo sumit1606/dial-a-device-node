@@ -27,6 +27,10 @@ function hex2a(hexx) {
         return str;
 }
 
+function fulltrim(str) {
+  return str.replace( /([^\x00-\xFF]|\s)*$/g, '' );
+};
+
 exports.init = function (eventbus) {
     localeventbus = eventbus;
     localeventbus.emit("serial.initialized");
@@ -160,6 +164,8 @@ exports.init = function (eventbus) {
             if (data.substring(0, 1) == "\n") {
                 data = data.substring(1);
             }
+
+            data = fulltrim(data);
             
             localeventbus.emit("serial.retrieve", data);
             
