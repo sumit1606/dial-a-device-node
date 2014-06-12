@@ -2,7 +2,7 @@
 
     var device_model_simulation = {
 
-        temperature: 21.0
+        amount: 10.0
 
     };
 
