@@ -19,6 +19,10 @@
     ser_databit = 8;
     ser_parity = "none";
     ser_stopbit = 1;
+
+    ser_linebreak = "";
+    ser_prefix = "";
+    ser_suffix = "";
     
     device_id = 0;
 
@@ -38,6 +42,27 @@
 
     exports.set_ser_string = function (param) {
         ser_string = param;
+    };
+
+    exports.set_ser_linebreak = function (param) {
+        
+        if (typeof(param) != "undefined") {
+            ser_linebreak = param;
+        }
+    };
+
+    exports.set_ser_prefix = function (param) {
+        
+        if (typeof(param) != "undefined") {
+            ser_prefix = param;
+        }
+    };
+
+    exports.set_ser_suffix = function (param) {
+        
+        if (typeof(param) != "undefined") {
+            ser_suffix = param;
+        }
     };
     
     exports.set_ser_databit = function (param) {
@@ -207,16 +232,20 @@
 
             dialadevicenode = require('./dial_a_device_node.js');
 
-            dialadevicenode.set_ser_string(bbinfo.device.portname);
+            dialadevicenode.set_ser_string(bbinfo.devicetype.portname);
 
-            dialadevicenode.set_ser_baud(parseInt(bbinfo.device.portbaud));
+            dialadevicenode.set_ser_baud(parseInt(bbinfo.devicetype.portbaud));
             
             
-            dialadevicenode.set_ser_parity(bbinfo.device.portparity);
+            dialadevicenode.set_ser_parity(bbinfo.devicetype.portparity);
             
-            dialadevicenode.set_ser_databit(bbinfo.device.portdatabit);
+            dialadevicenode.set_ser_databit(bbinfo.devicetype.portdatabits);
             
-            dialadevicenode.set_ser_stopbit(bbinfo.device.portstopbit);
+            dialadevicenode.set_ser_stopbit(bbinfo.devicetype.portstopbits);
+
+            dialadevicenode.set_ser_linebreak(bbinfo.devicetype.portlinebreak);
+            dialadevicenode.set_ser_prefix(bbinfo.devicetype.portprefix);
+            dialadevicenode.set_ser_suffix(bbinfo.devicetype.portsuffix);
             
             
 
@@ -307,6 +336,10 @@
         eventbus.emit("serial.set.databit", ser_databit);
         eventbus.emit("serial.set.parity", ser_parity);
         eventbus.emit("serial.set.stopbit", ser_stopbit);
+
+        eventbus.emit("serial.set.linebreak", ser_linebreak);
+        eventbus.emit("serial.set.prefix", ser_prefix);
+        eventbus.emit("serial.set.suffix", ser_suffix);
 
         eventbus.emit("serial.set.port", ser_string);
 
