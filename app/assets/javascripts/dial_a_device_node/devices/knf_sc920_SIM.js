@@ -169,7 +169,7 @@
 
             if (data.command.startsWith('gFv')) {
                 value = "1";
-                value = message.substr(3);
+                value = data.command.substr(3);
                 splitter = value.split(';');
                 index_chk = parseInt(splitter[0].trim());
                 value = index_chk + ";" + device_model_simulation.jashon[index_chk].jso_time + ";" + device_model_simulation.jashon[index_chk].jso_pressure + " ; " + device_model_simulation.jashon[index_chk].jso_coolant + ";1";
@@ -177,7 +177,7 @@
             // set
 
             if (data.command.startsWith('cM')) {
-                d = message.substr(2);
+                d = data.command.substr(2);
 
                 switch (d) {
 
@@ -201,17 +201,17 @@
             }
 
             if (data.command.startsWith('cUp')) {
-                d = message.substr(3);
+                d = data.command.substr(3);
                 device_model_simulation.pressureunit = d;
             }
 
             if (data.command.startsWith('dV')) {
-                d = message.substr(2);
+                d = data.command.substr(2);
                 device_model_simulation.ventilation = d;
             }
 
             if (data.command.startsWith('dW')) {
-                d = message.substr(2);
+                d = data.command.substr(2);
                 device_model_simulation.coolant = d;
             }
 
@@ -226,13 +226,13 @@
 
             if (data.command.startsWith('cS')) {
 
-                d = message.substr(2);
+                d = data.command.substr(2);
                 device_model_simulation.power = d;
             }
 
             if (data.command.startsWith('cC')) {
 
-                d = message.substr(2);
+                d = data.command.substr(2);
 
                 device_model_simulation.setpoint = d;
             }
@@ -240,7 +240,7 @@
             if (data.command.startsWith('cFs')) {
 
 
-                d = message.substr(3);
+                d = data.command.substr(3);
                 splitter = d.split(';');
                 index_chk = parseInt(splitter[0].trim());
 
@@ -254,7 +254,7 @@
 
             if (data.command.startsWith('cFd')) {
 
-                d = message.substr(3);
+                d = data.command.substr(3);
                 splitter = d.split(';');
                 index_chk = parseInt(splitter[0].trim());
                 for (i = index_chk; i < 11; i++) {
@@ -270,7 +270,7 @@
 
             if (data.command.startsWith('cFc')) {
 
-                d = message.substr(3);
+                d = data.command.substr(3);
                 splitter = d.split(';');
                 index_chk = parseInt(splitter[0].trim());
                 for (i = index_chk; i < 12; i++) {
