@@ -30,11 +30,6 @@
             console.log("serial send immediatecommand: " + data);
         });
 
-        localeventbus.on("serial.writenext", function (data) {
-
-            console.log("serial command sent!");
-        });
-
         localeventbus.on("serial.incoming", function (data) {
 
             console.log("serial incoming: " + JSON.stringify(data));

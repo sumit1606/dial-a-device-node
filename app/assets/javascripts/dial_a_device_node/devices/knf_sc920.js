@@ -167,7 +167,7 @@
                         "model": device_model
                     });
 
-                    eventbus.emit('device.snapshot', [device_model]);
+                    eventbus.emit('device.snapshot', device_model);
 
                 } catch (e) {
 
@@ -187,6 +187,8 @@
                         "model": device_model
                     });
 
+                    eventbus.emit('device.snapshot', device_model);
+
                 } catch (e) {
 
                 }
@@ -205,6 +207,8 @@
                         "model": device_model
                     });
 
+                    eventbus.emit('device.snapshot', device_model);
+
                 } catch (e) {
 
                 }
@@ -222,6 +226,9 @@
                         "component": "all",
                         "model": device_model
                     });
+
+                    eventbus.emit('device.snapshot', device_model);
+
                 } catch (e) {
 
                 }
@@ -239,6 +246,8 @@
                         "component": "all",
                         "model": device_model
                     });
+
+                    eventbus.emit('device.snapshot', device_model);
 
                 } catch (e) {
 
@@ -261,6 +270,7 @@
                         "model": device_model
                     });
 
+                    eventbus.emit('device.snapshot', device_model);
 
                 } else {
                     console.log('wrong reply gFv');
@@ -281,6 +291,7 @@
 
 
         eventbus.on("device.update.list", function (device_model) {
+
 
             for (index = 0; index < 12; index++) {
 

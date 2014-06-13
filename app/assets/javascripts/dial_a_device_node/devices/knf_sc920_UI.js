@@ -16,7 +16,7 @@
 
             temp_device_model = data.model;
 
-            runtime = parseFloat(device_model.runtime);
+            runtime = parseFloat(data.model.runtime);
 
             if (runtime > 0) {
                 $('#startstopicon').removeClass('icon-play');
@@ -105,7 +105,7 @@
                     $("#tab3").hide();
                     $("#tab4").show();
                     $("#container").show();
-                    eventbus.emit("device.update.list", [device_model]);
+                    eventbus.emit("device.update.list", [data.model]);
                     functionvisible = true;
                     break;
             }
