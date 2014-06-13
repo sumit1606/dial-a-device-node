@@ -141,43 +141,43 @@
             };
         }
 
-        eventbus.on("device.command", function (data) {
+        eventbus.on("serial.command", function (message) {
 
             var value = "1";
 
             // get
 
-            if (data.command.startsWith('pP')) {
+            if (message.startsWith('pP')) {
                 value = device_model_simulation.runtime + ";" + device_model_simulation.pressure + ";" + device_model_simulation.setpoint + ";" + device_model_simulation.power + ";" + "  50";
             }
 
-            if (data.command.startsWith('gM')) {
+            if (message.startsWith('gM')) {
                 value = device_model_simulation.runmode + ";" + "  1";
             }
 
-            if (data.command.startsWith('gUp')) {
+            if (message.startsWith('gUp')) {
                 value = device_model_simulation.pressureunit + ";" + "  1";
             }
 
-            if (data.command.startsWith('gV')) {
+            if (message.startsWith('gV')) {
                 value = device_model_simulation.ventilation + ";" + "  1";
             }
 
-            if (data.command.startsWith('gW')) {
+            if (message.startsWith('gW')) {
                 value = device_model_simulation.coolant + ";" + "  1";
             }
 
-            if (data.command.startsWith('gFv')) {
+            if (message.startsWith('gFv')) {
                 value = "1";
-                value = data.command.substr(3);
+                value = message.substr(3);
                 splitter = value.split(';');
                 index_chk = parseInt(splitter[0].trim());
                 value = index_chk + ";" + device_model_simulation.jashon[index_chk].jso_time + ";" + device_model_simulation.jashon[index_chk].jso_pressure + " ; " + device_model_simulation.jashon[index_chk].jso_coolant + ";1";
             }
             // set
 
-            if (data.command.startsWith('cM')) {
-                d = data.command.substr(2);
+            if (message.startsWith('cM')) {
+                d = message.substr(2);
 
                 switch (d) {
 
@@ -200,47 +200,47 @@
 
             }
 
-            if (data.command.startsWith('cUp')) {
-                d = data.command.substr(3);
+            if (message.startsWith('cUp')) {
+                d = message.substr(3);
                 device_model_simulation.pressureunit = d;
             }
 
-            if (data.command.startsWith('dV')) {
-                d = data.command.substr(2);
+            if (message.startsWith('dV')) {
+                d = message.substr(2);
                 device_model_simulation.ventilation = d;
             }
 
-            if (data.command.startsWith('dW')) {
-                d = data.command.substr(2);
+            if (message.startsWith('dW')) {
+                d = message.substr(2);
                 device_model_simulation.coolant = d;
             }
 
-            if (data.command.startsWith('dB')) {
+            if (message.startsWith('dB')) {
                 device_model_simulation.pumpengine = true;
             }
 
-            if (data.command.startsWith('dE')) {
+            if (message.startsWith('dE')) {
                 device_model_simulation.pumpengine = false;
                 device_model_simulation.runtime = "0.0";
             }
 
-            if (data.command.startsWith('cS')) {
+            if (message.startsWith('cS')) {
 
-                d = data.command.substr(2);
+                d = message.substr(2);
                 device_model_simulation.power = d;
             }
 
-            if (data.command.startsWith('cC')) {
+            if (message.startsWith('cC')) {
 
-                d = data.command.substr(2);
+                d = message.substr(2);
 
                 device_model_simulation.setpoint = d;
             }
 
-            if (data.command.startsWith('cFs')) {
+            if (message.startsWith('cFs')) {
 
 
-                d = data.command.substr(3);
+                d = message.substr(3);
                 splitter = d.split(';');
                 index_chk = parseInt(splitter[0].trim());
 
@@ -252,9 +252,9 @@
             }
 
 
-            if (data.command.startsWith('cFd')) {
+            if (message.startsWith('cFd')) {
 
-                d = data.command.substr(3);
+                d = message.substr(3);
                 splitter = d.split(';');
                 index_chk = parseInt(splitter[0].trim());
                 for (i = index_chk; i < 11; i++) {
@@ -268,9 +268,9 @@
                 device_model_simulation.jashon[11].jso_coolant = "";
             }
 
-            if (data.command.startsWith('cFc')) {
+            if (message.startsWith('cFc')) {
 
-                d = data.command.substr(3);
+                d = message.substr(3);
                 splitter = d.split(';');
                 index_chk = parseInt(splitter[0].trim());
                 for (i = index_chk; i < 12; i++) {
@@ -280,7 +280,7 @@
                 }
             }
 
-            eventbus.emit("device.reply", data.command, value);
+            eventbus.emit("device.reply", message, value);
         });
 
 
