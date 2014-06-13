@@ -107,8 +107,7 @@
 
         });
 
-
-
+        
 
         eventbus.on("device.command", function (data) {
 
@@ -316,6 +315,7 @@
             eventbus.emit("serial.command", "cFc " + temp_obj_3 + ";");
 
         });
+
 
         eventbus.emit("device.initialized");        
 
