@@ -173,8 +173,9 @@ exports.init = function (eventbus) {
             localeventbus.emit("device.reply", currentmessage, data);
             waiting = false;
         } else {
-            
+            lastmessage = new Array;
             localeventbus.emit("device.reply", "heartbeat", data);
+            
             
         }
     });

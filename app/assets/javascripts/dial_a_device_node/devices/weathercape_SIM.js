@@ -19,6 +19,8 @@
                     "model": device_model_simulation
                 });
 
+            eventbus.emit('device.snapshot', device_model_simulation);
+
 
         }, 1000);
 

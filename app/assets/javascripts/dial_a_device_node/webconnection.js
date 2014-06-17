@@ -88,11 +88,13 @@
             });
 
 
-            localeventbus.on("device.snapshot", function (data) {
+            localeventbus.on("device.snapshot", function (model) {
 
                 websockets.trigger("device.log", {
-                    "metainfo": device_info,
-                    "data": data
+
+                        "device_info": device_info,
+                        "model": model
+                    
                 });
             });
 
