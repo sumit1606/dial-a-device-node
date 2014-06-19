@@ -51,7 +51,7 @@
             }
 
             function printLux(x){
-                device_model.lux = x.data;
+                device_model.lux = x.data*1;
 
                 eventbus.emit('ui.update', {
                     "component": "all",

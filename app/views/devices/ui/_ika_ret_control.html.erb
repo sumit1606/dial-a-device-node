@@ -1,7 +1,58 @@
 
 <div class="row-fluid clearfix" style="height: 160px;">
 
-             <div id="gauge1" class="span3 200x160px"></div>
+		<div class="col-md-6 col-sm-6">
+
+             <div id="gauge1" class="200x160px"></div>
+        
+
+	        <div class="inline" id="temperature_setpoint"> </div>
+
+            <script type="text/javascript">
+
+               smartinput ("temperature_setpoint", function(val) {
+                   ui.setTemperatureSetpoint(val);
+                }, "Set (°C)");
+            </script>
+
+            <div class="btn-group btn-group-justified">
+
+            	<div class="btn-group">
+
+            <button id="heaterbutton" name="heaterbutton" class="col-md-6 col-sm-6 btn btn-warning btn-large" onclick="ui.toggleHeater();" data-toggle="button"><span id="heatericon" name="heatericon" class="glyphicon" />Heater</button>
+
+        		</div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-sm-6">
+
+	        <div id="gauge2" class="200x160px"></div>
+
+                      
+	       
+	        <div class="inline" id="rotation_setpoint"> </div>
+
+            <script type="text/javascript">
+
+                smartinput ("rotation_setpoint", function(val) {
+                    ui.setRotationSetpoint(val);
+                }, "Set (rpm)");
+            </script>
+
+            <div class="btn-group btn-group-justified">
+
+            	<div class="btn-group">
+
+            <button id="stirrerbutton" name="stirrerbutton" class="col-md-6 col-sm-6 btn btn-warning btn-large" onclick="ui.toggleStirrer();" data-toggle="button"><span id="stirrericon" name="stirrericon" class="glyphicon" />Stirrer</button>
+
+        		</div>
+
+            </div>
+
+        </div>
 
 
 </div>
@@ -15,6 +66,15 @@
     max: 280,
     title: "Temperature",
     label: "° C"
+  }); 
+
+  var g2 = new JustGage({
+    id: "gauge2", 
+    value: 0, 
+    min: 0,
+    max: 1700,
+    title: "Rotation",
+    label: "rpm"
   }); 
 
 </script>

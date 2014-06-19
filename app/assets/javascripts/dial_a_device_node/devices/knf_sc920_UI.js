@@ -19,14 +19,14 @@
             runtime = parseFloat(data.model.runtime);
 
             if (runtime > 0) {
-                $('#startstopicon').removeClass('icon-play');
-                $('#startstopicon').addClass('icon-stop');
+                $('#startstopicon').removeClass('glyphicon-play');
+                $('#startstopicon').addClass('glyphicon-stop');
                 $('#startstop').addClass('active');
 
                 $('#runmode').addClass('disabled');
             } else {
-                $('#startstopicon').removeClass('icon-stop');
-                $('#startstopicon').addClass('icon-play');
+                $('#startstopicon').removeClass('glyphicon-stop');
+                $('#startstopicon').addClass('glyphicon-play');
                 $('#startstop').removeClass('active');
 
                 $('#runmode').removeClass('disabled');
@@ -44,14 +44,14 @@
 
             switch (parseInt(data.model.ventilation)) {
                 case 0:
-                    $('#ventilationicon').removeClass('icon-star-empty');
-                    $('#ventilationicon').addClass('icon-star');
+                    $('#ventilationicon').removeClass('glyphicon-star-empty');
+                    $('#ventilationicon').addClass('glyphicon-star');
                     $('#ventilationbutton').removeClass('active');
                     break;
 
                 case 1:
-                    $('#ventilationicon').removeClass('icon-star');
-                    $('#ventilationicon').addClass('icon-star-empty');
+                    $('#ventilationicon').removeClass('glyphicon-star');
+                    $('#ventilationicon').addClass('glyphicon-star-empty');
                     $('#ventilationbutton').addClass('active');
                     break;
 
@@ -59,14 +59,14 @@
 
             switch (parseInt(data.model.coolant)) {
                 case 0:
-                    $('#coolanticon').removeClass('icon-star-empty');
-                    $('#coolanticon').addClass('icon-star');
+                    $('#coolanticon').removeClass('glyphicon-star-empty');
+                    $('#coolanticon').addClass('glyphicon-star');
                     $('#coolantbutton').removeClass('active');
                     break;
 
                 case 1:
-                    $('#coolanticon').removeClass('icon-star');
-                    $('#coolanticon').addClass('icon-star-empty');
+                    $('#coolanticon').removeClass('glyphicon-star');
+                    $('#coolanticon').addClass('glyphicon-star-empty');
                     $('#coolantbutton').addClass('active');
                     break;
             }
