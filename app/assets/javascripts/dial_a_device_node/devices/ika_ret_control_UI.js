@@ -22,12 +22,12 @@
 
             switch (parseInt(data.model.stirrer_status)) {
                 case 2:
-                    $('#stirrericon').removeClass('glyphicon-flash');
+                    $('#stirrericon').removeClass('glyphicon-refresh');
                     $('#stirrerbutton').removeClass('active');
                     break;
 
                 case 1:
-                    $('#stirrericon').addClass('glyphicon-flash');
+                    $('#stirrericon').addClass('glyphicon-refresh');
                     $('#stirrerbutton').addClass('active');
                     break;
             }
