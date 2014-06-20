@@ -105,9 +105,7 @@
             };
         }
 
-        eventbus.on("serial.command", function (message) {
-
-            var value = "OK";
+        eventbus.on("serial.immediatecommand", function (message) {
 
             if (message.startsWith('START')) {
 
@@ -144,6 +142,33 @@
                 }
                 
             }
+
+            if (message.startsWith('OUT_SP')) {
+
+                dev = message.split(" ")[0].split("_")[2]
+
+                data = message.split(" ")[1]
+
+                switch (dev) {
+
+                    case '1':
+                        device_model_simulation.temperature_setpoint = parseFloat(data);
+
+                        break;
+                    case '4':
+                        device_model_simulation.rotation_setpoint = parseFloat(data);
+                        break;
+                    
+                }
+                
+            }
+
+        });
+
+
+        eventbus.on("serial.command", function (message) {
+
+            var value = "OK";
 
             if (message.startsWith('STATUS')) {
 
@@ -193,26 +218,6 @@
                         break;
                     case '4':
                         value = device_model_simulation.rotation_setpoint;
-                        break;
-                    
-                }
-                
-            }
-
-            if (message.startsWith('OUT_SP')) {
-
-                dev = message.split(" ")[0].split("_")[2]
-
-                data = message.split(" ")[1]
-
-                switch (dev) {
-
-                    case '1':
-                        device_model_simulation.temperature_setpoint = parseFloat(data);
-
-                        break;
-                    case '4':
-                        device_model_simulation.rotation_setpoint = parseFloat(data);
                         break;
                     
                 }

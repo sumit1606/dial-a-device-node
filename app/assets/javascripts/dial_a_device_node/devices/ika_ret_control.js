@@ -81,13 +81,13 @@
 
             if (data.command == "set_temperature_setpoint") {
 
-                eventbus.emit("serial.command", "OUT_SP_1 "+data.value);
+                eventbus.emit("serial.immediatecommand", "OUT_SP_1 "+data.value);
 
             }
 
             if (data.command == "set_rotation_setpoint") {
 
-                eventbus.emit("serial.command", "OUT_SP_4 "+data.value);
+                eventbus.emit("serial.immediatecommand", "OUT_SP_4 "+data.value);
 
             }  
 
@@ -105,25 +105,25 @@
 
             if (data.command == "start_heater") {
 
-                eventbus.emit("serial.command", "START_1");
+                eventbus.emit("serial.immediatecommand", "START_1");
 
             }
 
             if (data.command == "stop_heater") {
 
-                eventbus.emit("serial.command", "STOP_1");
+                eventbus.emit("serial.immediatecommand", "STOP_1");
 
             }
 
             if (data.command == "start_stirrer") {
 
-                eventbus.emit("serial.command", "START_4");
+                eventbus.emit("serial.immediatecommand", "START_4");
 
             }
 
             if (data.command == "stop_stirrer") {
 
-                eventbus.emit("serial.command", "STOP_4");
+                eventbus.emit("serial.immediatecommand", "STOP_4");
 
             }
 
