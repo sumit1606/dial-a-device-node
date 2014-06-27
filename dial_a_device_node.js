@@ -197,7 +197,7 @@
 
         server = host;
 
-        if !(typeof overridelogging === 'undefined') {
+        if (typeof overridelogging != 'undefined') {
             logging = overridelogging;
         }
 
