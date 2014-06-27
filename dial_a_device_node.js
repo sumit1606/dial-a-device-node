@@ -12,6 +12,8 @@
 
     var heartbeatinterval;
 
+    var logging = false;
+
     // default parameters
     ser_port = '/dev/ttyUSB0';
 
@@ -139,7 +141,7 @@
 
                 } else {
 
-                    console.log("beaglebone not registered");
+                    // console.log("beaglebone not registered");
 
                     if (typeof dialadevicenode === "undefined") {
                         process.exit(1);
@@ -155,20 +157,17 @@
 
                 dialadeviceweb.getBBInfo(server, ipaddress, serialnumber, function (message) {
 
-                    console.log("beaglebone registration response");
-                    console.log(message);
-
                     bbinfo = message;
 
                 }, function (message) {
                     clearInterval(intervalIDcheck);
-                    console.log("beaglebone registration failed (" + message + ")");
+                    // console.log("beaglebone registration failed (" + message + ")");
 
                     var exec = require('child_process').exec;
 
                     exec('udhcpc -i eth0', function (error, stdout, stderr) {
 
-                        console.log("resetting DHCP on eth0...");
+                        // console.log("resetting DHCP on eth0...");
 
                         bbinfo = undefined;
 
@@ -198,6 +197,8 @@
 
         server = host;
 
+        logging = true;
+
         console.log("connecting to " + host);
 
         var beaglebonechip = require('./beaglebonechip.js');
@@ -225,7 +226,7 @@
 
         if (!bbinfo.device) {
 
-            console.log("no device registered for this beaglebone");
+            // console.log("no device registered for this beaglebone");
 
             getBBInfo(5000);
 
@@ -335,7 +336,10 @@
 
         device.init(eventbus);
 
-        consolelogger.init(eventbus);
+        if (logging == true) {
+
+            consolelogger.init(eventbus);
+        }
 
         deviceconnection.init(eventbus);
 

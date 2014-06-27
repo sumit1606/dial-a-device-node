@@ -149,8 +149,6 @@ exports.init = function (eventbus) {
 
     localeventbus.on("serial.incoming", function (data) {
         
-        console.log (typeof data);
-        
         if ((typeof data === "object")) {
             
             localeventbus.emit("serial.rawretrieve", data);
