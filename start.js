@@ -6,7 +6,7 @@ b.readTextFile('/var/lib/cloud9/server.txt', function(x) {
 
 	if ((x.data != null) && (x.data.length != 0)) { dialadevicenode.run_beaglebone(x.data); } else {
 
-		dialadevicenode.run_beaglebone("localhost:5000");
+		dialadevicenode.run_beaglebone("localhost:5000", true);
 	} 
 
 

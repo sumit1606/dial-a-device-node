@@ -193,11 +193,13 @@
     }
 
 
-    exports.run_beaglebone = function (host) {
+    exports.run_beaglebone = function (host, overridelogging) {
 
         server = host;
 
-        logging = true;
+        if !(typeof overridelogging === 'undefined') {
+            logging = overridelogging;
+        }
 
         console.log("connecting to " + host);
 
