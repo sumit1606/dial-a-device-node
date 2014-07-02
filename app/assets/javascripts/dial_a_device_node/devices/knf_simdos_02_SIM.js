@@ -2,7 +2,11 @@
 
     var device_model_simulation = {
 
-        amount: 10.0
+        amount: 10.0,
+        timecounter: 0,
+        amountcounter: 0.0,
+        flowrate: 0.0,
+        runmode: 0
 
     };
 

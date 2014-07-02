@@ -1,7 +1,39 @@
+<span class="btn-group inline">
+            <button id="runmodebutton" name="runmodebutton" class=" btn btn-info btn-large dropdown-toggle" data-toggle="dropdown"><span id="runmode">Run Mode</span>&nbsp;<span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="ui.setRunmode(0);">Run Mode</a></li>
+                <li><a href="#" onclick="ui.setRunmode(1);">Dispense Mode ml</a></li>
+              <li><a href="#" onclick="ui.setRunmode(2);">Dispense Mode ml/min</a></li>
+            </ul>
+        </span>
+
+<span class="btn-group inline">
+            <button id="startstop" name="startstop" class=" btn btn-warning btn-large" onclick="ui.toggleStartstop();" data-toggle="button"><span id="startstopicon" name="startstopicon" class="glyphicon glyphicon-play" /></button>
+</span>
+
+<div class="row-fluid" style="margin-top:20px;">
+    <div class="span6">
+        <div id="tab2" name="tab2" class="well" style="text-align: center";>
+           <label><span id="timecounter" style="font-size: 20px;"></span></label>
+
+        </div>
+     </div>
+
+     <div class="span6">
+        <div id="tab2" name="tab2" class="well" style="text-align: center";>
+           <label><span id="amountcounter" style="font-size: 20px;"></span></label>
+
+        </div>
+     </div>
+</div>
+
+
 
 <div class="row-fluid clearfix" style="height: 160px;">
 
              <div id="gauge1" class="span3 200x160px"></div>
+
+             <div id="gauge2" class="span3 200x160px"></div>
 
 
 </div>
@@ -15,6 +47,15 @@
     max: 10000,
     title: "Amount",
     label: "ul"
+  }); 
+
+  var g2 = new JustGage({
+    id: "gauge2", 
+    value: 0, 
+    min: 0,
+    max: 10000,
+    title: "Flow rate",
+    label: "ul/min"
   }); 
 
 </script>

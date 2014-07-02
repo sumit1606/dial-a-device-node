@@ -2,7 +2,11 @@
 
     var device_model = {
 
-        amount: 0.0
+        amount: 0.0,
+        timecounter: 0,
+        amountcounter: 0.0,
+        flowrate: 0.0,
+        runmode: 0
 
     };
 
@@ -25,6 +29,22 @@
 	            "command": "get_amount"
 	        });
 
+            localeventbus.emit("device.command", {
+                "command": "get_timecounter"
+            });
+
+            localeventbus.emit("device.command", {
+                "command": "get_amountcounter"
+            });
+
+            localeventbus.emit("device.command", {
+                "command": "get_flowrate"
+            });
+
+            localeventbus.emit("device.command", {
+                "command": "get_runmode"
+            });
+
         });
 
 
@@ -33,6 +53,42 @@
             if (data.command == "get_amount") {
 
                 eventbus.emit("serial.command", "?DV");
+
+            }
+
+            if (data.command == "get_timecounter") {
+
+                eventbus.emit("serial.command", "?TT");
+
+            }
+
+            if (data.command == "get_amountcounter") {
+
+                eventbus.emit("serial.command", "?TV");
+
+            }
+
+            if (data.command == "get_flowrate") {
+
+                eventbus.emit("serial.command", "?RV");
+
+            }
+
+            if (data.command == "set_flowrate") {
+
+                eventbus.emit("serial.command", "RV"+data.value);
+
+            }
+
+            if (data.command == "get_runmode") {
+
+                eventbus.emit("serial.command", "?MS");
+
+            }
+
+            if (data.command == "set_function") {
+
+                eventbus.emit("serial.command", "KY"+data.value);
 
             }
 
@@ -48,6 +104,50 @@
             if (lastmessage.startsWith('?DV')) {
 
                 device_model.amount = parseFloat(data) / 1000;
+
+                eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model
+                });
+
+            }
+
+            if (lastmessage.startsWith('?TT')) {
+
+                device_model.timecounter = parseFloat(data);
+
+                eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model
+                });
+
+            }
+
+            if (lastmessage.startsWith('?TV')) {
+
+                device_model.amountcounter = parseFloat(data);
+
+                eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model
+                });
+
+            }
+
+            if (lastmessage.startsWith('?RV')) {
+
+                device_model.flowrate = parseFloat(data);
+
+                eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model
+                });
+
+            }
+
+            if (lastmessage.startsWith('?MS')) {
+
+                device_model.runmode = parseInt(data);
 
                 eventbus.emit('ui.update', {
                     "component": "all",
