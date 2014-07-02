@@ -11,7 +11,7 @@
 
             document.getElementById("timecounter").innerHTML = data.model.timecounter + "s";
 
-            switch (parseInt(data.model.runmode)) {
+            switch (parseInt(data.model.runfunction)) {
                 case 0:
                     $('#startstopicon').removeClass('glyphicon-play');
 	                $('#startstopicon').addClass('glyphicon-stop');

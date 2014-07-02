@@ -6,7 +6,8 @@
         timecounter: 0,
         amountcounter: 0.0,
         flowrate: 0.0,
-        runmode: 0
+        runmode: 0,
+        runfunction: 0
 
     };
 
@@ -95,6 +96,8 @@
 
                 eventbus.emit("serial.command", "KY"+data.value);
 
+                device_model.runfunction = data.value;
+
             }
 
             
@@ -108,7 +111,7 @@
 
             if (data.indexOf(String.fromCharCode(6)+String.fromCharCode(2)) > -1) {
 
-                data = data.substring(data.indexOf(String.fromCharCode(6)+String.fromCharCode(2))+1);
+                data = data.substring(data.indexOf(String.fromCharCode(6)+String.fromCharCode(2)));
                 
             }
 
@@ -122,7 +125,7 @@
 
             if (lastmessage.startsWith('?TT')) {
 
-                device_model.timecounter = parseFloat(data);
+                device_model.timecounter = parseFloat(data.substring(1));
 
             }
 

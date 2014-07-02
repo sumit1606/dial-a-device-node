@@ -6,7 +6,8 @@
         timecounter: 0,
         amountcounter: 0.0,
         flowrate: 0.0,
-        runmode: 0
+        runmode: 0,
+        runfunction: 0
 
     };
 
