@@ -57,9 +57,9 @@
 
     exports.toggleStartstop = function toggleStartstop() {
         if ($('#startstop').hasClass('active')) {
-            data = '0';
+            data = 0;
         } else {
-            data = '1';
+            data = 1;
         }
         localeventbus.emit("ui.command", {
             "command": "set_function",
