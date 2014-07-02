@@ -106,14 +106,18 @@
 
             eventbus.emit('device.assumeconnected');
 
-            data = data.substring(data.indexOf(String.fromCharCode(6)+String.fromCharCode(2)));
+            if (data.indexOf(String.fromCharCode(6)+String.fromCharCode(2)) > -1) {
+
+                data = data.substring(data.indexOf(String.fromCharCode(6)+String.fromCharCode(2))+1);
+                
+            }
+
 
             if (lastmessage.startsWith('?DV')) {
 
                 device_model.amount = parseFloat(data) / 1000;
 
-                
-
+            
             }
 
             if (lastmessage.startsWith('?TT')) {

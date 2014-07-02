@@ -5,11 +5,11 @@
         eventbus.on("ui.update", function (data) {
 
             g1.refresh(data.model.amount * 1000);
-            g2.refresh(data.model.flowrate * 1000);
+            g2.refresh(data.model.flowrate);
 
-            document.getElementById("amountcounter").innerHTML = data.model.flowcounter;
+            document.getElementById("amountcounter").innerHTML = data.model.amountcounter + " ul";
 
-            document.getElementById("timecounter").innerHTML = data.model.timecounter;
+            document.getElementById("timecounter").innerHTML = data.model.timecounter + "s";
 
             switch (parseInt(data.model.runmode)) {
                 case 0:
