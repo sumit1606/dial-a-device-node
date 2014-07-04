@@ -14,6 +14,8 @@
 
     var logging = false;
 
+    var device_fwatcher_root;
+
     // default parameters
     ser_port = '/dev/ttyUSB0';
 
@@ -50,6 +52,13 @@
 
     exports.set_ser_port = function (param) {
         ser_port = param;
+    };
+
+    exports.set_fwatcher_root = function (param) {
+        
+        if (typeof(param) != "undefined") {
+            device_fwatcher_root = param;
+        }
     };
 
     exports.set_ser_linebreak = function (param) {
@@ -258,6 +267,8 @@
             dialadevicenode.set_ser_prefix(bbinfo.devicetype.portprefix);
             dialadevicenode.set_ser_suffix(bbinfo.devicetype.portsuffix);
             
+
+            dialadevicenode.set_fwatcher_root(bbinfo.device.fwroot);
             
 
             dialadevicenode.set_device_id(bbinfo.device.id);
@@ -324,6 +335,8 @@
 
         status = require('./app/assets/javascripts/dial_a_device_node/systemstatus.js');
 
+        folderwatcher = require('./app/assets/javascripts/dial_a_device_node/folderwatcher.js');
+
         eventbus = new ev.EventEmitter;
 
         status.init(eventbus);
@@ -373,6 +386,12 @@
 
         if (simulate) {
             simulation.init(eventbus);
+        } else {
+
+            folderwatcher.init(eventbus);
+
+            eventbus.emit("folderwatcher.set_root", device_fwatcher_root);            
+
         }
 
         heartbeat = function () {

@@ -1,6 +1,6 @@
 {
   "name": "dial-a-device-node",
-  "version": "0.0.96",
+  "version": "0.0.97",
   "description": "dial-a-device-node is the device interface for dial-a-device",
   "main": "dial_a_device_node.js",
   "dependencies": {
@@ -8,7 +8,8 @@
     "coffee-script": "*",
     "websocket": "*",
     "getmac": "*",
-    "bonescript": "*"
+    "bonescript": "*",
+    "chokidar": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
