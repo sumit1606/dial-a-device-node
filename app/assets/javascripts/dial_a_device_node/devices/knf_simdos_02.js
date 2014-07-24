@@ -3,6 +3,7 @@
     var device_model = {
 
         amount: 0.0,
+        time: 0.0,
         timecounter: 0,
         amountcounter: 0.0,
         flowrate: 0.0,
@@ -45,6 +46,10 @@
             });
 
             localeventbus.emit("device.command", {
+                "command": "get_time"
+            });
+
+            localeventbus.emit("device.command", {
                 "command": "get_runmode"
             });
 
@@ -64,6 +69,12 @@
 
             }
 
+            if (data.command == "set_amount") {
+
+                eventbus.emit("serial.command", "DV"+data.value);
+
+            }
+
             if (data.command == "get_timecounter") {
 
                 eventbus.emit("serial.command", "?TT");
@@ -75,6 +86,7 @@
                 eventbus.emit("serial.command", "?TV");
 
             }
+
 
             if (data.command == "get_flowrate") {
 
@@ -88,9 +100,28 @@
 
             }
 
+
+            if (data.command == "get_time") {
+
+                eventbus.emit("serial.command", "?DT");
+
+            }
+
+            if (data.command == "set_time") {
+
+                eventbus.emit("serial.command", "DT"+data.value);
+
+            }
+
             if (data.command == "get_runmode") {
 
                 eventbus.emit("serial.command", "?MS");
+
+            }
+
+            if (data.command == "set_runmode") {
+
+                eventbus.emit("serial.command", "MS"+data.value);
 
             }
 
@@ -146,12 +177,6 @@
             if (lastmessage.startsWith('?MS')) {
 
                 device_model.runmode = parseInt(data);
-
-            }
-
-            if (lastmessage.startsWith('?KY')) {
-
-                device_model.runfunction = parseInt(data);
 
             }
 
