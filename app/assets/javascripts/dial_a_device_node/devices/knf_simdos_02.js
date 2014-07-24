@@ -149,6 +149,12 @@
 
             }
 
+            if (lastmessage.startsWith('?KY')) {
+
+                device_model.runfunction = parseInt(data);
+
+            }
+
 
         });
 

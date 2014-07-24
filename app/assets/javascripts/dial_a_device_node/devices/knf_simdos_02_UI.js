@@ -13,6 +13,9 @@
 
             switch (parseInt(data.model.runfunction)) {
                 case 0:
+
+                    // STOP
+
                     $('#runicon').removeClass('glyphicon-play');
                     $('#runicon').removeClass('glyphicon-stop');
                     $('#runicon').removeClass('glyphicon-pause');
@@ -22,10 +25,14 @@
 
 	                $('#runicon').addClass('glyphicon-stop');
                     $('#startpauseicon').addClass('glyphicon-start');
+
+                    $('#startpause').removeClass('active');
                 
                     break;
 
                 case 1:
+
+                    // START
                     $('#runicon').removeClass('glyphicon-play');
                     $('#runicon').removeClass('glyphicon-stop');
                     $('#runicon').removeClass('glyphicon-pause');
@@ -35,10 +42,14 @@
 
 	                $('#runicon').addClass('glyphicon-play');
                     $('#startpauseicon').addClass('glyphicon-pause');
+
+                    $('#startpause').addClass('active');
 	                
                     break;
 
-                case 2:
+                case 3:
+
+                    // PAUSE
                     $('#runicon').removeClass('glyphicon-play');
                     $('#runicon').removeClass('glyphicon-stop');
                     $('#runicon').removeClass('glyphicon-pause');
@@ -48,6 +59,8 @@
 
                     $('#runicon').addClass('glyphicon-pause');
                     $('#startpauseicon').addClass('glyphicon-start');
+
+                    $('#startpause').removeClass('active');
 
                     break;
             }
