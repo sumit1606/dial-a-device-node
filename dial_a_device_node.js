@@ -345,11 +345,14 @@
 
         webconnection.initsubscribe;
 
+        device.init(eventbus);
+        
+
         eventbus.emit("device.announce.deviceid", device_id);
 
         eventbus.emit("device.announce.devicetype", device_type);
 
-        device.init(eventbus);
+        
 
         if (logging == true) {
 
@@ -390,7 +393,9 @@
 
             folderwatcher.init(eventbus);
 
-            eventbus.emit("folderwatcher.set_root", device_fwatcher_root);            
+            eventbus.emit("folderwatcher.set_root", device_fwatcher_root);
+
+            eventbus.emit("device.folderwatcher_initialized");
 
         }
 

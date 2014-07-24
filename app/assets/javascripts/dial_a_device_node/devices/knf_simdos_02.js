@@ -7,7 +7,9 @@
         amountcounter: 0.0,
         flowrate: 0.0,
         runmode: 0,
-        runfunction: 0
+        runfunction: 0,
+        cyclenumber: 1,
+        actualcyclenumber: 1
 
     };
 
@@ -94,7 +96,7 @@
 
             if (data.command == "set_function") {
 
-                eventbus.emit("serial.command", "KY"+data.value);
+                eventbus.emit("serial.immediatecommand", "KY"+data.value);
 
                 device_model.runfunction = data.value;
 

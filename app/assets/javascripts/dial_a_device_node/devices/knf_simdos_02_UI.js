@@ -13,19 +13,42 @@
 
             switch (parseInt(data.model.runfunction)) {
                 case 0:
-                    $('#startstopicon').removeClass('glyphicon-play');
-	                $('#startstopicon').addClass('glyphicon-stop');
-	                $('#startstop').addClass('active');
+                    $('#runicon').removeClass('glyphicon-play');
+                    $('#runicon').removeClass('glyphicon-stop');
+                    $('#runicon').removeClass('glyphicon-pause');
 
-	                
+                    $('#startpauseicon').removeClass('glyphicon-start');
+                    $('#startpauseicon').removeClass('glyphicon-pause');
+
+	                $('#runicon').addClass('glyphicon-stop');
+                    $('#startpauseicon').addClass('glyphicon-start');
+                
                     break;
 
                 case 1:
-                    $('#startstopicon').removeClass('glyphicon-stop');
-	                $('#startstopicon').addClass('glyphicon-play');
-	                $('#startstop').removeClass('active');
+                    $('#runicon').removeClass('glyphicon-play');
+                    $('#runicon').removeClass('glyphicon-stop');
+                    $('#runicon').removeClass('glyphicon-pause');
 
+                    $('#startpauseicon').removeClass('glyphicon-start');
+                    $('#startpauseicon').removeClass('glyphicon-pause');
+
+	                $('#runicon').addClass('glyphicon-play');
+                    $('#startpauseicon').addClass('glyphicon-pause');
 	                
+                    break;
+
+                case 2:
+                    $('#runicon').removeClass('glyphicon-play');
+                    $('#runicon').removeClass('glyphicon-stop');
+                    $('#runicon').removeClass('glyphicon-pause');
+
+                    $('#startpauseicon').removeClass('glyphicon-start');
+                    $('#startpauseicon').removeClass('glyphicon-pause');
+
+                    $('#runicon').addClass('glyphicon-pause');
+                    $('#startpauseicon').addClass('glyphicon-start');
+
                     break;
             }
 
@@ -55,15 +78,33 @@
         });
     };
 
-    exports.toggleStartstop = function toggleStartstop() {
-        if ($('#startstop').hasClass('active')) {
-            data = 0;
-        } else {
+    exports.toggleStartPause = function toggleStartPause() {
+        if ($('#startpause').hasClass('active')) {
             data = 1;
+        } else {
+            data = 3;
         }
         localeventbus.emit("ui.command", {
             "command": "set_function",
             "value": data
+        });
+
+    };
+
+    exports.toggleStop = function toggleStop() {
+
+        localeventbus.emit("ui.command", {
+            "command": "set_function",
+            "value": 0
+        });
+
+    };
+
+    exports.togglePrimeDrain = function togglePrimeDrain() {
+
+        localeventbus.emit("ui.command", {
+            "command": "set_function",
+            "value": 2
         });
 
     };

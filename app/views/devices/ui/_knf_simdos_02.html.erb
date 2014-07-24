@@ -7,8 +7,17 @@
             </ul>
         </span>
 
+<span id="runicon" name="runicon" class="glyphicon glyphicon-stop" />
+
 <span class="btn-group inline">
-            <button id="startstop" name="startstop" class=" btn btn-warning btn-large" onclick="ui.toggleStartstop();" data-toggle="button"><span id="startstopicon" name="startstopicon" class="glyphicon glyphicon-play" /></button>
+
+        <button id="stop" name="stop" class=" btn btn-warning btn-large" onclick="ui.toggleStop();"><span id="stopicon" name="stopicon" class="glyphicon glyphicon-stop" /></button>
+
+            <button id="startpause" name="startpause" class=" btn btn-success btn-large" onclick="ui.toggleStartPause();" data-toggle="button"><span id="startpauseicon" name="startpauseicon" class="glyphicon glyphicon-play" /></button>
+
+            &nbsp;
+            <button id="primedrain" name="primedrain" class=" btn btn-default btn-large" onclick="ui.togglePrimeDrain();">Prime/Drain</button>
+
 </span>
 
 <div class="row-fluid" style="margin-top:20px;">

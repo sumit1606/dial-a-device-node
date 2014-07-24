@@ -1,16 +1,33 @@
 (function (exports) {
 
 
+    var fwroot;
+
+    var watcher;
+
+
     exports.init = function (eventbus) {
         localeventbus = eventbus;
 
-        localeventbus.on("something", function (data) {
+        localeventbus.on("folderwatcher.set_root", function (data) {
 
-            data;
+            fwroot = data;
 
         });
 
-        localeventbus.emit("status.initialized");
+
+
+        localeventbus.on("folderwatcher.start", function (data) {
+
+            require('chokidar').watch(fwroot, {ignored: /[\/\\]\./, persistent: true}).on('all', function(event, path) {
+
+                localeventbus.emit("folderwatcher.event", event, path);
+
+            });
+
+        });
+
+        
     };
 
 })(typeof exports == 'undefined' ? this['folderwatcher'] = {} : exports);
