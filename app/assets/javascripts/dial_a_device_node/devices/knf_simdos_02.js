@@ -121,7 +121,7 @@
 
             if (data.command == "set_runmode") {
 
-                eventbus.emit("serial.command", "MS"+data.value);
+                eventbus.emit("serial.immediatecommand", "MS"+data.value);
 
             }
 

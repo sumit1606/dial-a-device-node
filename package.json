@@ -1,6 +1,6 @@
 {
   "name": "dial-a-device-node",
-  "version": "0.0.101",
+  "version": "0.0.102",
   "description": "dial-a-device-node is the device interface for dial-a-device",
   "main": "dial_a_device_node.js",
   "dependencies": {
