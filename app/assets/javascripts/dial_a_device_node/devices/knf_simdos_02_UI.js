@@ -46,24 +46,24 @@
                 case 0:
                     $('#runmode').text('Run Mode');
 
-                    $("#tab2").show();
-                    $("#tab3").hide();
-                    $("#tab4").hide();
+                    $("#tflowrate").show();
+                    $("#tamount").hide();
+                    $("#ttime").hide();
  
                     break;
                 case 1:
                     $('#runmode').text('Dispense Mode ml');
 
-                    $("#tab2").hide();
-                    $("#tab3").show();
-                    $("#tab4").hide();
+                    $("#tflowrate").hide();
+                    $("#tamount").show();
+                    $("#ttime").show();
                     break;
                 case 2:
                     $('#runmode').text('Dispense Mode ml/min');
 
-                    $("#tab2").hide();
-                    $("#tab3").hide();
-                    $("#tab4").show();
+                    $("#tflowrate").show();
+                    $("#tamount").hide();
+                    $("#ttime").show();
                     break;
                 
             }
