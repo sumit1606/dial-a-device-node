@@ -4,8 +4,6 @@
 
         eventbus.on("ui.update", function (data) {
 
-            g1.refresh(data.model.amount * 1000);
-            g2.refresh(data.model.flowrate);
 
             document.getElementById("amountcounter").innerHTML = data.model.amountcounter + " ul";
 

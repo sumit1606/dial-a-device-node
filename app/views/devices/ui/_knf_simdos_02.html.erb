@@ -44,11 +44,6 @@
   <div id="tab2" name="tab2" class="well" style="display:none;">
 
 
-        <div class="col-md-5 col-sm-5">
-
-             <div id="gauge2" class="200x160px"></div>
-        
-
           <div class="inline" id="flowrate"> </div>
 
             <script type="text/javascript">
@@ -58,8 +53,6 @@
                 }, "Set (ul/min)");
             </script>
 
-        </div>
-
 
       
     </div>
@@ -67,9 +60,7 @@
         <div id="tab3" name="tab3" class="well" style="display:none;">
             
 
-              <div class="col-md-5 col-sm-5">
 
-                   <div id="gauge1" class="200x160px"></div>
               
 
                 <div class="inline" id="amount"> </div>
@@ -81,8 +72,7 @@
                       }, "Set (ul)");
                   </script>
 
-               </div>
-
+ 
 
 
         </div>
@@ -90,11 +80,6 @@
 
         <div id="tab4" name="tab4" class="well" style="display:none;">
          
-
-                    <div class="col-md-5 col-sm-5">
-
-             <div id="gauge2" class="200x160px"></div>
-        
 
           <div class="inline" id="time"> </div>
 
@@ -105,31 +90,7 @@
                 }, "Set (s)");
             </script>
 
-        </div>
 
         </div>
 
 </div>
-
-
-<script>
- var g1 = new JustGage({
-    id: "gauge1", 
-    value: 0, 
-    min: 0,
-    max: 10000,
-    title: "Amount",
-    label: "ul"
-  }); 
-
-  var g2 = new JustGage({
-    id: "gauge2", 
-    value: 0, 
-    min: 0,
-    max: 10000,
-    title: "Flow rate",
-    label: "ml/min"
-  }); 
-
-</script>
-
