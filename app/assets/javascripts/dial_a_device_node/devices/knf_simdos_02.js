@@ -53,6 +53,18 @@
                 "command": "get_runmode"
             });
 
+            localeventbus.emit("device.command", {
+                "command": "get_operationstatus"
+            });
+
+            localeventbus.emit("device.command", {
+                "command": "get_runmodestatus"
+            });
+
+            localeventbus.emit("device.command", {
+                "command": "get_dispensemodestatus"
+            });
+
             eventbus.emit('ui.update', {
                     "component": "all",
                     "model": device_model
@@ -119,6 +131,24 @@
 
             }
 
+            if (data.command == "get_operationstatus") {
+
+                eventbus.emit("serial.command", "?SS1");
+
+            }
+
+            if (data.command == "get_runmodestatus") {
+
+                eventbus.emit("serial.command", "?SS3");
+
+            }
+
+            if (data.command == "get_dispensemodestatus") {
+
+                eventbus.emit("serial.command", "?SS4");
+
+            }
+
             if (data.command == "set_runmode") {
 
                 eventbus.emit("serial.immediatecommand", "MS"+data.value);
@@ -177,6 +207,42 @@
             if (lastmessage.startsWith('?MS')) {
 
                 device_model.runmode = parseInt(data);
+
+            }
+
+            if (lastmessage.startsWith('?SS1')) {
+
+                if (parseInt(data) == 1) {
+
+                    device_model.runfunction = 1; 
+
+                } else {
+
+
+                    device_model.runfunction = 0; 
+                }
+
+            }
+
+            if (lastmessage.startsWith('?SS3')) {
+
+                if (parseInt(data) == 1) {
+
+                    device_model.runmode = 0;
+                    device_model.runfunction = 1; 
+
+                }
+
+            }
+
+            if (lastmessage.startsWith('?SS4')) {
+
+                if (parseInt(data) == 1) {
+
+                    
+                    device_model.runfunction = 1; 
+
+                }                
 
             }
 
