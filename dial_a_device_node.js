@@ -210,13 +210,22 @@
             logging = overridelogging;
         }
 
-        console.log("connecting to " + host);
+        if (logging == true) {
+
+            console.log("connecting to " + host);
+
+        }
 
         var beaglebonechip = require('./beaglebonechip.js');
 
         beaglebonechip.getSerialNumber(function (ser) {
 
-            console.log("serialnumber " + ser);
+
+            if (logging == true) {
+
+                console.log("serialnumber " + ser);
+
+            }
 
             serialnumber = ser;
 

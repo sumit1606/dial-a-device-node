@@ -22,6 +22,29 @@
             };
         }
 
+
+        function pad(n, width, z) {
+          z = z || '0';
+          n = n + '';
+          return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+        }
+
+        function toknftime(datetime) {
+
+            var d = new Date(datetime);
+
+            return pad(d.getHours(), 2) + pad(d.getMinutes(), 2) + pad(d.getSeconds(), 2) + "00";
+
+        }
+
+        function fromknftime(str) {
+
+            var d = new Date(0, 0, 0, parseInt(str.substr(0, 2)), parseInt(str.substr(2, 2), parseInt(str.substr(4, 2)), parseInt(str.substr(6, 2)));
+
+            return Number(d);
+
+        }
+
         eventbus.on("device.initialized", function () {
 
         });
@@ -83,7 +106,7 @@
 
             if (data.command == "set_amount") {
 
-                eventbus.emit("serial.command", "DV"+data.value);
+                eventbus.emit("serial.command", "DV"+pad(data.value, 8));
 
             }
 
@@ -108,7 +131,7 @@
 
             if (data.command == "set_flowrate") {
 
-                eventbus.emit("serial.command", "RV"+data.value);
+                eventbus.emit("serial.command", "RV"+pad(data.value, 8));
 
             }
 
@@ -121,7 +144,7 @@
 
             if (data.command == "set_time") {
 
-                eventbus.emit("serial.command", "DT"+data.value);
+                eventbus.emit("serial.command", "DT"+toknftime(data.value));
 
             }
 
@@ -188,7 +211,7 @@
 
             if (lastmessage.startsWith('?TT')) {
 
-                device_model.timecounter = parseFloat(data.substring(1));
+                device_model.timecounter = fromknftime(data.substring(1));
 
             }
 
