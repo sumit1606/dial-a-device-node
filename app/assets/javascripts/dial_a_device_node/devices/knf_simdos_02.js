@@ -39,7 +39,7 @@
 
         function fromknftime(str) {
 
-            var d = new Date(0, 0, 0, parseInt(str.substr(0, 2)), parseInt(str.substr(2, 2), parseInt(str.substr(4, 2)), parseInt(str.substr(6, 2)));
+            var d = new Date(0, 0, 0, parseInt(str.substr(0, 2)), parseInt(str.substr(2, 2)), parseInt(str.substr(4, 2)), parseInt(str.substr(6, 2)));
 
             return Number(d);
 
