@@ -41,8 +41,13 @@
 
         localeventbus.on("device.assumeconnected", function () {
 
-            status_model.deviceconnection = true;
-            localeventbus.emit("ui.status", status_model);
+            if status_model.deviceconnection == false {
+                
+                status_model.deviceconnection = true;
+                localeventbus.emit("ui.status", status_model);
+
+            }
+
         });
 
         localeventbus.on("serial.simulation", function () {

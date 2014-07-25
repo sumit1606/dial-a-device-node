@@ -204,7 +204,7 @@
 
             if (lastmessage.startsWith('?DV')) {
 
-                device_model.amount = parseFloat(data) / 1000;
+                device_model.amount = parseFloat(data);
 
             
             }
