@@ -3,7 +3,7 @@
     var device_model = {
 
         amount: 0.0,
-        time: 0.0,
+        time: 0,
         timecounter: 0,
         amountcounter: 0.0,
         flowrate: 0.0,
@@ -205,7 +205,13 @@
 
             if (lastmessage.startsWith('?TT')) {
 
-                device_model.timecounter = fromknftime(data.substring(1));
+                device_model.timecounter = fromknftime(data);
+
+            }
+
+            if (lastmessage.startsWith('?DT')) {
+
+                device_model.time = fromknftime(data);
 
             }
 
