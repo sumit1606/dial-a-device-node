@@ -39,7 +39,7 @@
 
         function fromknftime(str) {
 
-            var d = new Date(0, 0, 0, parseInt(str.substr(0, 2)), parseInt(str.substr(2, 2)), parseInt(str.substr(4, 2)), parseInt(str.substr(6, 2)));
+            var d = new Date(1970, 1, 1, parseInt(str.substr(0, 2)), parseInt(str.substr(2, 2)), parseInt(str.substr(4, 2)), parseInt(str.substr(6, 2)));
 
             return Number(d);
 
@@ -106,7 +106,7 @@
 
             if (data.command == "set_amount") {
 
-                eventbus.emit("serial.command", "DV"+pad(data.value, 8));
+                eventbus.emit("serial.immediatecommand", "DV"+pad(data.value, 8));
 
             }
 
@@ -131,7 +131,7 @@
 
             if (data.command == "set_flowrate") {
 
-                eventbus.emit("serial.command", "RV"+pad(data.value, 8));
+                eventbus.emit("serial.immediatecommand", "RV"+pad(data.value, 8));
 
             }
 
@@ -144,7 +144,7 @@
 
             if (data.command == "set_time") {
 
-                eventbus.emit("serial.command", "DT"+toknftime(data.value));
+                eventbus.emit("serial.immediatecommand", "DT"+toknftime(data.value));
 
             }
 

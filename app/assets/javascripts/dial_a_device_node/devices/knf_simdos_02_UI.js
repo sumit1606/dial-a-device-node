@@ -7,7 +7,9 @@
 
             document.getElementById("amountcounter").innerHTML = data.model.amountcounter + " ul";
 
-            document.getElementById("timecounter").innerHTML = data.model.timecounter + "s";
+            var d = new Date(data.model.timecounter);
+
+            document.getElementById("timecounter").innerHTML = d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+'.'+getMilliseconds();
 
             switch (parseInt(data.model.runfunction)) {
                 case 0:
