@@ -34,14 +34,14 @@ function knfsimdosparser() {
     return function(emitter, buffer){
 
       data = Buffer.concat([data, buffer]);
+      
+      console.log (data.toJSON());
 
+      while (data.toJSON().indexOf(2) > -1 && data.toJSON().indexOf(3) > data.toJSON().indexOf(2)) {
 
+        var out = data.slice(data.toJSON().indexOf(2)+1, data.toJSON().indexOf(3));
 
-      while (data.toJSON.indexOf(2) > -1 && data.JSON.indexOf(3) > data.toJSON.indexOf(2)) {
-
-        var out = data.slice(data.toJSON.indexOf(2)+1, data.JSON.indexOf(3)-data.toJSON.indexOf(2));
-
-        data = data.slice(data.toJSON.indexOf(2)+1);
+        data = data.slice(data.toJSON().indexOf(3)+2);
 
         emitter.emit('data', out);
 
