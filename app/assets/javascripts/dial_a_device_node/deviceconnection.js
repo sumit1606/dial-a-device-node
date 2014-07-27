@@ -27,6 +27,30 @@ function hex2a(hexx) {
         return str;
 }
 
+function knfsimdosparser() {
+
+    var data = new Buffer(0);
+
+    return function(emitter, buffer){
+
+      data = Buffer.concat([data, buffer]);
+
+
+
+      while (data.toJSON.indexOf(2) > -1 && data.JSON.indexOf(3) > data.toJSON.indexOf(2)) {
+
+        var out = data.slice(data.toJSON.indexOf(2)+1, data.JSON.indexOf(3)-data.toJSON.indexOf(2));
+
+        data = data.slice(data.toJSON.indexOf(2)+1);
+
+        emitter.emit('data', out);
+
+      }
+    };
+
+
+}
+
 exports.init = function (eventbus) {
     localeventbus = eventbus;
     localeventbus.emit("serial.initialized");
@@ -67,21 +91,31 @@ exports.init = function (eventbus) {
     localeventbus.on("serial.connect", function () {
         
         if (linebreak == "") {
-        serialport = new ser.SerialPort(port, {
-            baudrate: baud,
-            databit: databit,
-            parity: parity,
-            stopbit: stopbit,
-            parser: (ser.parsers.raw)
-        });
+            serialport = new ser.SerialPort(port, {
+                baudrate: baud,
+                databit: databit,
+                parity: parity,
+                stopbit: stopbit,
+                parser: (ser.parsers.raw)
+            });
+        } else if (linebreak == "knfsimdos") {
+
+            serialport = new ser.SerialPort(port, {
+                baudrate: baud,
+                databit: databit,
+                parity: parity,
+                stopbit: stopbit,
+                parser: (knfsimdosparser())
+            });
+
         } else {
             
             serialport = new ser.SerialPort(port, {
-            baudrate: baud,
-            databit: databit,
-            parity: parity,
-            stopbit: stopbit,
-            parser: (ser.parsers.readline(hex2a(linebreak)))
+                baudrate: baud,
+                databit: databit,
+                parity: parity,
+                stopbit: stopbit,
+                parser: (ser.parsers.readline(hex2a(linebreak)))
             });
         }
 
