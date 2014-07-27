@@ -195,12 +195,6 @@
 
             eventbus.emit('device.assumeconnected');
 
-            if (data.indexOf(String.fromCharCode(6)+String.fromCharCode(2)) > -1) {
-
-                data = data.substring(data.indexOf(String.fromCharCode(6)+String.fromCharCode(2)));
-                
-            }
-
 
             if (lastmessage.startsWith('?DV')) {
 
