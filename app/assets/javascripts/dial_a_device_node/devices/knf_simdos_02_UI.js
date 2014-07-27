@@ -9,7 +9,7 @@
 
             var d = new Date(data.model.timecounter);
 
-            document.getElementById("timecounter").innerHTML = d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+'.'+getMilliseconds();
+            document.getElementById("timecounter").innerHTML = d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+'.'+d.getMilliseconds();
 
             switch (parseInt(data.model.runfunction)) {
                 case 0:
