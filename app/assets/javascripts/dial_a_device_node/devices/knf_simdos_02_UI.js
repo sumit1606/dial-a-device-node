@@ -78,8 +78,10 @@
                 $('#flowrate_input').val(data.model.flowrate);
             }
 
+            var d2 = new Date(data.model.time);
+
             if (!$('#time_input').hasClass("dontupdate")) {
-                $('#time_input').val(data.model.time);
+                $('#time_input').val(d2.getSeconds());
             }
 
 
@@ -155,6 +157,17 @@
         localeventbus.emit("ui.command", {
             "command": "set_time",
             "value": data
+        });
+
+    };
+
+    exports.setTimeSeconds = function setTimeSeconds(data) {
+
+        var d = new Date(1970, 1, 1, 0, 0, data, 0);
+
+        localeventbus.emit("ui.command", {
+            "command": "set_time",
+            "value": Number(d)
         });
 
     };
