@@ -45,8 +45,6 @@ function knfsimdosparser() {
 
       }
 
-      data = new Buffer(0);
-      
     };
 
 

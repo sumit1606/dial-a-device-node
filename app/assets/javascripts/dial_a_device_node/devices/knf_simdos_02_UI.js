@@ -1,5 +1,14 @@
 (function (exports) {
 
+
+    function pad(n, width, z) {
+          z = z || '0';
+          n = n + '';
+          return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+        }
+
+
+
     exports.init = function (eventbus) {
 
         eventbus.on("ui.update", function (data) {
@@ -9,7 +18,7 @@
 
             var d = new Date(data.model.timecounter);
 
-            document.getElementById("timecounter").innerHTML = d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+'.'+d.getMilliseconds();
+            document.getElementById("timecounter").innerHTML = pad(d.getHours(), 2)+':'+pad(d.getMinutes(), 2)+':'+pad(d.getSeconds(), 2)+'.'+pad(d.getMilliseconds(), 2);
 
             switch (parseInt(data.model.runfunction)) {
                 case 0:
