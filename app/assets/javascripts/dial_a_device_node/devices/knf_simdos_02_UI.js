@@ -20,7 +20,7 @@
 
             d.setTime(data.model.timecounter);
 
-            document.getElementById("timecounter").innerHTML = pad(d.getUTCHours(), 2)+':'+pad(d.getUTCMinutes(), 2)+':'+pad(d.getUTCSeconds(), 2)+'.'+pad(d.getUTCMilliseconds(), 2);
+            document.getElementById("timecounter").innerHTML = pad(d.getUTCHours(), 2)+':'+pad(d.getUTCMinutes(), 2)+':'+pad(d.getUTCSeconds(), 2);
 
             switch (parseInt(data.model.runfunction)) {
                 case 0:
@@ -176,7 +176,7 @@
 
         var d = new Date();
 
-        d.setTime(data*100);
+        d.setTime(data*1000);
 
         localeventbus.emit("ui.command", {
             "command": "set_time",
