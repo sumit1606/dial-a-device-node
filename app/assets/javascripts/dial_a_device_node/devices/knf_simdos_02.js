@@ -41,7 +41,7 @@
 
             var d = new Date(1970, 1, 1, parseInt(str.substr(0, 2)), parseInt(str.substr(2, 2)), parseInt(str.substr(4, 2)), parseInt(str.substr(6, 2)));
 
-            return Number(d);
+            return d.getTime();
 
         }
 
@@ -193,8 +193,6 @@
 
         eventbus.on("device.reply", function (lastmessage, data) {
 
-            eventbus.emit('device.assumeconnected');
-
 
             if (lastmessage.startsWith('?DV')) {
 
@@ -206,6 +204,8 @@
             if (lastmessage.startsWith('?TT')) {
 
                 device_model.timecounter = fromknftime(data);
+
+                eventbus.emit('device.assumeconnected');
 
             }
 

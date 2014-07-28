@@ -44,6 +44,9 @@ function knfsimdosparser() {
         emitter.emit('data', out.toString());
 
       }
+
+      data = new Buffer(0);
+      
     };
 
 

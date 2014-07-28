@@ -167,7 +167,7 @@
 
         localeventbus.emit("ui.command", {
             "command": "set_time",
-            "value": Number(d)
+            "value": d.getTime()
         });
 
     };
