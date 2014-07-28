@@ -1,12 +1,3 @@
-<span class="btn-group inline">
-            <button id="runmodebutton" name="runmodebutton" class=" btn btn-info btn-large dropdown-toggle" data-toggle="dropdown"><span id="runmode">Run Mode</span>&nbsp;<span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li><a href="#" onclick="ui.setRunmode(0);">Run Mode</a></li>
-                <li><a href="#" onclick="ui.setRunmode(1);">Dispense Mode ml</a></li>
-              <li><a href="#" onclick="ui.setRunmode(2);">Dispense Mode ml/min</a></li>
-            </ul>
-
-</span>
 
 <span class="btn-group inline">
 
@@ -19,6 +10,17 @@
             <button id="primedrain" name="primedrain" class=" btn btn-default btn-large" onclick="ui.togglePrimeDrain();">Prime/Drain</button>
 
 </span>
+
+<span class="btn-group inline">
+            <button id="runmodebutton" name="runmodebutton" class=" btn btn-info btn-large dropdown-toggle" data-toggle="dropdown"><span id="runmode">Run Mode</span>&nbsp;<span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="ui.setRunmode(0);">Run Mode</a></li>
+                <li><a href="#" onclick="ui.setRunmode(1);">Dispense Mode (volume)</a></li>
+              <li><a href="#" onclick="ui.setRunmode(2);">Dispense Mode (flow rate)</a></li>
+            </ul>
+
+</span>
+
 
 <div class="row-fluid" style="margin-top:20px;">
     <div class="span6">

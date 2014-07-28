@@ -65,14 +65,14 @@
  
                     break;
                 case 1:
-                    $('#runmode').text('Dispense Mode ml');
+                    $('#runmode').text('Dispense Mode (volume)');
 
                     $("#tflowrate").hide();
                     $("#tamount").show();
                     $("#ttime").show();
                     break;
                 case 2:
-                    $('#runmode').text('Dispense Mode ml/min');
+                    $('#runmode').text('Dispense Mode (flow rate)');
 
                     $("#tflowrate").show();
                     $("#tamount").hide();
