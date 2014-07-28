@@ -14,7 +14,7 @@
         eventbus.on("ui.update", function (data) {
 
 
-            document.getElementById("amountcounter").innerHTML = data.model.amountcounter + " ul";
+            document.getElementById("amountcounter").innerHTML = data.model.amountcounter + " &micro;l";
 
             var d = new Date();
 
