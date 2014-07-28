@@ -33,13 +33,15 @@
 
             var d = new Date(datetime);
 
-            return pad(d.getHours(), 2) + pad(d.getMinutes(), 2) + pad(d.getSeconds(), 2) + "00";
+            return pad(d.getUTCHours(), 2) + pad(d.getUTCMinutes(), 2) + pad(d.getUTCSeconds(), 2) + "00";
 
         }
 
         function fromknftime(str) {
 
-            var d = new Date(1970, 1, 1, parseInt(str.substr(0, 2)), parseInt(str.substr(2, 2)), parseInt(str.substr(4, 2)), parseInt(str.substr(6, 2)));
+            var d = new Date();
+
+            d.setTime(parseInt(str.substr(0, 2))*24 * parseInt(str.substr(2, 2))*60 * parseInt(str.substr(4, 2)) * 60 *  parseInt(str.substr(6, 2)) * 100);
 
             return d.getTime();
 

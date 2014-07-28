@@ -35,7 +35,7 @@ function knfsimdosparser() {
 
       data = Buffer.concat([data, buffer]);
       
-      while (data.toJSON().indexOf(2) > -1 && data.toJSON().indexOf(3) > data.toJSON().indexOf(2)) {
+      while (data.toJSON().indexOf(2) > -1 && data.toJSON().indexOf(3) > data.toJSON().indexOf(2) && data.toJSON().length > data.toJSON().indexOf(3)+1) {
 
         var out = data.slice(data.toJSON().indexOf(2)+1, data.toJSON().indexOf(3));
 

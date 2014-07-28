@@ -16,9 +16,11 @@
 
             document.getElementById("amountcounter").innerHTML = data.model.amountcounter + " ul";
 
-            var d = new Date(data.model.timecounter);
+            var d = new Date();
 
-            document.getElementById("timecounter").innerHTML = pad(d.getHours(), 2)+':'+pad(d.getMinutes(), 2)+':'+pad(d.getSeconds(), 2)+'.'+pad(d.getMilliseconds(), 2);
+            d.setTime(data.model.timecounter);
+
+            document.getElementById("timecounter").innerHTML = pad(d.getUTCHours(), 2)+':'+pad(d.getUTCMinutes(), 2)+':'+pad(d.getUTCSeconds(), 2)+'.'+pad(d.getUTCMilliseconds(), 2);
 
             switch (parseInt(data.model.runfunction)) {
                 case 0:
@@ -172,7 +174,9 @@
 
     exports.setTimeSeconds = function setTimeSeconds(data) {
 
-        var d = new Date(1970, 1, 1, 0, 0, data, 0);
+        var d = new Date();
+
+        d.setTime(data*100);
 
         localeventbus.emit("ui.command", {
             "command": "set_time",
