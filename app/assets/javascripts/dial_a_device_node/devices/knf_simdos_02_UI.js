@@ -92,7 +92,7 @@
             var d2 = new Date(data.model.time);
 
             if (!$('#time_input').hasClass("dontupdate")) {
-                $('#time_input').val(d2.getSeconds());
+                $('#time_input').val(d2.getUTCSeconds() + d2.getUTCMinutes()*60 + d2.getUTCHours() * 60 * 60);
             }
 
 

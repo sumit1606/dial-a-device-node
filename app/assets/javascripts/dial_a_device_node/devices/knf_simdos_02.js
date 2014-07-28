@@ -41,7 +41,7 @@
 
             var d = new Date();
 
-            d.setTime(parseInt(str.substr(0, 2))*24 * parseInt(str.substr(2, 2))*60 * parseInt(str.substr(4, 2)) * 60 *  parseInt(str.substr(6, 2)) * 100);
+            d.setTime(parseInt(str.substr(0, 2))*60*60 * 100 + parseInt(str.substr(2, 2))*60 * 100 + parseInt(str.substr(4, 2)) * 100  +  parseInt(str.substr(6, 2)) );
 
             return d.getTime();
 
