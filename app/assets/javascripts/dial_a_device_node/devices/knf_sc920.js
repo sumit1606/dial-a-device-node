@@ -105,6 +105,14 @@
             eventbus.emit("serial.command", "gV");
             eventbus.emit("serial.command", "gW");
 
+            eventbus.emit('ui.update', {
+                        "component": "all",
+                        "model": device_model
+                    });
+
+
+            eventbus.emit('device.snapshot', device_model);
+
         });
 
         
@@ -162,16 +170,12 @@
                     device_model.setpoint = re[2].trim();
                     device_model.power = re[3].trim();
 
-                    eventbus.emit('ui.update', {
-                        "component": "all",
-                        "model": device_model
-                    });
-
-                    eventbus.emit('device.snapshot', device_model);
-
                 } catch (e) {
 
                 }
+
+                eventbus.emit('device.assumeconnected');
+
             }
 
             if (lastmessage.startsWith('gM')) {
@@ -181,13 +185,6 @@
                     var re = ("" + data).split(';');
 
                     device_model.runmode = re[0].trim();
-
-                    eventbus.emit('ui.update', {
-                        "component": "all",
-                        "model": device_model
-                    });
-
-                    eventbus.emit('device.snapshot', device_model);
 
                 } catch (e) {
 
@@ -202,12 +199,6 @@
 
                     device_model.pressureunit = re[0].trim();
 
-                    eventbus.emit('ui.update', {
-                        "component": "all",
-                        "model": device_model
-                    });
-
-                    eventbus.emit('device.snapshot', device_model);
 
                 } catch (e) {
 
@@ -222,13 +213,6 @@
 
                     device_model.ventilation = re[0].trim();
 
-                    eventbus.emit('ui.update', {
-                        "component": "all",
-                        "model": device_model
-                    });
-
-                    eventbus.emit('device.snapshot', device_model);
-
                 } catch (e) {
 
                 }
@@ -241,13 +225,6 @@
                     var re = ("" + data).split(';');
 
                     device_model.coolant = re[0].trim();
-
-                    eventbus.emit('ui.update', {
-                        "component": "all",
-                        "model": device_model
-                    });
-
-                    eventbus.emit('device.snapshot', device_model);
 
                 } catch (e) {
 
@@ -265,12 +242,6 @@
                     device_model.jashon[x].jso_pressure = re[2].trim();
                     device_model.jashon[x].jso_coolant = re[3].trim();
 
-                    eventbus.emit('ui.update', {
-                        "component": "all",
-                        "model": device_model
-                    });
-
-                    eventbus.emit('device.snapshot', device_model);
 
                 } else {
                     console.log('wrong reply gFv');

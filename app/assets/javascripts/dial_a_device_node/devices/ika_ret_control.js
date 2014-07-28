@@ -50,6 +50,13 @@
                 "command": "get_stirrer_status"
             });
 
+            eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model
+                });
+
+            eventbus.emit('device.snapshot', device_model);
+
         });
 
 
@@ -132,16 +139,11 @@
 
         eventbus.on("device.reply", function (lastmessage, data) {
 
-            eventbus.emit('device.assumeconnected');
-
             if (lastmessage.startsWith('IN_PV_1')) {
 
                 device_model.temperature = parseFloat(data.split(" ")[0]);
 
-                eventbus.emit('ui.update', {
-                    "component": "all",
-                    "model": device_model
-                });
+                eventbus.emit('device.assumeconnected');
 
             }
 
@@ -149,21 +151,12 @@
 
                 device_model.rotation = parseFloat(data.split(" ")[0]);
 
-                eventbus.emit('ui.update', {
-                    "component": "all",
-                    "model": device_model
-                });
-
             }
 
             if (lastmessage.startsWith('IN_SP_1')) {
 
                 device_model.temperature_setpoint = parseFloat(data.split(" ")[0]);
 
-                eventbus.emit('ui.update', {
-                    "component": "all",
-                    "model": device_model
-                });
 
             }
 
@@ -171,10 +164,6 @@
 
                 device_model.rotation_setpoint = parseFloat(data.split(" ")[0]);
 
-                eventbus.emit('ui.update', {
-                    "component": "all",
-                    "model": device_model
-                });
 
             }
 
@@ -182,21 +171,12 @@
 
                 device_model.heater_status = parseFloat(data.split(" ")[0][1]);
 
-                eventbus.emit('ui.update', {
-                    "component": "all",
-                    "model": device_model
-                });
 
             }
 
             if (lastmessage.startsWith('STATUS_4')) {
 
                 device_model.stirrer_status = parseFloat(data.split(" ")[0][1]);
-
-                eventbus.emit('ui.update', {
-                    "component": "all",
-                    "model": device_model
-                });
 
             }
 

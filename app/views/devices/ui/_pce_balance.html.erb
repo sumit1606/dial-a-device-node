@@ -1,0 +1,37 @@
+<div class="row-fluid" style="margin-top:20px;">
+    <div class="span12">
+        <div id="tab2" name="tab2" class="well" style="text-align: center";>
+           <label id="Display" name="Display"  ><span id="iDisplay" style="font-size: 20px;"></span></label>
+
+        </div>
+     </div>
+</div>
+
+
+<div class="row-fluid">
+    <div class="span12">
+       
+        <span class="btn-group">
+            <button id="powerbutton" name="powerbutton" class="btn btn-warning btn-large" onclick="ui.togglepower(); "><span id="power">Power</span></button>
+        </span>
+
+
+        <span class="btn-group">
+
+            <button id="tare" name="TARE" class="btn btn-danger btn-large " onclick="ui.tare();" >Tare</button>
+        </span>
+        
+         <span class="btn-group">
+            <button id="print" name="PRINT" class=" btn btn-success btn-large" onclick="ui.print(); " >Print</button>
+        </span>
+
+       
+
+    </div>
+
+    <script type="text/javascript">
+        if (connectiontype == "simulation") {
+            //ev.emit("device.set.print");
+        }
+    </script>
+</div>

@@ -2,10 +2,10 @@
 
     var device_model = {
 
-        amount: 0.0,
+        amount: 0,
         time: 0,
         timecounter: 0,
-        amountcounter: 0.0,
+        amountcounter: 0,
         flowrate: 0.0,
         runmode: 0,
         runfunction: 0,
@@ -94,6 +94,8 @@
                     "component": "all",
                     "model": device_model
                 });
+
+            eventbus.emit('device.snapshot', device_model);
 
         });
 
@@ -200,14 +202,13 @@
 
                 device_model.amount = parseFloat(data);
 
+                eventbus.emit('device.assumeconnected');
             
             }
 
             if (lastmessage.startsWith('?TT')) {
 
                 device_model.timecounter = fromknftime(data);
-
-                eventbus.emit('device.assumeconnected');
 
             }
 
@@ -264,7 +265,6 @@
 
                 if (parseInt(data) == 1) {
 
-                    
                     device_model.runfunction = 1; 
 
                 }                
