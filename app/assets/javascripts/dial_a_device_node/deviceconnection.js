@@ -172,7 +172,7 @@ exports.init = function (eventbus) {
 
                     }
 
-                }, 100);
+                }, 20);
 
             });
 
