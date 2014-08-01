@@ -1,3 +1,3 @@
 module DialADeviceNode
-  VERSION = "0.0.125"
+  VERSION = "0.0.126"
 end
