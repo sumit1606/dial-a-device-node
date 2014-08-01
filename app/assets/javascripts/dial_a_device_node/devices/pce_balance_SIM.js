@@ -19,7 +19,14 @@
 
         setInterval(function () {
         
-            eventbus.emit("device.heartbeat");
+            eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model_simulation
+                });
+
+            eventbus.emit('device.snapshot', device_model_simulation);
+
+
         }, 1000);
 
 
