@@ -17,6 +17,11 @@
 
     exports.init = function (eventbus) {
 
+        setInterval(function () {
+        
+            eventbus.emit("device.heartbeat");
+        }, 1000);
+
 
         eventbus.emit("serial.simulation");
         eventbus.emit("serial.portopened");

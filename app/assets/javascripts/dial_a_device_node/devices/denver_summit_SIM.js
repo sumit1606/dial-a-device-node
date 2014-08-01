@@ -20,17 +20,10 @@
     exports.init = function (eventbus) {
 
         setInterval(function () {
-
-            if (device_model_simulation.power == "1") {
-
-                if (device_model_simulation.autoprint == "1") {
-
-                    eventbus.emit("device.reply", "heartbeat", device_model_simulation.weight);
-                }
-
-            }
-
-        }, 3000);
+        
+            eventbus.emit("device.heartbeat");
+            
+        }, 1000);
 
 
         eventbus.emit("serial.simulation");
