@@ -40,43 +40,37 @@
         }
 
 
-        eventbus.on("serial.immediatecommand", function (data) {
+        eventbus.on("device.command", function (data) {
 
-            if (data.startsWith('Sx1')) {
 
-                device_model_simulation.weight = "  0.166 g ";
+            if (data.command == "power") {
 
-                if (device_model_simulation.power == 1) {
-
-                    eventbus.emit("device.reply", "heartbeat", device_model_simulation.weight);
-
-                }
-                
-            }
-
-            if (data.startsWith('MT')) {
-
-                device_model_simulation.weight = "  0.000 g ";
-
-            }
-
-            if (data.startsWith('SP')) {
-
-                device_model_simulation.weight = "  0.555 g ";
-
-            }
-
-            if (data.startsWith('SS')) {
-
+            
                 if (device_model_simulation.power == 1) {
 
                     device_model_simulation.power = 0;
+
                 } else {
 
                     device_model_simulation.power = 1;
+
                 }
 
             }
+
+            if (data.command == "tare") {
+
+                device_model_simulation.weight = " 0.000 g ";
+
+            }
+
+
+            if (data.command == "print") {
+
+                device_model_simulation.weight = "  0.166 g ";
+
+            }
+
 
         });
 
