@@ -23,7 +23,7 @@
 
                 device_model_simulation.timecounter = device_model_simulation.timecounter + 1000;
 
-                device_model_simulation.amountcounter = device_model_simulation.amountcounter + round(device_model_simulation.flowrate / 60);
+                device_model_simulation.amountcounter = device_model_simulation.amountcounter + Math.round(device_model_simulation.flowrate / 60);
 
                 if (device_model_simulation.runmode == 1) {
 
