@@ -39,7 +39,7 @@
                 if (device_model_simulation.runmode == 1) {
 
 
-                    device_model_simulation.amountcounter = device_model_simulation.amountcounter + Math.round((device_model_simulation.amount / (device_model_simulation.time*1000)));
+                    device_model_simulation.amountcounter = device_model_simulation.amountcounter + Math.round((device_model_simulation.amount / (device_model_simulation.time/1000)));
 
                     if (device_model_simulation.timecounter >= device_model_simulation.time) {
 
