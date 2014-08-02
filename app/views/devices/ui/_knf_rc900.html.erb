@@ -1,0 +1,90 @@
+
+<div class="row-fluid clearfix" style="height: 160px;">
+
+     <span class="btn-group inline">
+            <button id="coolantbutton" name="coolantbutton" class=" btn btn-success btn-large" onclick="ui.toggleCoolant(); " data-toggle="button"><span id="coolanticon" name="coolanticon" class="glyphicon glyphicon-star" />&nbsp;<span id="coolant">Coolant</span></button>
+        </span>
+
+         <span class="btn-group inline">
+            <button id="stopbutton" name="stopbutton" class=" btn btn-error btn-large" onclick="ui.Stop(); " data-toggle="button"><span id="coolant">STOP</span></button>
+        </span>
+
+
+        <div class="col-md-5 col-sm-5">
+
+             <div id="gauge1" class="200x160px"></div>
+        
+
+            <div class="inline" id="temperature_setpoint"> </div>
+
+            <script type="text/javascript">
+
+               smartinput ("temperature_setpoint", function(val) {
+                   ui.setTemperatureSetpoint(val);
+                }, "Set (°C)");
+            </script>
+
+            <div class="btn-group btn-group-justified">
+
+                <div class="btn-group">
+
+            <button id="heaterbutton" name="heaterbutton" class="col-md-6 col-sm-6 btn btn-warning btn-lg" onclick="ui.toggleHeater();" data-toggle="button"><span id="heatericon" name="heatericon" class="glyphicon" />Heater</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-5 col-sm-5">
+
+            <div id="gauge2" class="200x160px"></div>
+
+                      
+           
+            <div class="inline" id="rotation_setpoint"> </div>
+
+            <script type="text/javascript">
+
+                smartinput ("rotation_setpoint", function(val) {
+                    ui.setRotationSetpoint(val);
+                }, "Set (rpm)");
+            </script>
+
+            <div class="btn-group btn-group-justified">
+
+                <div class="btn-group">
+
+            <button id="rotationbutton" name="rotationbutton" class="col-md-6 col-sm-6 btn btn-warning btn-lg" onclick="ui.toggleRotation();" data-toggle="button"><span id="rotationicon" name="rotationicon" class="glyphicon" />Rotation</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+</div>
+
+
+<script>
+ var g1 = new JustGage({
+    id: "gauge1", 
+    value: 0, 
+    min: 0,
+    max: 280,
+    title: "Temperature",
+    label: "° C"
+  }); 
+
+  var g2 = new JustGage({
+    id: "gauge2", 
+    value: 0, 
+    min: 0,
+    max: 1700,
+    title: "Rotation",
+    label: "rpm"
+  }); 
+
+</script>
+
