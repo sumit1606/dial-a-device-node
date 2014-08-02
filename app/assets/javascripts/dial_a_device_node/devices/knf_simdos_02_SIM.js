@@ -113,8 +113,8 @@
 
                 if (device_model_simulation.runfunction == 0 && data.value > 0) {
 
-                    device_model.timecounter = 0;
-                    device_model.amountcounter = 0;
+                    device_model_simulation.timecounter = 0;
+                    device_model_simulation.amountcounter = 0;
 
 
                 }
