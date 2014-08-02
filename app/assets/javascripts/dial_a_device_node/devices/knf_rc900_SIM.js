@@ -172,11 +172,11 @@
 
             if (data.command == "stop") {
 
-                device_model.heater_status = 0;
+                device_model_simulation.heater_status = 0;
 
-                device_model.rotation_status = 0;
+                device_model_simulation.rotation_status = 0;
 
-                device_model.lift_status = 0;
+                device_model_simulation.lift_status = 0;
 
             }
 

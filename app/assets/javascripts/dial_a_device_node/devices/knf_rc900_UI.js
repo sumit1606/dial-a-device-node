@@ -20,7 +20,7 @@
                     break;
             }
 
-            switch (parseInt(data.model.stirrer_status)) {
+            switch (parseInt(data.model.rotation_status)) {
                 case 2:
                     $('#rotationicon').removeClass('glyphicon-refresh');
                     $('#rotationbutton').removeClass('active');
@@ -39,6 +39,10 @@
 
             if (!$('#rotation_setpoint_input').hasClass("dontupdate")) {
                 $('#rotation_setpoint_input').val(data.model.rotation_setpoint);
+            }
+
+            if (!$('#lift_setpoint_input').hasClass("dontupdate")) {
+                $('#lift_setpoint_input').val(data.model.lift_setpoint);
             }
 
             switch (parseInt(data.model.coolant_valve)) {
@@ -124,6 +128,15 @@
 
         localeventbus.emit("ui.command", {
                 "command": "set_rotation_setpoint",
+                "value": parseFloat(val)
+            });
+
+    };
+
+    exports.setLiftSetpoint = function setLiftSetpoint(val) {
+
+        localeventbus.emit("ui.command", {
+                "command": "set_lift_setpoint",
                 "value": parseFloat(val)
             });
 

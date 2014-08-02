@@ -1,13 +1,14 @@
-
-<div class="row-fluid clearfix" style="height: 160px;">
-
-     <span class="btn-group inline">
+<span class="btn-group inline">
             <button id="coolantbutton" name="coolantbutton" class=" btn btn-success btn-large" onclick="ui.toggleCoolant(); " data-toggle="button"><span id="coolanticon" name="coolanticon" class="glyphicon glyphicon-star" />&nbsp;<span id="coolant">Coolant</span></button>
         </span>
 
          <span class="btn-group inline">
-            <button id="stopbutton" name="stopbutton" class=" btn btn-error btn-large" onclick="ui.Stop(); " data-toggle="button"><span id="coolant">STOP</span></button>
+            <button id="stopbutton" name="stopbutton" class=" btn btn-warning btn-large" onclick="ui.Stop(); " data-toggle="button"><span id="coolant">STOP</span></button>
         </span>
+
+
+
+<div class="row-fluid clearfix" style="height: 160px;">
 
 
         <div class="col-md-5 col-sm-5">
@@ -65,6 +66,36 @@
 
 
 </div>
+
+
+    <div class="row-fluid clearfix" style="height: 160px;">
+
+
+        <div class="col-md-5 col-sm-5">
+
+
+            <div class="inline" id="lift_setpoint"> </div>
+
+            <script type="text/javascript">
+
+               smartinput ("lift_setpoint", function(val) {
+                   ui.setLiftSetpoint(val);
+                }, "Set");
+            </script>
+
+            <div class="btn-group btn-group-justified">
+
+                <div class="btn-group">
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 
 
 <script>
