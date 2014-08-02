@@ -18,6 +18,41 @@
 
         setInterval(function () {
 
+
+            if (device_model_simulation.runfunction == 1) {
+
+                device_model_simulation.timecounter = device_model_simulation.timecounter + 1000;
+
+                device_model_simulation.amountcounter = device_model_simulation.amountcounter + round(device_model_simulation.flowrate / 60);
+
+                if (device_model_simulation.runmode == 1) {
+
+                    if (device_model_simulation.amountcounter >= device_model_simulation.amount) {
+
+                        device_model_simulation.runfunction = 0;
+                    }
+
+                }
+
+                if (device_model_simulation.runmode == 2) {
+
+                    if (device_model_simulation.timecounter >= device_model_simulation.time) {
+
+                        device_model_simulation.runfunction = 0;
+                    }
+
+                }
+
+            }
+
+            if (device_model_simulation.runfunction == 2) {
+
+                device_model_simulation.timecounter = 2000;                
+                device_model_simulation.runfunction = 0;
+                device_model_simulation.amountcounter = 175;
+
+            }
+
             eventbus.emit('ui.update', {
                     "component": "all",
                     "model": device_model_simulation
@@ -31,7 +66,7 @@
         eventbus.emit("serial.simulation");
         eventbus.emit("serial.portopened");
 
-        eventbus.on("device.immediatecommand", function (data) {
+        eventbus.on("device.command", function (data) {
 
             if (data.command == "set_amount") {
 
