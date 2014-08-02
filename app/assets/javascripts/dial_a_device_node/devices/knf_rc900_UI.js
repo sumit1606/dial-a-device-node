@@ -8,6 +8,8 @@
 
             g2.refresh(data.model.rotation);
 
+            g3.refresh(data.model.lift);
+
             switch (parseInt(data.model.heater_status)) {
                 case 2:
                     $('#heatericon').removeClass('glyphicon-fire');

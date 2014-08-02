@@ -67,11 +67,15 @@
 
 </div>
 
+<br>
+<br>
 
     <div class="row-fluid clearfix" style="height: 160px;">
 
 
         <div class="col-md-5 col-sm-5">
+
+            <div id="gauge3" class="200x160px"></div>
 
 
             <div class="inline" id="lift_setpoint"> </div>
@@ -115,6 +119,15 @@
     max: 1700,
     title: "Rotation",
     label: "rpm"
+  }); 
+
+  var g3 = new JustGage({
+    id: "gauge3", 
+    value: 0, 
+    min: 0,
+    max: 10,
+    title: "Lift",
+    label: "position"
   }); 
 
 </script>
