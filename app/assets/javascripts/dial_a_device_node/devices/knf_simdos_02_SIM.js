@@ -2,11 +2,11 @@
 
     var device_model_simulation = {
 
-        amount: 10,
-        time: 0,
+        amount: 400,
+        time: 1000,
         timecounter: 0,
         amountcounter: 0,
-        flowrate: 0.0,
+        flowrate: 400.0,
         runmode: 0,
         runfunction: 0,
         cyclenumber: 1,
@@ -23,9 +23,11 @@
 
                 device_model_simulation.timecounter = device_model_simulation.timecounter + 1000;
 
-                device_model_simulation.amountcounter = device_model_simulation.amountcounter + Math.round(device_model_simulation.flowrate / 60);
+                
+                if (device_model_simulation.runmode == 0) {
 
-                if (device_model_simulation.runmode == 1) {
+
+                    device_model_simulation.amountcounter = device_model_simulation.amountcounter + Math.round(device_model_simulation.flowrate / 60);
 
                     if (device_model_simulation.amountcounter >= device_model_simulation.amount) {
 
@@ -34,7 +36,22 @@
 
                 }
 
+                if (device_model_simulation.runmode == 1) {
+
+
+                    device_model_simulation.amountcounter = device_model_simulation.amountcounter + Math.round((device_model_simulation.amount / device_model_simulation.time));
+
+                    if (device_model_simulation.timecounter >= device_model_simulation.time) {
+
+                        device_model_simulation.runfunction = 0;
+                    }
+
+                }
+
                 if (device_model_simulation.runmode == 2) {
+
+
+                    device_model_simulation.amountcounter = device_model_simulation.amountcounter + Math.round(device_model_simulation.flowrate / 60);
 
                     if (device_model_simulation.timecounter >= device_model_simulation.time) {
 
