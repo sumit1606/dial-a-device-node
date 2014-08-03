@@ -1,0 +1,72 @@
+
+<div class="row-fluid clearfix" style="height: 160px;">
+
+		<div class="col-md-5 col-sm-5">
+
+             <div id="gauge1" class="200x160px"></div>
+        
+
+	        <div class="inline" id="temperature_setpoint"> </div>
+
+            <script type="text/javascript">
+
+               smartinput ("temperature_setpoint", function(val) {
+                   ui.setTemperatureSetpoint(val);
+                }, "Set (°C)");
+            </script>
+
+            <div class="btn-group btn-group-justified">
+
+
+
+            </div>
+
+        </div>
+
+        <div class="col-md-5 col-sm-5">
+
+	        <div id="gauge2" class="200x160px"></div>
+
+                      
+	       
+	        <div class="inline" id="rotation_setpoint"> </div>
+
+            <script type="text/javascript">
+
+                smartinput ("rotation_setpoint", function(val) {
+                    ui.setRotationSetpoint(val);
+                }, "Set (rpm)");
+            </script>
+
+            <div class="btn-group btn-group-justified">
+
+
+            </div>
+
+        </div>
+
+
+</div>
+
+
+<script>
+ var g1 = new JustGage({
+    id: "gauge1", 
+    value: 0, 
+    min: 0,
+    max: 280,
+    title: "Temperature",
+    label: "° C"
+  }); 
+
+  var g2 = new JustGage({
+    id: "gauge2", 
+    value: 0, 
+    min: 0,
+    max: 1700,
+    title: "Rotation",
+    label: "rpm"
+  }); 
+
+</script>
+
