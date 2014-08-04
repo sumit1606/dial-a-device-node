@@ -11,7 +11,7 @@
             g3.refresh(data.model.lift);
 
             switch (parseInt(data.model.heater_status)) {
-                case 2:
+                case 0:
                     $('#heatericon').removeClass('glyphicon-fire');
                     $('#heaterbutton').removeClass('active');
                     break;
@@ -23,7 +23,7 @@
             }
 
             switch (parseInt(data.model.rotation_status)) {
-                case 2:
+                case 0:
                     $('#rotationicon').removeClass('glyphicon-refresh');
                     $('#rotationbutton').removeClass('active');
                     break;

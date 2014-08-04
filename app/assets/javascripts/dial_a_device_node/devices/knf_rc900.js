@@ -110,15 +110,11 @@
 
             if (data.command == "start_heater") {
 
-                device_model.heater_status = 1;
-
                 eventbus.emit("serial.immediatecommand", "dRh1");
 
             }
 
             if (data.command == "stop_heater") {
-
-                device_model.heater_status = 0;
 
                 eventbus.emit("serial.immediatecommand", "dRh2");
 
@@ -126,15 +122,11 @@
 
             if (data.command == "start_rotation") {
 
-                device_model.rotation_status = 1;
-
                 eventbus.emit("serial.immediatecommand", "dRr1");
 
             }
 
             if (data.command == "stop_rotation") {
-
-                device_model.rotation_status = 0;
 
                 eventbus.emit("serial.immediatecommand", "dRr2");
 
@@ -190,12 +182,6 @@
 
             if (data.command == "stop") {
 
-                device_model.heater_status = 0;
-
-                device_model.rotation_status = 0;
-
-                device_model.lift_status = 0;
-
                 eventbus.emit("serial.immediatecommand", "dE");
 
             }
@@ -207,12 +193,71 @@
 
             if (lastmessage.startsWith('pP')) {
 
+
+                function pad(s,z){s=""+s;return s.length<z?pad("0"+s,z):s}
+
                 device_model.time = parseFloat(data.split(";")[0]);
                 device_model.temperature = parseFloat(data.split(";")[1]);
                 device_model.rotation_setpoint = parseFloat(data.split(";")[2]);
                 device_model.lift = parseFloat(data.split(";")[3]);
 
                 device_model.status = data.split(";")[4];
+
+                s = parseInt(data.split(";")[4][2], 16);
+
+                if (s == 0) {
+
+                    device_model.heater_status = 0;
+                    device_model.rotation_status = 0;
+
+                    device_model.rotation = 0;
+
+                }
+
+                if (s == 4) {
+
+                    device_model.heater_status = 0;
+                    device_model.rotation_status = 1;
+
+                    device_model.rotation = device_model.rotation_setpoint;
+
+                }
+
+                if (s == 8) {
+
+                    device_model.heater_status = 1;
+                    device_model.rotation_status = 0;
+
+                    device_model.rotation = 0;
+
+                }
+
+                if (s == 14) {
+
+                    device_model.heater_status = 1;
+                    device_model.rotation_status = 1;
+
+                    device_model.rotation = device_model.rotation_setpoint;
+
+                }
+
+                l1 = parseInt(data.split(";")[4][0], 16);
+                l2 = parseInt(data.split(";")[4][1], 16);
+
+                device_model.lift_status = 0;
+
+
+                if (l1 == 1) {
+
+                    device_model.lift_status = -1;
+
+                }
+
+                if (l2 == 9) {
+
+                    device_model.lift_status = 1;
+
+                }
 
                 eventbus.emit('device.assumeconnected');
 
