@@ -81,10 +81,19 @@
 
                 if (data.split(String.fromCharCode(13)).length > 1) {
 
-                    device_model.rotation_setpoint = parseFloat(data.split(String.fromCharCode(13))[1].split(String.fromCharCode(9))[0]);
-                    device_model.temperature_setpoint = parseFloat(data.split(String.fromCharCode(13))[1].split(String.fromCharCode(9))[1]);
+                    r = data.split(String.fromCharCode(13))[1];
 
-                    eventbus.emit('device.assumeconnected');
+                    if (r.split(String.fromCharCode(9)).length > 1) {
+
+                        device_model.rotation_setpoint = parseFloat(r.split(String.fromCharCode(9))[0]);
+
+                        device_model.temperature_setpoint = parseFloat(r.split(String.fromCharCode(9))[1]);
+
+                        eventbus.emit('device.assumeconnected');
+
+                    }
+
+                    
                 }
 
             }
@@ -93,8 +102,15 @@
 
                 if (data.split(String.fromCharCode(13)).length > 1) {
 
-                    device_model.rotation = parseFloat(data.split(String.fromCharCode(13))[1].split(String.fromCharCode(9))[0]);
-                    device_model.temperature = parseFloat(data.split(String.fromCharCode(13))[1].split(String.fromCharCode(9))[1]);
+                    r = data.split(String.fromCharCode(13))[1];
+
+                    if (r.split(String.fromCharCode(9)).length > 1) {
+
+                        device_model.rotation = parseFloat(r.split(String.fromCharCode(9))[0]);
+
+                        device_model.temperature = parseFloat(r.split(String.fromCharCode(9))[1]);
+
+                    }
 
                 }
 

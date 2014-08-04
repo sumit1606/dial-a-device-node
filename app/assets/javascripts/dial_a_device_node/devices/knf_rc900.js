@@ -223,8 +223,6 @@
                 device_model.temperature_setpoint = parseFloat(data.split(";")[0]);
                 device_model.shaking_time = parseFloat(data.split(";")[1]);
                 device_model.lift_setpoint = parseFloat(data.split(";")[2]);
-
-                device_model.status = data.split(";")[3];
                 
 
             }
