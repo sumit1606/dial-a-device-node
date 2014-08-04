@@ -192,7 +192,7 @@ exports.init = function (eventbus) {
                 data = data.substring(1);
             }
 
-            data = data.replace(/[^A-Za-z 0-9 \.,\?""!@#\$%\^&\*\(\)-_=\+;:<>\/\\\|\}\{\[\]`~]*/g, '');
+            // data = data.replace(/[^A-Za-z 0-9 \.,\?""!@#\$%\^&\*\(\)-_=\+;:<>\/\\\|\}\{\[\]`~]*/g, '');
             
             localeventbus.emit("serial.retrieve", data);
             
