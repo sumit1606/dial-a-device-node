@@ -79,8 +79,8 @@
 
             if (lastmessage.startsWith('RS')) {
 
-                device_model.rotation = parseFloat(data.split(String.fromCharCode(11))[0]);
-                device_model.temperature = parseFloat(data.split(String.fromCharCode(11))[1]);
+                device_model.rotation_setpoint = parseFloat(data.split(String.fromCharCode(13))[1].split(String.fromCharCode(11)[0]));
+                device_model.temperature_setpoint = parseFloat(data.split(String.fromCharCode(13))[1].split(String.fromCharCode(11)[1]));
 
                 eventbus.emit('device.assumeconnected');
 
@@ -88,8 +88,8 @@
 
             if (lastmessage.startsWith('RV')) {
 
-                device_model.rotation = parseFloat(data.split(String.fromCharCode(11))[0]);
-                device_model.temperature = parseFloat(data.split(String.fromCharCode(11))[1]);
+                device_model.rotation = parseFloat(data.split(String.fromCharCode(13))[1].split(String.fromCharCode(11)[0]));
+                device_model.temperature = parseFloat(data.split(String.fromCharCode(13))[1].split(String.fromCharCode(11)[1]));
 
             }
 
