@@ -16,7 +16,9 @@
 
         lift: 0,
         lift_setpoint: 0,
-        lift_status: 0
+        lift_status: 0,
+
+        status: ""
 
     };
 
@@ -126,7 +128,7 @@
 
                 device_model.rotation_status = 1;
 
-                eventbus.emit("serial.immediatecommand", "dR1");
+                eventbus.emit("serial.immediatecommand", "dRr1");
 
             }
 
@@ -134,7 +136,7 @@
 
                 device_model.rotation_status = 0;
 
-                eventbus.emit("serial.immediatecommand", "dR2");
+                eventbus.emit("serial.immediatecommand", "dRr2");
 
             }
 
@@ -207,8 +209,10 @@
 
                 device_model.time = parseFloat(data.split(";")[0]);
                 device_model.temperature = parseFloat(data.split(";")[1]);
-                device_model.rotation = parseFloat(data.split(";")[2]);
+                device_model.rotation_setpoint = parseFloat(data.split(";")[2]);
                 device_model.lift = parseFloat(data.split(";")[3]);
+
+                device_model.status = data.split(";")[4];
 
                 eventbus.emit('device.assumeconnected');
 
@@ -219,6 +223,8 @@
                 device_model.temperature_setpoint = parseFloat(data.split(";")[0]);
                 device_model.shaking_time = parseFloat(data.split(";")[1]);
                 device_model.lift_setpoint = parseFloat(data.split(";")[2]);
+
+                device_model.status = data.split(";")[3];
                 
 
             }

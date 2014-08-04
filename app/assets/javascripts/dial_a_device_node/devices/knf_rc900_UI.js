@@ -144,4 +144,36 @@
 
     };
 
+    exports.liftUp = function liftUp() {
+
+        localeventbus.emit("ui.command", {
+                "command": "start_lift_up"
+            });
+
+    };
+
+    exports.liftUpStop = function liftUpStop() {
+
+        localeventbus.emit("ui.command", {
+                "command": "stop_lift_up"
+            });
+
+    };
+
+    exports.liftDown = function liftDown() {
+
+        localeventbus.emit("ui.command", {
+                "command": "start_lift_down"
+            });
+
+    };
+
+    exports.liftDownStop = function liftDownStop() {
+
+        localeventbus.emit("ui.command", {
+                "command": "stop_lift_down"
+            });
+
+    };
+
 })(typeof exports == 'undefined' ? this['ui'] = {} : exports);

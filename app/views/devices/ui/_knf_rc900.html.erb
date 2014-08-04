@@ -87,10 +87,13 @@
                 }, "Set");
             </script>
 
-            <div class="btn-group btn-group-justified">
+             <div class="btn-group btn-group-justified">
 
                 <div class="btn-group">
 
+            <button id="upbutton" name="upbutton" class="col-md-6 col-sm-6 btn btn-success btn-lg" onmousedown="ui.liftUp();" onmouseup="ui.liftUpStop();">Up</button>
+
+            <button id="downbutton" name="downbutton" class="col-md-6 col-sm-6 btn btn-success btn-lg" onmousedown="ui.liftDown();" onmouseup="ui.liftDownStop();">Down</button>
 
                 </div>
 
@@ -107,7 +110,7 @@
     id: "gauge1", 
     value: 0, 
     min: 0,
-    max: 280,
+    max: 100,
     title: "Temperature",
     label: "° C"
   }); 
@@ -116,7 +119,7 @@
     id: "gauge2", 
     value: 0, 
     min: 0,
-    max: 1700,
+    max: 500,
     title: "Rotation",
     label: "rpm"
   }); 
