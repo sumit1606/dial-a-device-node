@@ -19,11 +19,21 @@
 
         localeventbus.on("folderwatcher.start", function (data) {
 
-            require('chokidar').watch(fwroot, {ignored: /[\/\\]\./, persistent: true}).on('all', function(event, path) {
+            var fs = require('fs'); 
 
-                localeventbus.emit("folderwatcher.event", event, path);
+            fs.exists(fwroot, function(exists) { 
+              if (exists) { 
 
-            });
+                require('chokidar').watch(fwroot, {ignored: /[\/\\]\./, persistent: true}).on('all', function(event, path) {
+
+                    localeventbus.emit("folderwatcher.event", event, path);
+
+                });
+                
+              } 
+            }); 
+
+            
 
         });
 

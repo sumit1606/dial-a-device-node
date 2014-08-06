@@ -2,13 +2,11 @@
 
     var device_model = {
 
-        d: 0
+        filedetected: ""
 
     };
 
     var device_id;
-
-    var fs = require('fs');
 
     exports.init = function (eventbus) {
 
@@ -17,6 +15,19 @@
                 return this.indexOf(str) == 0;
             };
         }
+
+        eventbus.on("device.heartbeat", function() {
+
+            eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model
+                });
+
+            eventbus.emit('device.snapshot', device_model);
+
+            eventbus.emit("device.assumeconnected");
+
+        });
 
         eventbus.on("device.announce.deviceid", function(data){
 
@@ -33,6 +44,7 @@
 
             eventbus.emit("folderwatcher.start");
 
+
         });
 
         function matchfile(path) {
@@ -43,14 +55,26 @@
 
             // if measurement does not contain this file, upload it
 
-            console.log(path);
 
-            console.log(device_id);
+            // console.log(path);
+
+            // console.log(device_id);
+
+            device_model.filedetected = path;
+
+
+            eventbus.emit('ui.update', {
+                    "component": "all",
+                    "model": device_model
+                });
 
         }
 
 
         eventbus.on("folderwatcher.event", function(event, path){
+
+
+            var fs = require('fs');
 
             if (event == "add") {
 
@@ -71,6 +95,8 @@
 
 
         eventbus.emit("device.initialized");
+
+        
 
     };
 

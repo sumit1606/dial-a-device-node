@@ -2,7 +2,7 @@
 
     var device_model_simulation = {
 
-        d: 0
+        filedetected: ""
 
     };
 
