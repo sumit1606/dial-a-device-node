@@ -105,7 +105,23 @@
             eventbus.emit('device.assumeconnected');
 
             if (lastmessage.startsWith('heartbeat')) {
-                device_model.weight = data.substring(data.indexOf(" "));
+
+                w = data.substring(data.indexOf(" ")).trim();
+
+                if (w[0] == "+") {
+
+                    device_model.weight = w.substring(data.indexOf(" "));                    
+
+                } else if (w[0] == "-") {
+
+                    device_model.weight = "-"+w.substring(data.indexOf(" "));                    
+
+                } else {
+
+                    device_model.weight = w;
+
+                }
+
                 device_model.power = '1';
 
                 eventbus.emit('ui.update', {
