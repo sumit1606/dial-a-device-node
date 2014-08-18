@@ -107,7 +107,17 @@ exports.init = function (eventbus) {
                 parser: (knfsimdosparser())
             });
 
-        } else {
+        } else if (linebreak == "denver") {
+            
+            serialport = new ser.SerialPort(port, {
+                baudrate: baud,
+                databit: databit,
+                parity: parity,
+                stopbit: stopbit,
+                parser: (ser.parsers.readline(hex2a("0D"), "ascii"))
+            });
+        
+        }else {
             
             serialport = new ser.SerialPort(port, {
                 baudrate: baud,

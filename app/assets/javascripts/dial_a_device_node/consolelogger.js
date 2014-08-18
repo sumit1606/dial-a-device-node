@@ -4,6 +4,12 @@
         localeventbus = eventbus;
 
 
+        localeventbus.on("folderwatcher.event", function (event, path) {
+
+            console.log("folderwatcher "+ event + " - "+ path);
+        });
+
+
         localeventbus.on("serial.initialized", function () {
 
             console.log("serial port library initialized");

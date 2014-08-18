@@ -80,7 +80,9 @@
 
                 fs.stat(path, function(err, stats) {
 
-                    if ((Date.now() - stats.mtime) < 1000* 60* 60 * 24) {
+                    if ((Date.now() - stats.atime) < 1000* 60* 60 * 24) {
+
+                        
                         
                         matchfile(path);
 
