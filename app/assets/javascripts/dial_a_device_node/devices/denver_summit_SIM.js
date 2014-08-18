@@ -2,7 +2,7 @@
 
     var device_model_simulation = {
 
-        weight: "0.166[0]g",
+        weight: "+ 0.1667 g ",
         autoprint: "0",
         power: "1"
 

@@ -105,7 +105,7 @@
             eventbus.emit('device.assumeconnected');
 
             if (lastmessage.startsWith('heartbeat')) {
-                device_model.weight = data;
+                device_model.weight = data.substring(data.indexOf(" "));
                 device_model.power = '1';
 
                 eventbus.emit('ui.update', {
@@ -118,7 +118,7 @@
 
 
             if (lastmessage.startsWith('D')) {
-                device_model.weight = data;
+                device_model.weight = data.substring(data.indexOf(" "));
                 device_model.power = '1';
 
                 eventbus.emit('ui.update', {
