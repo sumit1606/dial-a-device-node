@@ -1,0 +1,102 @@
+
+<div class="row-fluid">
+    <div class="span12">
+
+        <span class="btn-group">
+            <button id="startbutton" name="startbutton" class="btn btn-success btn-large" onclick="ui.start(); "><span id="start">Start</span></button>
+            <button id="stopbutton" name="stopbutton" class="btn btn-error btn-large" onclick="ui.stop(); "><span id="stop">Stop</span></button>
+        </span>
+
+        <span class="btn-group inline">
+            <button id="runmodebutton" name="runmodebutton" class=" btn btn-info btn-large dropdown-toggle" data-toggle="dropdown"><span id="runmode">Evacuate</span>&nbsp;<span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="ui.setRunmode(0);">VACUU-LAN</a></li>
+                <li><a href="#" onclick="ui.setRunmode(1);">Pump down</a></li>
+              <li><a href="#" onclick="ui.setRunmode(2);">Vac control</a></li>
+              <li><a href="#" onclick="ui.setRunmode(3);">Auto mode</a></li>
+            </ul>
+        </span>
+
+        <span class="btn-group inline">
+            <button id="ventilationbutton" name="ventilationbutton" class=" btn btn-success btn-large" onclick="ui.toggleVentValve();" data-toggle="button"><span id="ventilationicon" name="ventilationicon" class="glyphicon glyphicon-star" />&nbsp;<span id="coolant">Ventilation</span></button>
+        </span>
+
+            
+
+    </div>
+
+</div>
+
+<br/>
+<br/>
+
+
+
+
+<div class="row-fluid clearfix" style="height: 160px;">
+
+
+
+        <div class="col-md-5 col-sm-5">
+
+            <div id="gauge1" class="200x160px"></div>
+
+                      
+           
+            <div class="inline" id="si_pressuresetpoint"> </div>
+
+            <script type="text/javascript">
+
+                smartinput ("si_pressuresetpoint", function(val) {
+                    ui.setPressureSetpoint(val);
+                }, "Set (mbar)");
+            </script>
+
+
+        </div>
+
+
+
+        <div class="col-md-5 col-sm-5">
+
+             <div id="gauge2" class="200x160px"></div>
+        
+
+            <div class="inline" id="si_speedsetpoint"> </div>
+
+            <script type="text/javascript">
+
+               smartinput ("si_speedsetpoint", function(val) {
+                   ui.setSpeedSetpoint(val);
+                }, "Set (%)");
+            </script>
+
+        </div>
+
+
+</div>
+
+
+
+
+
+<script>
+ var g1 = new JustGage({
+    id: "gauge1", 
+    value: 0, 
+    min: 0,
+    max: 1100,
+    title: "Pressure",
+    label: "mbar"
+  }); 
+
+  var g2 = new JustGage({
+    id: "gauge2", 
+    value: 0, 
+    min: 0,
+    max: 100,
+    title: "Speed",
+    label: "%"
+  }); 
+
+  </script>
