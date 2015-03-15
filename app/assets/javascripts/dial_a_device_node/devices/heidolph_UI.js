@@ -4,10 +4,10 @@
 
         eventbus.on("ui.update", function (data) {
 
-            g1.refresh(data.model.rotation);
-            g2.refresh(data.model.temperature);
-            g3.refresh(data.model.exttemperature);
-            g4.refresh(data.model.vacuum);
+            hg1.refresh(data.model.rotation);
+            hg2.refresh(data.model.temperature);
+            hg3.refresh(data.model.exttemperature);
+            hg4.refresh(data.model.vacuum);
 
 
         });
