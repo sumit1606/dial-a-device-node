@@ -21,6 +21,7 @@
 
     };
 
+
     exports.init = function (eventbus) {
 
         if (typeof String.prototype.startsWith != 'function') {
